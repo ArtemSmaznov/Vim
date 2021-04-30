@@ -67,9 +67,7 @@ noremap <leader>- :resize -5<CR>
 noremap <leader>, :vertical:resize -5<CR>
 noremap <leader>. :vertical:resize +5<CR>
 
-" Open Splits
-nnoremap <leader>uv :vertical split<cr>
-nnoremap <leader>us :split<cr>
+" Open Terminal
 nnoremap <leader>` :term<cr>
 
 " Useful mappings for managing tabs
