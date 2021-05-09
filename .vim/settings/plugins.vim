@@ -16,10 +16,11 @@ Plug 'airblade/vim-gitgutter'                   " A Vim plugin which shows a git
 Plug 'michaeljsmith/vim-indent-object'          " Text objests based on indent levels
 Plug 'farmergreg/vim-lastplace'                 " Intelligently reopen files where you left off
 " Plug 'maxbrunsfeld/vim-yankstack'               " Plugin for storing and cycling through yanked text strings
+Plug 'tpope/vim-commentary'                     " Plugin for commenting code
 Plug 'tpope/vim-fugitive'                       " A Git wrapper so awesome, it should be illegal
 Plug 'tpope/vim-surround'                       " Plugin for deleting, changing, and adding surroundings
+Plug 'tpope/vim-repeat'                         " Repeat.vim remaps `.` in a way that plugins can tap into it
 Plug 'honza/vim-snippets'
-Plug 'tpope/vim-commentary'                     " Plugin for commenting code
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'christoomey/vim-system-copy'
 Plug 'liuchengxu/vim-which-key'
