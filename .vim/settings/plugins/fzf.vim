@@ -17,12 +17,14 @@ map <leader>fb :Buffers<CR>
 map <leader>fw :Windows<CR>
 map <leader>fl :BLines<CR>
 map <leader>fr :History<CR>
+map <leader>fc :Commands<CR>
+map <leader>fm :Maps<CR>
 nnoremap <leader>fg :Rg<CR>
 nnoremap <leader>ft :Tags<CR>
-nnoremap <leader>fm :Marks<CR>
-nnoremap <leader>fc :History:<CR>
-nnoremap <leader>fs :History/<CR>
-nnoremap <leader>fk :Helptags<CR>
+nnoremap <leader>f' :Marks<CR>
+nnoremap <leader>f: :History:<CR>
+nnoremap <leader>f/ :History/<CR>
+nnoremap <leader>fh :Helptags<CR>
 
 
 let g:fzf_tags_command = 'ctags -R'

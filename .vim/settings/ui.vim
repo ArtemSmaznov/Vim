@@ -68,5 +68,5 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>eu :e! ~/.vim/settings/ui.vim<cr>
-autocmd! bufwritepost ~/.vim/settings/ui.vim source ~/.vim/settings/ui.vim
+map <leader>eu :e! $HOME/.vim/settings/ui.vim<cr>
+autocmd! bufwritepost $HOME/.vim/settings/ui.vim source $HOME/.vim/settings/ui.vim

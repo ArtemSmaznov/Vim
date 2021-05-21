@@ -1,10 +1,10 @@
-source ~/.vim/settings/filetypes.vim
-source ~/.vim/settings/basic.vim
-source ~/.vim/settings/plugins.vim
-source ~/.vim/settings/ui.vim
-source ~/.vim/settings/key-mappings.vim
+source $HOME/.vim/settings/filetypes.vim
+source $HOME/.vim/settings/basic.vim
+source $HOME/.vim/settings/plugins.vim
+source $HOME/.vim/settings/ui.vim
+source $HOME/.vim/settings/key-mappings.vim
 
 try
-  source ~/.vim/local.vim
+  source $HOME/.vim/vimrc.vim
 catch
 endtry

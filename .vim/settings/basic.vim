@@ -93,7 +93,7 @@ au FocusGained,BufEnter * checktime
 
 " Turn persistent undo on - you can undo even when you close a buffer/VIM
 try
-    set undodir=~/.vim/temp_dirs/undodir
+    set undodir=$HOME/.vim/temp_dirs/undodir
     set undofile
 catch
 endtry
@@ -240,5 +240,5 @@ endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>eb :e! ~/.vim/settings/basic.vim<cr>
-autocmd! bufwritepost ~/.vim/settings/basic.vim source ~/.vim/settings/basic.vim
+map <leader>eb :e! $HOME/.vim/settings/basic.vim<cr>
+autocmd! bufwritepost $HOME/.vim/settings/basic.vim source $HOME/.vim/settings/basic.vim

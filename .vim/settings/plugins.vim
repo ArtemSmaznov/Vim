@@ -1,7 +1,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Load Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin('~/.vim/plugged')
+call plug#begin('$HOME/.vim/plugged')
 
 " Plug 'mileszs/ack.vim'                          " Plugin that integrates ack with Vim
 " Plug 'ctrlpvim/ctrlp.vim'                       " Fuzzy file, buffer, mru, tag, ... finder
@@ -31,12 +31,13 @@ Plug 'severin-lemaignan/vim-minimap'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" Language Support
-Plug 'tpope/vim-cucumber'                       " Filetype plugin for Cucumber
-Plug 'pangloss/vim-javascript'                  " Filetype plugin for JavaScript
-Plug 'leafgarland/typescript-vim'               " Filetype plugin for TypeScript
-" Plug 'rust-lang/rust.vim'                       " Filetype plugin for Rust
-Plug 'plasticboy/vim-markdown'                  " Vim Markdown
+                                  " Language Support
+Plug 'tpope/vim-cucumber'         " Filetype plugin for Cucumber
+Plug 'pangloss/vim-javascript'    " Filetype plugin for JavaScript
+Plug 'leafgarland/typescript-vim' " Filetype plugin for TypeScript
+                                  " Plug 'rust-lang/rust.vim'      " Filetype plugin for Rust
+Plug 'plasticboy/vim-markdown'    " Vim Markdown
+Plug 'cespare/vim-toml'           " Filetype plugin for TOML
 
 " Color Schemes
 Plug 'lifepillar/vim-gruvbox8'
@@ -49,24 +50,24 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Load Configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" source ~/.vim/settings/plugins/ack.vim
-source ~/.vim/settings/plugins/airline.vim
-source ~/.vim/settings/plugins/auto-pairs.vim
-source ~/.vim/settings/plugins/buffExplorer.vim
-source ~/.vim/settings/plugins/coc.vim
-source ~/.vim/settings/plugins/colorizer.vim
-source ~/.vim/settings/plugins/commentary.vim
-" source ~/.vim/settings/plugins/ctrlp.vim 
-source ~/.vim/settings/plugins/fzf.vim 
-source ~/.vim/settings/plugins/gitGutter.vim
-source ~/.vim/settings/plugins/minimap.vim
-source ~/.vim/settings/plugins/sneak.vim
-source ~/.vim/settings/plugins/system-copy.vim
-source ~/.vim/settings/plugins/surround.vim
-source ~/.vim/settings/plugins/tabularize.vim
-source ~/.vim/settings/plugins/tmuxline.vim
-source ~/.vim/settings/plugins/which-key.vim
-" source ~/.vim/settings/plugins/yankstack.vim
+" source $HOME/.vim/settings/plugins/ack.vim
+source $HOME/.vim/settings/plugins/airline.vim
+source $HOME/.vim/settings/plugins/auto-pairs.vim
+source $HOME/.vim/settings/plugins/buffExplorer.vim
+source $HOME/.vim/settings/plugins/coc.vim
+source $HOME/.vim/settings/plugins/colorizer.vim
+source $HOME/.vim/settings/plugins/commentary.vim
+" source $HOME/.vim/settings/plugins/ctrlp.vim 
+source $HOME/.vim/settings/plugins/fzf.vim 
+source $HOME/.vim/settings/plugins/gitGutter.vim
+source $HOME/.vim/settings/plugins/minimap.vim
+source $HOME/.vim/settings/plugins/sneak.vim
+source $HOME/.vim/settings/plugins/system-copy.vim
+source $HOME/.vim/settings/plugins/tabularize.vim
+source $HOME/.vim/settings/plugins/surround.vim
+source $HOME/.vim/settings/plugins/tmuxline.vim
+source $HOME/.vim/settings/plugins/which-key.vim
+" source $HOME/.vim/settings/plugins/yankstack.vim
 
 
 " Automatically install missing plugins on startup
@@ -79,5 +80,5 @@ autocmd VimEnter *
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>ep :e! ~/.vim/settings/plugins.vim<cr>
-autocmd! bufwritepost ~/.vim/settings/plugins.vim source ~/.vim/settings/plugins.vim
+map <leader>ep :e! $HOME/.vim/settings/plugins.vim<cr>
+autocmd! bufwritepost $HOME/.vim/settings/plugins.vim source $HOME/.vim/settings/plugins.vim
