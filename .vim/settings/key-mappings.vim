@@ -35,6 +35,9 @@ nnoremap J :m+<cr>==
 vnoremap K :m '<-2<cr>gv=gv
 vnoremap J :m '>+1<cr>gv=gv
 
+" Join line with space in between with gj and no space with gJ
+noremap gj J
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Workspace navigation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -58,10 +61,6 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Resize windows
-noremap <silent> <C-Up> :resize +5<CR>
-noremap <silent> <C-Down> :resize -5<CR>
-noremap <silent> <C-Left> :vertical resize +5<CR>
-noremap <silent> <C-Right> :vertical resize -5<CR>
 noremap <leader>= :resize +5<CR>
 noremap <leader>- :resize -5<CR>
 noremap <leader>, :vertical:resize -5<CR>
