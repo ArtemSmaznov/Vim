@@ -13,6 +13,9 @@ set cmdheight=2      " Height of the command bar
 set splitbelow       " Horizontal splits will automatically be below
 set splitright       " Vertical splits will automatically be to the right
 
+" Open diffs in vertical splits
+set diffopt+=vertical
+
 " Disable scrollbars 
 set guioptions-=r
 set guioptions-=R
