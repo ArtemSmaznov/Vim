@@ -36,7 +36,7 @@ vnoremap K :m '<-2<cr>gv=gv
 vnoremap J :m '>+1<cr>gv=gv
 
 " Join line with space in between with gj and no space with gJ
-noremap gj J
+" noremap gj J " gj is actually used for wrapped line navigation
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Workspace navigation
@@ -84,19 +84,30 @@ au TabLeave * let g:lasttab = tabpagenr()
 " Working with buffers
 
 " Close the current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT 
+map <leader>bc :Bclose<cr>
+" map <leader>bd :Bclose<cr>:tabclose<cr>gT 
 
 " Close all the buffers
-map <leader>ba :bufdo bd<cr>              
+map <leader>ba :bufdo bd<cr>
 
-" Prev buffer
-map <leader>bh :bprevious<cr>              
+" First buffer
+map <leader>bj :bfirst<cr>
+nnoremap <Down> :bfirst<cr>
+
+" Previous buffer
+map <leader>bh :bprevious<cr>
+nnoremap <Left> :bprevious<cr>
 
 " Next buffer
-map <leader>bl :bnext<cr>                  
+map <leader>bl :bnext<cr>
+nnoremap <Right> :bnext<cr>
+
+" Last buffer
+map <leader>bk :blast<cr>
+nnoremap <Up> :blast<cr>
 
 " Switch CWD to the directory of the open buffer
-map <leader>bc :cd %:p:h<cr>:pwd<cr>
+map <leader>bd :cd %:p:h<cr>:pwd<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

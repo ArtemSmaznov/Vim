@@ -29,6 +29,7 @@ Plug 'christoomey/vim-system-copy'
 " ======> Navigation <======
 " Plug 'mileszs/ack.vim'                          " Plugin that integrates ack with Vim
 " Plug 'ctrlpvim/ctrlp.vim'                       " Fuzzy file, buffer, mru, tag, ... finder
+Plug 'szw/vim-tags'
 Plug 'jlanzarotta/bufexplorer'                  " Buffer Explorer
 Plug 'farmergreg/vim-lastplace'                 " Intelligently reopen files where you left off
 Plug 'justinmk/vim-sneak'
@@ -74,6 +75,7 @@ source $HOME/.vim/settings/plugins/sneak.vim
 source $HOME/.vim/settings/plugins/system-copy.vim
 source $HOME/.vim/settings/plugins/surround.vim
 source $HOME/.vim/settings/plugins/tabularize.vim
+source $HOME/.vim/settings/plugins/tags.vim
 source $HOME/.vim/settings/plugins/tmuxline.vim
 source $HOME/.vim/settings/plugins/which-key.vim
 " source $HOME/.vim/settings/plugins/yankstack.vim
