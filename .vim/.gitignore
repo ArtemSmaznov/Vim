@@ -1,7 +1,6 @@
 .DS_Store
 .netrwhist
 vimrc.vim
-tags
 spell
 plugged/*
 plugged/ack.vim/.netrwhist

@@ -34,6 +34,7 @@ let g:leader_map.g = { 'name' : '+ Git' }
   let g:leader_map.g.d = [ 'vertical Gdiffsplit', 'Diff Split' ]
   let g:leader_map.g.g = [ 'vertical Gstatus', 'Status' ]
 let g:leader_map.m = { 'name' : '+ Minimap' }
+let g:leader_map.p = { 'name' : '+ Popup' }
 let g:leader_map.s = { 'name' : '+ Set' }
 let g:leader_map.f = { 'name' : '+ Search' }
 let g:leader_map.t = { 'name' : '+ Tabs' }

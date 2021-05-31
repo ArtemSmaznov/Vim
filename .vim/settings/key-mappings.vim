@@ -7,12 +7,16 @@
 "    -> Workspace navigation
 "    -> Spell checking
 "    -> Tabs, windows and buffer
+"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+" Source current file
+nnoremap <leader>r :source %<cr>
 
 " Toggle paste mode on and off
 map <leader>sp :setlocal paste!<cr>

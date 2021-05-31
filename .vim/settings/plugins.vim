@@ -46,6 +46,7 @@ Plug 'airblade/vim-gitgutter'                   " A Vim plugin which shows a git
 Plug 'tpope/vim-fugitive'                       " A Git wrapper so awesome, it should be illegal
 Plug 'liuchengxu/vim-which-key'
 Plug 'ryanoasis/vim-devicons' 
+Plug 'voldikss/vim-floaterm'
 
 " ======> New Plugins to try <====== 
 " Plug 'airblade/vim-rooter'
@@ -68,6 +69,7 @@ source $HOME/.vim/settings/plugins/coc.vim
 source $HOME/.vim/settings/plugins/colorizer.vim
 source $HOME/.vim/settings/plugins/commentary.vim
 " source $HOME/.vim/settings/plugins/ctrlp.vim 
+source $HOME/.vim/settings/plugins/floaterm.vim
 source $HOME/.vim/settings/plugins/fzf.vim 
 source $HOME/.vim/settings/plugins/gitGutter.vim
 source $HOME/.vim/settings/plugins/minimap.vim
