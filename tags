@@ -166,45 +166,26 @@ Bclose	settings/basic.vim	/^command! Bclose call <SID>BufcloseCloseIt()$/;"	c	la
 BufcloseCloseIt	settings/basic.vim	/^function! <SID>BufcloseCloseIt()$/;"	f	language:Vim
 CleanExtraSpaces	settings/basic.vim	/^fun! CleanExtraSpaces()$/;"	f	language:Vim
 CmdLine	settings/basic.vim	/^function! CmdLine(str)$/;"	f	language:Vim
-Command line mappings	README.md	/^### Command line mappings$/;"	S	language:Markdown	section:The Ultimate vimrc""Key Mappings
-Cope	README.md	/^### Cope$/;"	S	language:Markdown	section:The Ultimate vimrc""Key Mappings
 CurrentFileDir	settings/basic.vim	/^func! CurrentFileDir(cmd)$/;"	f	language:Vim
 D	autoload/plug.vim	/^  nnoremap <silent> <buffer> D  :PlugDiff<cr>$/;"	m	language:Vim
 DeleteTillSlash	settings/basic.vim	/^func! DeleteTillSlash()$/;"	f	language:Vim
 Files	settings/plugins/fzf.vim	/^command! -bang -nargs=? -complete=dir Files$/;"	c	language:Vim
 Fold	settings/plugins/coc.vim	/^command! -nargs=? Fold :call     CocAction('fold', <f-args>)$/;"	c	language:Vim
 FoldText	after/ftplugin/javascript.vim	/^    function! FoldText()$/;"	f	language:Vim
-Fonts	README.md	/^## Fonts$/;"	s	language:Markdown	chapter:The Ultimate vimrc
 Format	settings/plugins/coc.vim	/^command! -nargs=0 Format :call CocAction('format')$/;"	c	language:Vim
 GGrep	settings/plugins/fzf.vim	/^command! -bang -nargs=* GGrep$/;"	c	language:Vim
 HasPaste	settings/basic.vim	/^function! HasPaste()$/;"	f	language:Vim
-How to include your own stuff?	README.md	/^## How to include your own stuff?$/;"	s	language:Markdown	chapter:The Ultimate vimrc
-How to install on Linux	README.md	/^## How to install on Linux$/;"	s	language:Markdown	chapter:The Ultimate vimrc
-How to install on Windows?	README.md	/^## How to install on Windows?$/;"	s	language:Markdown	chapter:The Ultimate vimrc
-How to install the Awesome version?	README.md	/^## How to install the Awesome version?$/;"	s	language:Markdown	chapter:The Ultimate vimrc
-How to install the Basic version?	README.md	/^## How to install the Basic version?$/;"	s	language:Markdown	chapter:The Ultimate vimrc
-How to uninstall	README.md	/^## How to uninstall$/;"	s	language:Markdown	chapter:The Ultimate vimrc
-How to update to latest version?	README.md	/^## How to update to latest version?$/;"	s	language:Markdown	chapter:The Ultimate vimrc
-Included Plugins	README.md	/^## Included Plugins$/;"	s	language:Markdown	chapter:The Ultimate vimrc
-Included color schemes	README.md	/^## Included color schemes$/;"	s	language:Markdown	chapter:The Ultimate vimrc
-Included modes	README.md	/^## Included modes$/;"	s	language:Markdown	chapter:The Ultimate vimrc
-Insert mode mappings	README.md	/^### Insert mode mappings$/;"	S	language:Markdown	section:The Ultimate vimrc""Key Mappings
-Install for multiple users	README.md	/^### Install for multiple users$/;"	S	language:Markdown	section:The Ultimate vimrc""How to install the Awesome version?
-Install for your own user only	README.md	/^### Install for your own user only$/;"	S	language:Markdown	section:The Ultimate vimrc""How to install the Awesome version?
 J	settings/key-mappings.vim	/^nnoremap J :m+<cr>==$/;"	m	language:Vim
 J	settings/key-mappings.vim	/^vnoremap J :m '>+1<cr>gv=gv$/;"	m	language:Vim
 JavaScriptFold	after/ftplugin/javascript.vim	/^function! JavaScriptFold() $/;"	f	language:Vim
 K	settings/key-mappings.vim	/^nnoremap K :m-2<cr>==$/;"	m	language:Vim
 K	settings/key-mappings.vim	/^vnoremap K :m '<-2<cr>gv=gv$/;"	m	language:Vim
-Key Mappings	README.md	/^## Key Mappings$/;"	s	language:Markdown	chapter:The Ultimate vimrc
 L	autoload/plug.vim	/^    nnoremap <silent> <buffer> L :call <SID>status_load(line('.'))<cr>$/;"	m	language:Vim
 L	autoload/plug.vim	/^    xnoremap <silent> <buffer> L :call <SID>status_load(line('.'))<cr>$/;"	m	language:Vim
-Looking for a remote-first job?	README.md	/^## Looking for a remote-first job?$/;"	s	language:Markdown	chapter:The Ultimate vimrc
 Lua.completion.enable	coc-settings.json	/^  "Lua.completion.enable": true,$/;"	b	language:JSON
 Lua.hover.enable	coc-settings.json	/^  "Lua.hover.enable": true,$/;"	b	language:JSON
 NERDTreeIgnore	settings/plugins/nerdtree.vim	/^let NERDTreeIgnore = ['^node_modules','\\.pyc$', '__pycache__']$/;"	v	language:Vim
 NERDTreeShowHidden	settings/plugins/nerdtree.vim	/^let NERDTreeShowHidden=1$/;"	v	language:Vim
-Normal mode mappings	README.md	/^### Normal mode mappings$/;"	S	language:Markdown	section:The Ultimate vimrc""Key Mappings
 OR	settings/plugins/coc.vim	/^command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')$/;"	c	language:Vim
 Plug	autoload/plug.vim	/^  command! -nargs=+ -bar Plug call plug#(<args>)$/;"	c	language:Vim
 PlugClean	autoload/plug.vim	/^  command! -nargs=0 -bar -bang PlugClean call s:clean(<bang>0)$/;"	c	language:Vim
@@ -215,7 +196,6 @@ PlugSnapshot	autoload/plug.vim	/^  command! -nargs=? -bar -bang -complete=file P
 PlugStatus	autoload/plug.vim	/^  command! -nargs=0 -bar PlugStatus  call s:status()$/;"	c	language:Vim
 PlugUpdate	autoload/plug.vim	/^  command! -nargs=* -bar -bang -complete=customlist,s:names PlugUpdate  call s:update(<bang>0, [/;"	c	language:Vim
 PlugUpgrade	autoload/plug.vim	/^  command! -nargs=0 -bar PlugUpgrade if s:upgrade() | execute 'source' s:esc(s:me) | endif$/;"	c	language:Vim
-Plugin related mappings	README.md	/^### Plugin related mappings$/;"	S	language:Markdown	section:The Ultimate vimrc""Key Mappings
 Prettier	settings/plugins/coc.vim	/^command! -nargs=0 Prettier :CocCommand prettier.formatFile$/;"	c	language:Vim
 R	autoload/plug.vim	/^  nnoremap <silent> <buffer> R  :call <SID>retry()<cr>$/;"	m	language:Vim
 RG	settings/plugins/fzf.vim	/^command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)$/;"	c	language:Vim
@@ -223,13 +203,9 @@ Rg	settings/plugins/fzf.vim	/^command! -bang -nargs=* Rg$/;"	c	language:Vim
 RipgrepFzf	settings/plugins/fzf.vim	/^function! RipgrepFzf(query, fullscreen)$/;"	f	language:Vim
 S	autoload/plug.vim	/^  nnoremap <silent> <buffer> S  :PlugStatus<cr>$/;"	m	language:Vim
 Si	settings/plugins/surround.vim	/^vmap Si S(i_<esc>f)$/;"	m	language:Vim
-Some screenshots	README.md	/^## Some screenshots$/;"	s	language:Markdown	chapter:The Ultimate vimrc
-Spell checking	README.md	/^### Spell checking$/;"	S	language:Markdown	section:The Ultimate vimrc""Key Mappings
-The Ultimate vimrc	README.md	/^# The Ultimate vimrc$/;"	c	language:Markdown
 U	autoload/plug.vim	/^  nnoremap <silent> <buffer> U  :call <SID>status_update()<cr>$/;"	m	language:Vim
 U	autoload/plug.vim	/^  xnoremap <silent> <buffer> U  :call <SID>status_update()<cr>$/;"	m	language:Vim
 Vifm	settings/plugins/floaterm.vim	/^command! Vifm FloatermNew vifm$/;"	c	language:Vim
-Visual mode mappings	README.md	/^### Visual mode mappings$/;"	S	language:Markdown	section:The Ultimate vimrc""Key Mappings
 VisualSelection	settings/basic.vim	/^function! VisualSelection(direction, extra_filter) range$/;"	f	language:Vim
 W	settings/key-mappings.vim	/^command! W execute 'w !sudo tee % > \/dev\/null' <bar> edit!$/;"	c	language:Vim
 X	autoload/plug.vim	/^    nnoremap <silent> <buffer> X :call <SID>revert()<cr>$/;"	m	language:Vim
