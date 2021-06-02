@@ -42,6 +42,21 @@ vnoremap J :m '>+1<cr>gv=gv
 " Join line with space in between with gj and no space with gJ
 " noremap gj J " gj is actually used for wrapped line navigation
 
+" vim
+map <leader>ef :e! $HOME/.vim/settings/filetypes.vim<cr>
+
+" qTile
+map <leader>eqw :e! $HOME/.config/qtile/lib/widgets.py<cr>
+map <leader>eqk :e! $HOME/.config/qtile/keys/bindings.py<cr>
+map <leader>eql :e! $HOME/.config/qtile/settings/layouts.py<cr>
+map <leader>eqg :e! $HOME/.config/qtile/settings/groups.py<cr>
+
+" Dotfiles
+map <leader>edb :e! $HOME/.bashrc<cr>
+map <leader>edz :e! $HOME/.zshrc<cr>
+
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Workspace navigation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

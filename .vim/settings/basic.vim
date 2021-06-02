@@ -121,7 +121,7 @@ set expandtab             " Converts tabs to spaces
 
 " Linebreak on 500 characters
 set linebreak
-set textwidth=500
+" set textwidth=500
 
 set autoindent  " Good auto indent
 set smartindent " Makes indenting smart
