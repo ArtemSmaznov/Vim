@@ -43,7 +43,11 @@ vnoremap J :m '>+1<cr>gv=gv
 " noremap gj J " gj is actually used for wrapped line navigation
 
 " vim
-map <leader>ef :e! $HOME/.vim/settings/filetypes.vim<cr>
+map <leader>er :e! $HOME/.vim/vimrc<cr>
+map <leader>eb :e! $HOME/.vim/settings/basic.vim<cr>
+map <leader>ep :e! $HOME/.vim/settings/plugins.vim<cr>
+map <leader>eu :e! $HOME/.vim/settings/ui.vim<cr>
+map <leader>ek :e! $HOME/.vim/settings/key-mappings.vim<cr>
 
 " qTile
 map <leader>eqw :e! $HOME/.config/qtile/lib/widgets.py<cr>
@@ -127,10 +131,3 @@ nnoremap <Up> :blast<cr>
 
 " Switch CWD to the directory of the open buffer
 map <leader>bd :cd %:p:h<cr>:pwd<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Fast editing and reloading of vimrc configs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>ek :e! $HOME/.vim/settings/key-mappings.vim<cr>
-autocmd! bufwritepost $HOME/.vim/settings/key-mappings.vim source $HOME/.vim/settings/key-mappings.vim

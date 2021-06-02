@@ -92,7 +92,3 @@ autocmd VimEnter *
   \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \|   PlugInstall --sync | q
   \| endif
-
-" Fast editing and reloading of vimrc configs
-map <leader>ep :e! $HOME/.vim/settings/plugins.vim<cr>
-autocmd! bufwritepost $HOME/.vim/settings/plugins.vim source $HOME/.vim/settings/plugins.vim

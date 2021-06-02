@@ -66,10 +66,3 @@ endif
 if has("gui_macvim")
     autocmd GUIEnter * set vb t_vb=
 endif
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Fast editing and reloading of vimrc configs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>eu :e! $HOME/.vim/settings/ui.vim<cr>
-autocmd! bufwritepost $HOME/.vim/settings/ui.vim source $HOME/.vim/settings/ui.vim

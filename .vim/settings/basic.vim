@@ -21,9 +21,6 @@ let mapleader = " "
 " General abbreviations
 iab xdate <C-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
 
-" Omni complete functions
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-
 " Stop newline continution of comments
 autocmd BufNewFile,BufRead,BufEnter * setlocal fo-=cro 
 
@@ -68,6 +65,15 @@ if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
 
+if exists('$TMUX') 
+    if has('nvim')
+        set termguicolors
+    else
+        set term=screen-256color 
+    endif
+endif
+
+
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
@@ -103,13 +109,6 @@ endtry
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set spelllang=en_us,ru_ru
-
-" Turn spellcheck on for markdown files
-augroup auto_spellcheck
-  autocmd BufNewFile,BufRead *.md setlocal spell
-  autocmd BufNewFile,BufRead COMMIT_EDITMSG setlocal spell
-augroup END
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -237,8 +236,3 @@ func! CurrentFileDir(cmd)
     return a:cmd . " " . expand("%:p:h") . "/"
 endfunc
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Fast editing and reloading of vimrc configs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>eb :e! $HOME/.vim/settings/basic.vim<cr>
-autocmd! bufwritepost $HOME/.vim/settings/basic.vim source $HOME/.vim/settings/basic.vim

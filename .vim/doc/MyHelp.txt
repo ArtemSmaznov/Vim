@@ -1,0 +1,15 @@
+*MyHelp.txt* Personal help file
+
+==============================================================================
+CONTENTS                                                    *myhelp-contents*
+
+  1. Secion 1 .......................................... |myhelp|
+
+==============================================================================
+1. Section 1                                                *myhelp*
+
+Tags are surrounded with `*`
+Links to tags are surrounded with `|`
+Generate helpfile with command `:helptags doc`
+
+==============================================================================
