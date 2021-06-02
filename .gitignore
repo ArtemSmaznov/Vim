@@ -1,7 +1,7 @@
 .DS_Store
 .netrwhist
-vimrc.vim
 spell
+after/vimrc
 plugged/*
 plugged/ack.vim/.netrwhist
 temp_dirs/undodir/*
