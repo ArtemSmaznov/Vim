@@ -3,24 +3,24 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " coc config
 let g:coc_global_extensions = [
-  \ 'coc-snippets',
-  \ 'coc-pairs',
-  \ 'coc-explorer',
-  \ 'coc-prettier',
-  \ 'coc-eslint',
-  \ 'coc-tsserver',
-  \ 'coc-pyright',
-  \ 'coc-lua',
-  \ 'coc-html',
-  \ 'coc-css',
-  \ 'coc-vimlsp',
-  \ 'coc-sh',
-  \ 'coc-json',
-  \ 'coc-yaml',
-  \ 'coc-xml',
-  \ 'coc-markdownlint',
-  \ 'coc-cmake',
-  \ ]
+      \ 'coc-snippets',
+      \ 'coc-pairs',
+      \ 'coc-explorer',
+      \ 'coc-prettier',
+      \ 'coc-eslint',
+      \ 'coc-tsserver',
+      \ 'coc-pyright',
+      \ 'coc-lua',
+      \ 'coc-html',
+      \ 'coc-css',
+      \ 'coc-vimlsp',
+      \ 'coc-sh',
+      \ 'coc-json',
+      \ 'coc-yaml',
+      \ 'coc-xml',
+      \ 'coc-markdownlint',
+      \ 'coc-cmake',
+      \ ]
 " from readme
 " if hidden is not set, TextEdit might fail.
 set hidden " Some servers have issues with backup files, see #649 set nobackup set nowritebackup " Better display for messages set cmdheight=2 " You will have bad experience for diagnostic messages when it's default 4000.

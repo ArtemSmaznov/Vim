@@ -171,7 +171,7 @@ D	autoload/plug.vim	/^  nnoremap <silent> <buffer> D  :PlugDiff<cr>$/;"	m	langua
 DeleteTillSlash	settings/basic.vim	/^func! DeleteTillSlash()$/;"	f	language:Vim
 Files	settings/plugins/fzf.vim	/^command! -bang -nargs=? -complete=dir Files$/;"	c	language:Vim
 Fold	settings/plugins/coc.vim	/^command! -nargs=? Fold :call     CocAction('fold', <f-args>)$/;"	c	language:Vim
-FoldText	after/ftplugin/javascript.vim	/^    function! FoldText()$/;"	f	language:Vim
+FoldText	after/ftplugin/javascript.vim	/^  function! FoldText()$/;"	f	language:Vim
 Format	settings/plugins/coc.vim	/^command! -nargs=0 Format :call CocAction('format')$/;"	c	language:Vim
 GGrep	settings/plugins/fzf.vim	/^command! -bang -nargs=* GGrep$/;"	c	language:Vim
 HasPaste	settings/basic.vim	/^function! HasPaste()$/;"	f	language:Vim
@@ -266,11 +266,11 @@ g:bufExplorerDisableDefaultKeyMapping	settings/plugins/buffExplorer.vim	/^let g:
 g:bufExplorerFindActive	settings/plugins/buffExplorer.vim	/^let g:bufExplorerFindActive=1$/;"	v	language:Vim
 g:bufExplorerShowRelativePath	settings/plugins/buffExplorer.vim	/^let g:bufExplorerShowRelativePath=1$/;"	v	language:Vim
 g:bufExplorerSortBy	settings/plugins/buffExplorer.vim	/^let g:bufExplorerSortBy='name'$/;"	v	language:Vim
-g:cmd	settings/basic.vim	/^    let g:cmd = getcmdline()$/;"	v	language:Vim
-g:cmd_edited	settings/basic.vim	/^            let g:cmd_edited = substitute(g:cmd, "\\\\(.*\\[\/\\]\\\\).*\/", "\\\\1", "")$/;"	v	language:Vim
-g:cmd_edited	settings/basic.vim	/^            let g:cmd_edited = substitute(g:cmd, "\\\\(.*\\[\\\\\\\\\\]\\\\).*\\[\\\\\\\\\\]", "/;"	v	language:Vim
-g:cmd_edited	settings/basic.vim	/^        let g:cmd_edited = substitute(g:cmd, "\\\\(.*\\[\/\\]\\\\).*", "\\\\1", "")$/;"	v	language:Vim
-g:cmd_edited	settings/basic.vim	/^        let g:cmd_edited = substitute(g:cmd, "\\\\(.*\\[\\\\\\\\]\\\\).*", "\\\\1", "")$/;"	v	language:Vim
+g:cmd	settings/basic.vim	/^  let g:cmd = getcmdline()$/;"	v	language:Vim
+g:cmd_edited	settings/basic.vim	/^      let g:cmd_edited = substitute(g:cmd, "\\\\(.*\\[\/\\]\\\\).*\/", "\\\\1", "")$/;"	v	language:Vim
+g:cmd_edited	settings/basic.vim	/^      let g:cmd_edited = substitute(g:cmd, "\\\\(.*\\[\\\\\\\\\\]\\\\).*\\[\\\\\\\\\\]", "\\\\1"/;"	v	language:Vim
+g:cmd_edited	settings/basic.vim	/^    let g:cmd_edited = substitute(g:cmd, "\\\\(.*\\[\/\\]\\\\).*", "\\\\1", "")$/;"	v	language:Vim
+g:cmd_edited	settings/basic.vim	/^    let g:cmd_edited = substitute(g:cmd, "\\\\(.*\\[\\\\\\\\]\\\\).*", "\\\\1", "")$/;"	v	language:Vim
 g:coc_global_extensions	settings/plugins/coc.vim	/^let g:coc_global_extensions = [$/;"	v	language:Vim
 g:colorizer_auto_color	settings/plugins/colorizer.vim	/^let g:colorizer_auto_color=1$/;"	v	language:Vim
 g:colorizer_auto_filetype	settings/plugins/colorizer.vim	/^let g:colorizer_auto_filetype='css,html,lua,js,vim'$/;"	v	language:Vim
@@ -289,17 +289,17 @@ g:fzf_layout	settings/plugins/fzf.vim	/^let g:fzf_layout = {'up':'~90%', 'window
 g:fzf_tags_command	settings/plugins/fzf.vim	/^let g:fzf_tags_command = 'ctags -R'$/;"	v	language:Vim
 g:gitgutter_enabled	settings/plugins/gitGutter.vim	/^let g:gitgutter_enabled=1$/;"	v	language:Vim
 g:lasttab	settings/key-mappings.vim	/^let g:lasttab = 1$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^  let g:leader_map.b.d = [ 'cd %:p:h<cr>:pwd<cr>', 'CD to current directory' ]$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^  let g:leader_map.e.d = { 'name' : '+ Dotfiles' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^  let g:leader_map.e.q = { 'name' : '+ qTile' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^  let g:leader_map.g.d = [ 'vertical Gdiffsplit', 'Diff Split' ]$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^  let g:leader_map.g.g = [ 'vertical Gstatus', 'Status' ]$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map =  {}$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b = { 'name' : '+ Buffers' }$/;"	v	language:Vim
+g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b.d = [ 'cd %:p:h<cr>:pwd<cr>', 'CD to current directory' ]$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.c = { 'name' : '+ Coc' }$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.e = { 'name' : '+ Edit Config' }$/;"	v	language:Vim
+g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.e.d = { 'name' : '+ Dotfiles' }$/;"	v	language:Vim
+g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.e.q = { 'name' : '+ qTile' }$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.f = { 'name' : '+ Search' }$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.g = { 'name' : '+ Git' }$/;"	v	language:Vim
+g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.g.d = [ 'vertical Gdiffsplit', 'Diff Split' ]$/;"	v	language:Vim
+g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.g.g = [ 'vertical Gstatus', 'Status' ]$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.m = { 'name' : '+ Minimap' }$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.p = { 'name' : '+ Popup' }$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.s = { 'name' : '+ Set' }$/;"	v	language:Vim

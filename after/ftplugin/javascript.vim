@@ -1,12 +1,12 @@
 function! JavaScriptFold() 
-    setlocal foldmethod=syntax
-    setlocal foldlevelstart=1
-    syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
+  setlocal foldmethod=syntax
+  setlocal foldlevelstart=1
+  syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
 
-    function! FoldText()
-        return substitute(getline(v:foldstart), '{.*', '{...}', '')
-    endfunction
-    setlocal foldtext=FoldText()
+  function! FoldText()
+    return substitute(getline(v:foldstart), '{.*', '{...}', '')
+  endfunction
+  setlocal foldtext=FoldText()
 endfunction
 
 call JavaScriptFold()

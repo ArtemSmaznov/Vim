@@ -58,6 +58,7 @@ map <leader>eqg :e! $HOME/.config/qtile/settings/groups.py<cr>
 " Dotfiles
 map <leader>edb :e! $HOME/.bashrc<cr>
 map <leader>edz :e! $HOME/.zshrc<cr>
+map <leader>eda :e! $HOME/.config/bash/aliases<cr>
 
 
 
