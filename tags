@@ -103,6 +103,7 @@ $r	after/ftplugin/python.vim	/^inoremap <buffer> $r return $/;"	m	language:Vim
 <leader>cv	settings/plugins/coc.vim	/^nmap <leader>cv <Plug>(coc-codeaction-selected)$/;"	m	language:Vim
 <leader>cv	settings/plugins/coc.vim	/^xmap <leader>cv <Plug>(coc-codeaction-selected)$/;"	m	language:Vim
 <leader>eb	settings/key-mappings.vim	/^map <leader>eb :e! $HOME\/.vim\/settings\/basic.vim<cr>$/;"	m	language:Vim
+<leader>eda	settings/key-mappings.vim	/^map <leader>eda :e! $HOME\/.config\/bash\/aliases<cr>$/;"	m	language:Vim
 <leader>edb	settings/key-mappings.vim	/^map <leader>edb :e! $HOME\/.bashrc<cr>$/;"	m	language:Vim
 <leader>edz	settings/key-mappings.vim	/^map <leader>edz :e! $HOME\/.zshrc<cr>$/;"	m	language:Vim
 <leader>ek	settings/key-mappings.vim	/^map <leader>ek :e! $HOME\/.vim\/settings\/key-mappings.vim<cr>$/;"	m	language:Vim
@@ -304,6 +305,7 @@ g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.m = { 'name' : '+
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.p = { 'name' : '+ Popup' }$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.s = { 'name' : '+ Set' }$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.t = { 'name' : '+ Tabs' }$/;"	v	language:Vim
+g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w = { 'name' : '+ Wiki' }$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.y = { 'name' : '+ YankStack' }$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map[','] = {$/;"	v	language:Vim
 g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map['`'] = [ 'term', 'Terminal' ]$/;"	v	language:Vim
@@ -342,6 +344,7 @@ g:tmuxline_preset	settings/plugins/tmuxline.vim	/^let g:tmuxline_preset = {$/;"	
 g:vim_tags_auto_generate	settings/plugins/tags.vim	/^let g:vim_tags_auto_generate = 1$/;"	v	language:Vim
 g:vim_tags_directories	settings/plugins/tags.vim	/^let g:vim_tags_directories = [".git", ".hg", ".svn", ".bzr", "_darcs", "CVS"]$/;"	v	language:Vim
 g:vim_tags_ignore_files	settings/plugins/tags.vim	/^let g:vim_tags_ignore_files = ['.gitignore', '.svnignore', '.cvsignore']$/;"	v	language:Vim
+g:vimwiki_list	settings/plugins/vimwiki.vim	/^let g:vimwiki_list = [{$/;"	v	language:Vim
 g:which_key_centered	settings/plugins/which-key.vim	/^let g:which_key_centered = 0$/;"	v	language:Vim
 g:which_key_default_group_name	settings/plugins/which-key.vim	/^let g:which_key_default_group_name = '+Group'$/;"	v	language:Vim
 g:which_key_fallback_to_native_key	settings/plugins/which-key.vim	/^let g:which_key_fallback_to_native_key=1$/;"	v	language:Vim

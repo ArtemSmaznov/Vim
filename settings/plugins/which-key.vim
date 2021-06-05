@@ -37,6 +37,7 @@ let g:leader_map.p = { 'name' : '+ Popup' }
 let g:leader_map.s = { 'name' : '+ Set' }
 let g:leader_map.f = { 'name' : '+ Search' }
 let g:leader_map.t = { 'name' : '+ Tabs' }
+let g:leader_map.w = { 'name' : '+ Wiki' }
 let g:leader_map.y = { 'name' : '+ YankStack' }
 
 let g:leader_map[','] = {
