@@ -51,7 +51,7 @@ set ffs=unix,dos,mac " Use Unix as the standard file type
 if has("mac") || has("macunix")
   set gfn=IBM\ Plex\ Mono:h14,Hack:h14,Source\ Code\ Pro:h15,Menlo:h15
 elseif has("win16") || has("win32")
-  set gfn=IBM\ Plex\ Mono:h14,Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
+  set gfn=Hack\ Nerd\ Font\ Mono:h10,Source\ Code\ Pro:h12,IBM\ Plex\ Mono:h14,Consolas:h11
 elseif has("gui_gtk2")
   set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
 elseif has("linux")
