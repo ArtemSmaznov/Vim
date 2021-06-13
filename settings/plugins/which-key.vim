@@ -1,9 +1,11 @@
-let g:which_key_position = 'botright'
-let g:which_key_vertical = 1
-let g:which_key_centered = 0
+let g:which_key_max_size = 0
 let g:which_key_flatten = 1
-let g:which_key_use_floating_win = 1
+let g:which_key_vertical = 0
+let g:which_key_position = 'botright'
+let g:which_key_use_floating_win = 0
 let g:which_key_fallback_to_native_key=1
+let g:which_key_display_names = { ' ': '⎵', '<CR>': '↵', '<TAB>': '⇆' }
+let g:which_key_centered = 0
 
 " register dictionary for the <Space>-prefix
 call which_key#register(' ', "g:leader_map")
@@ -23,22 +25,22 @@ let g:which_key_default_group_name = '+Group'
 let g:leader_map =  {}
 let g:leader_map['`'] = [ 'term', 'Terminal' ]
 let g:leader_map['k'] = [ 'call <SID>show_documentation()', 'Search Documentation' ]
-let g:leader_map.b = { 'name' : '+ Buffers' }
+let g:leader_map.b = { 'name' : '+Buffers' }
 let g:leader_map.b.d = [ 'cd %:p:h<cr>:pwd<cr>', 'CD to current directory' ]
-let g:leader_map.c = { 'name' : '+ Coc' }
-let g:leader_map.e = { 'name' : '+ Edit Config' }
-let g:leader_map.e.q = { 'name' : '+ qTile' }
-let g:leader_map.e.d = { 'name' : '+ Dotfiles' }
-let g:leader_map.g = { 'name' : '+ Git' }
+let g:leader_map.c = { 'name' : '+Coc' }
+let g:leader_map.e = { 'name' : '+Edit-Configs' }
+let g:leader_map.e.q = { 'name' : '+qTile' }
+let g:leader_map.e.d = { 'name' : '+Dotfiles' }
+let g:leader_map.g = { 'name' : '+Git' }
 let g:leader_map.g.d = [ 'vertical Gdiffsplit', 'Diff Split' ]
 let g:leader_map.g.g = [ 'vertical Gstatus', 'Status' ]
-let g:leader_map.m = { 'name' : '+ Minimap' }
-let g:leader_map.p = { 'name' : '+ Popup' }
-let g:leader_map.s = { 'name' : '+ Set' }
-let g:leader_map.f = { 'name' : '+ Search' }
-let g:leader_map.t = { 'name' : '+ Tabs' }
-let g:leader_map.w = { 'name' : '+ Wiki' }
-let g:leader_map.y = { 'name' : '+ YankStack' }
+let g:leader_map.m = { 'name' : '+Minimap' }
+let g:leader_map.p = { 'name' : '+Popup' }
+let g:leader_map.s = { 'name' : '+Set' }
+let g:leader_map.f = { 'name' : '+Search' }
+let g:leader_map.t = { 'name' : '+Tabs' }
+let g:leader_map.w = { 'name' : '+Wiki' }
+" let g:leader_map.y = { 'name' : '+YankStack' }
 
 let g:leader_map[','] = {
       \ 'name' : '+Leaderless',
