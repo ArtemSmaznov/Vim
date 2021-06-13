@@ -39,9 +39,6 @@ nnoremap J :m+<cr>==
 vnoremap K :m '<-2<cr>gv=gv
 vnoremap J :m '>+1<cr>gv=gv
 
-" Join line with space in between with gj and no space with gJ
-" noremap gj J " gj is actually used for wrapped line navigation
-
 " vim
 map <leader>er :e! $HOME/.vim/vimrc<cr>
 map <leader>eb :e! $HOME/.vim/settings/basic.vim<cr>
@@ -50,10 +47,12 @@ map <leader>eu :e! $HOME/.vim/settings/ui.vim<cr>
 map <leader>ek :e! $HOME/.vim/settings/key-mappings.vim<cr>
 
 " qTile
-map <leader>eqw :e! $HOME/.config/qtile/lib/widgets.py<cr>
+map <leader>eqb :e! $HOME/.config/qtile/lib/bars.py<cr>
+map <leader>eqg :e! $HOME/.config/qtile/settings/groups.py<cr>
 map <leader>eqk :e! $HOME/.config/qtile/keys/bindings.py<cr>
 map <leader>eql :e! $HOME/.config/qtile/settings/layouts.py<cr>
-map <leader>eqg :e! $HOME/.config/qtile/settings/groups.py<cr>
+map <leader>eqt :e! $HOME/.config/qtile/theme/default.py<cr>
+map <leader>eqw :e! $HOME/.config/qtile/lib/widgets/general.py<cr>
 
 " Dotfiles
 map <leader>edb :e! $HOME/.bashrc<cr>

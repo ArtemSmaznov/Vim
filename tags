@@ -108,10 +108,12 @@ $r	after/ftplugin/python.vim	/^inoremap <buffer> $r return $/;"	m	language:Vim
 <leader>edz	settings/key-mappings.vim	/^map <leader>edz :e! $HOME\/.zshrc<cr>$/;"	m	language:Vim
 <leader>ek	settings/key-mappings.vim	/^map <leader>ek :e! $HOME\/.vim\/settings\/key-mappings.vim<cr>$/;"	m	language:Vim
 <leader>ep	settings/key-mappings.vim	/^map <leader>ep :e! $HOME\/.vim\/settings\/plugins.vim<cr>$/;"	m	language:Vim
+<leader>eqb	settings/key-mappings.vim	/^map <leader>eqb :e! $HOME\/.config\/qtile\/lib\/bars.py<cr>$/;"	m	language:Vim
 <leader>eqg	settings/key-mappings.vim	/^map <leader>eqg :e! $HOME\/.config\/qtile\/settings\/groups.py<cr>$/;"	m	language:Vim
 <leader>eqk	settings/key-mappings.vim	/^map <leader>eqk :e! $HOME\/.config\/qtile\/keys\/bindings.py<cr>$/;"	m	language:Vim
 <leader>eql	settings/key-mappings.vim	/^map <leader>eql :e! $HOME\/.config\/qtile\/settings\/layouts.py<cr>$/;"	m	language:Vim
-<leader>eqw	settings/key-mappings.vim	/^map <leader>eqw :e! $HOME\/.config\/qtile\/lib\/widgets.py<cr>$/;"	m	language:Vim
+<leader>eqt	settings/key-mappings.vim	/^map <leader>eqt :e! $HOME\/.config\/qtile\/theme\/default.py<cr>$/;"	m	language:Vim
+<leader>eqw	settings/key-mappings.vim	/^map <leader>eqw :e! $HOME\/.config\/qtile\/lib\/widgets\/general.py<cr>$/;"	m	language:Vim
 <leader>er	settings/key-mappings.vim	/^map <leader>er :e! $HOME\/.vim\/vimrc<cr>$/;"	m	language:Vim
 <leader>eu	settings/key-mappings.vim	/^map <leader>eu :e! $HOME\/.vim\/settings\/ui.vim<cr>$/;"	m	language:Vim
 <leader>f'	settings/plugins/fzf.vim	/^nnoremap <leader>f' :Marks<CR>$/;"	m	language:Vim
@@ -349,9 +351,10 @@ g:which_key_default_group_name	settings/plugins/which-key.vim	/^let g:which_key_
 g:which_key_display_names	settings/plugins/which-key.vim	/^let g:which_key_display_names = { ' ': '⎵', '<CR>': '↵', '<TAB>': '⇆' }$/;"	v	language:Vim
 g:which_key_fallback_to_native_key	settings/plugins/which-key.vim	/^let g:which_key_fallback_to_native_key=1$/;"	v	language:Vim
 g:which_key_flatten	settings/plugins/which-key.vim	/^let g:which_key_flatten = 1$/;"	v	language:Vim
+g:which_key_max_size	settings/plugins/which-key.vim	/^let g:which_key_max_size = 0$/;"	v	language:Vim
 g:which_key_position	settings/plugins/which-key.vim	/^let g:which_key_position = 'botright'$/;"	v	language:Vim
-g:which_key_use_floating_win	settings/plugins/which-key.vim	/^let g:which_key_use_floating_win = 1$/;"	v	language:Vim
-g:which_key_vertical	settings/plugins/which-key.vim	/^let g:which_key_vertical = 1$/;"	v	language:Vim
+g:which_key_use_floating_win	settings/plugins/which-key.vim	/^let g:which_key_use_floating_win = 0$/;"	v	language:Vim
+g:which_key_vertical	settings/plugins/which-key.vim	/^let g:which_key_vertical = 0$/;"	v	language:Vim
 g:yankstack_yank_keys	settings/plugins/yankstack.vim	/^let g:yankstack_yank_keys = ['y', 'd']$/;"	v	language:Vim
 gR	settings/plugins/coc.vim	/^nmap <silent> gR <Plug>(coc-references)$/;"	m	language:Vim
 gS	settings/plugins/sneak.vim	/^map gS <Plug>Sneak_,$/;"	m	language:Vim
