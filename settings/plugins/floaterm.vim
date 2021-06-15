@@ -7,9 +7,9 @@ let g:floaterm_opener = 'tabe'
 let g:floaterm_autoclose = 1
 
 command! Vifm FloatermNew vifm
+command! Python FloatermNew python
 
-map <leader>p` :FloatermToggle<cr>
 map <leader>pv :Vifm<cr>
 map <leader>pr :Ranger<cr>
-map <leader>pp :FloatermNew python<cr>
+map <leader>pp :Python<cr>
 

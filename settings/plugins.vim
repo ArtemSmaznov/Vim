@@ -25,7 +25,7 @@ Plug 'tpope/vim-repeat'                         " Repeat.vim remaps `.` in a way
 Plug 'honza/vim-snippets'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'christoomey/vim-system-copy'
-Plug 'vimwiki/vimwiki'
+" Plug 'vimwiki/vimwiki'
 
 " ======> Navigation <======
 " Plug 'mileszs/ack.vim'                          " Plugin that integrates ack with Vim
@@ -80,7 +80,7 @@ source $HOME/.vim/settings/plugins/surround.vim
 source $HOME/.vim/settings/plugins/tabularize.vim
 source $HOME/.vim/settings/plugins/tags.vim
 source $HOME/.vim/settings/plugins/tmuxline.vim
-source $HOME/.vim/settings/plugins/vimwiki.vim
+" source $HOME/.vim/settings/plugins/vimwiki.vim
 source $HOME/.vim/settings/plugins/which-key.vim
 " source $HOME/.vim/settings/plugins/yankstack.vim
 

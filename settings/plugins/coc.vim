@@ -66,7 +66,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gR <Plug>(coc-references)
 
 " Use K to show documentation in preview window
-nnoremap <leader>k :call <SID>show_documentation()<CR>
+nnoremap <leader>hk :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -159,4 +159,5 @@ nnoremap <silent> <leader>cp  :<C-u>CocListResume<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " nmap <C-n> :CocCommand explorer<CR>
 nmap <leader><Tab> :CocCommand explorer<CR>
+nmap <leader>tn :CocCommand explorer<CR>
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif

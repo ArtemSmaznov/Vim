@@ -4,6 +4,7 @@
 " Sections:
 "    -> General
 "    -> File navigation
+"    -> Folds
 "    -> Workspace navigation
 "    -> Spell checking
 "    -> Tabs, windows and buffer
@@ -14,12 +15,6 @@
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
-
-" Source current file
-nnoremap <leader>r :source %<cr>
-
-" Toggle paste mode on and off
-map <leader>sp :setlocal paste!<cr>
 
 " Disable search highlight
 map <silent> <leader><leader> :noh<cr>
@@ -39,39 +34,39 @@ nnoremap J :m+<cr>==
 vnoremap K :m '<-2<cr>gv=gv
 vnoremap J :m '>+1<cr>gv=gv
 
+" Increase/Decrease numbers
+noremap g- <C-x>
+noremap g= <C-a>
+
 " vim
-map <leader>er :e! $HOME/.vim/vimrc<cr>
-map <leader>eb :e! $HOME/.vim/settings/basic.vim<cr>
-map <leader>ep :e! $HOME/.vim/settings/plugins.vim<cr>
-map <leader>eu :e! $HOME/.vim/settings/ui.vim<cr>
-map <leader>ek :e! $HOME/.vim/settings/key-mappings.vim<cr>
+map <leader>fevr :e! $HOME/.vim/vimrc<cr>
+map <leader>fevb :e! $HOME/.vim/settings/basic.vim<cr>
+map <leader>fevp :e! $HOME/.vim/settings/plugins.vim<cr>
+map <leader>fevu :e! $HOME/.vim/settings/ui.vim<cr>
+map <leader>fevk :e! $HOME/.vim/settings/key-mappings.vim<cr>
+map <leader>fevw :e! $HOME/.vim/settings/plugins/which-key.vim<cr>
 
 " qTile
-map <leader>eqb :e! $HOME/.config/qtile/lib/bars.py<cr>
-map <leader>eqg :e! $HOME/.config/qtile/settings/groups.py<cr>
-map <leader>eqk :e! $HOME/.config/qtile/keys/bindings.py<cr>
-map <leader>eql :e! $HOME/.config/qtile/settings/layouts.py<cr>
-map <leader>eqt :e! $HOME/.config/qtile/theme/default.py<cr>
-map <leader>eqw :e! $HOME/.config/qtile/lib/widgets/general.py<cr>
+map <leader>feqb :e! $HOME/.config/qtile/lib/bars.py<cr>
+map <leader>feqg :e! $HOME/.config/qtile/settings/groups.py<cr>
+map <leader>feqk :e! $HOME/.config/qtile/keys/bindings.py<cr>
+map <leader>feql :e! $HOME/.config/qtile/settings/layouts.py<cr>
+map <leader>feqt :e! $HOME/.config/qtile/theme/default.py<cr>
+map <leader>feqw :e! $HOME/.config/qtile/lib/widgets/general.py<cr>
 
 " Dotfiles
-map <leader>edb :e! $HOME/.bashrc<cr>
-map <leader>edz :e! $HOME/.zshrc<cr>
-map <leader>eda :e! $HOME/.config/bash/aliases<cr>
-
+map <leader>fedb :e! $HOME/.bashrc<cr>
+map <leader>fedz :e! $HOME/.zshrc<cr>
+map <leader>feda :e! $HOME/.config/aliasrc<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Workspace navigation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>fv :vimgrep 
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+noremap <tab> :norm za<cr>
+noremap <tab><tab> :norm zA<cr>
+noremap <S-tab> :norm zR<cr>
+noremap <S-tab><S-tab> :norm zM<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -89,45 +84,24 @@ noremap <leader>- :resize -5<CR>
 noremap <leader>, :vertical:resize -5<CR>
 noremap <leader>. :vertical:resize +5<CR>
 
-" Open Terminal
-nnoremap <leader>` :term<cr>
-
 " Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>t<leader> :tabnext<cr>
+map <leader>ttn :tabnew<cr>
+map <leader>tto :tabonly<cr>
+map <leader>ttc :tabclose<cr>
+map <leader>ttm :tabmove 
+map <leader>tt<leader> :tabnext<cr>
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
-nmap <leader>tl :exe "tabn ".g:lasttab<CR>
+nmap <leader>ttl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
-" Working with buffers
 
-" Close the current buffer
-map <leader>bc :Bclose<cr>
-" map <leader>bd :Bclose<cr>:tabclose<cr>gT 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Buffers
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Close all the buffers
-map <leader>ba :bufdo bd<cr>
-
-" First buffer
-map <leader>bj :bfirst<cr>
-nnoremap <Down> :bfirst<cr>
-
-" Previous buffer
-map <leader>bh :bprevious<cr>
-nnoremap <Left> :bprevious<cr>
-
-" Next buffer
-map <leader>bl :bnext<cr>
-nnoremap <Right> :bnext<cr>
-
-" Last buffer
-map <leader>bk :blast<cr>
 nnoremap <Up> :blast<cr>
-
-" Switch CWD to the directory of the open buffer
-map <leader>bd :cd %:p:h<cr>:pwd<cr>
+nnoremap <Down> :bfirst<cr>
+nnoremap <Left> :bprevious<cr>
+nnoremap <Right> :bnext<cr>

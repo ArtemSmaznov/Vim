@@ -1,6 +1,5 @@
-map <leader>tt :Tabularize /
-map <leader>t: :Tabularize /:<cr>
-map <leader>t- :Tabularize /-<cr>
-map <leader>t= :Tabularize /=<cr>
-map <leader>t" :Tabularize /"<cr>
-
+map <leader>ct :Tabularize /
+" map <leader>tt: :Tabularize /:<cr>
+" map <leader>tt- :Tabularize /-<cr>
+" map <leader>tt= :Tabularize /=<cr>
+" map <leader>tt" :Tabularize /"<cr>
