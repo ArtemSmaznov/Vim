@@ -6,40 +6,33 @@ let g:which_key_use_floating_win = 0
 let g:which_key_fallback_to_native_key=1
 let g:which_key_display_names = { ' ': '⎵', '<CR>': '↵', '<TAB>': '⇆' }
 let g:which_key_centered = 0
+let g:which_key_default_group_name = '+group'
 
 " register dictionary for the <Space>-prefix
 call which_key#register(' ', "g:leader_map")
 nnoremap <silent> <leader> :WhichKey ' '<CR>
 vnoremap <silent> <leader> :WhichKeyVisual ' '<CR>
 
-" default mappings like ]s stop working if which-key doesn't know about them
-call which_key#register('[', "g:left_square_bracket_map")
-call which_key#register(']', "g:right_square_bracket_map")
-nnoremap <silent> [ :WhichKey '['<CR>
-nnoremap <silent> ] :WhichKey ']'<CR>
-
-
-let g:which_key_default_group_name = '+Group'
-
 " Define prefix dictionary
 let g:leader_map =  {}
-let g:leader_map['<'] = [ 'BufExplorerHorizontalSplit' , 'Switch buffer' ]
+
+let g:leader_map['<'] = 'Switch buffer' 
 let g:leader_map['`'] = [ 'term'        , 'Terminal' ]
 
-let g:leader_map.b      = { 'name' : '+buffer' }
-let g:leader_map.b['['] = [ 'bprevious'                  , 'Previous buffer' ]
-let g:leader_map.b[']'] = [ 'bnext'                      , 'Next buffer' ]
-let g:leader_map.b['d'] = [ 'Bclose'                     , 'Kill buffer' ]
-let g:leader_map.b['k'] = [ 'Bclose'                     , 'Kill buffer' ]
-let g:leader_map.b['K'] = [ 'bufdo bd<cr>'               , 'Kill all buffers' ]
-let g:leader_map.b['n'] = [ 'bnext'                      , 'Next buffer' ]
-let g:leader_map.b['N'] = [ 'tabe'                       , 'New empty tab' ]
-let g:leader_map.b['p'] = [ 'bprevious'                  , 'Previous buffer' ]
-let g:leader_map.b['l'] = [ 'BufExplorerHorizontalSplit' , 'Switch buffers' ]
+let g:leader_map.b = { 'name' : '+buffer' }
+let g:leader_map.b['['] = 'Previous buffer'
+let g:leader_map.b[']'] = 'Next buffer'
+let g:leader_map.b['d'] = 'Kill buffer' 
+let g:leader_map.b['k'] = 'Kill buffer'
+let g:leader_map.b['K'] = 'Kill all buffers' 
+let g:leader_map.b['n'] = 'Next buffer' 
+let g:leader_map.b['N'] = 'New empty tab' 
+let g:leader_map.b['p'] = 'Previous buffer' 
+let g:leader_map.b['l'] = 'Switch buffers' 
 
 let g:leader_map.c = { 'name' : '+code' }
 
-let g:leader_map.f      = { 'name' : '+file' }
+let g:leader_map.f = { 'name' : '+file' }
 let g:leader_map.f['c'] = [ 'cd %:p:h<cr>:pwd<cr>' , 'CD to current directory' ]
 let g:leader_map.f['f'] = [ 'Files'                , 'Find file' ]
 let g:leader_map.f['r'] = [ 'History'              , 'Recent files' ]
@@ -130,6 +123,11 @@ let g:leader_map.w['|'] = [ '<C-W>|'                   , 'Set window width' ]
 
 
 
+" default mappings like ]s stop working if which-key doesn't know about them
+call which_key#register('[', "g:left_square_bracket_map")
+call which_key#register(']', "g:right_square_bracket_map")
+nnoremap <silent> [ :WhichKey '['<CR>
+nnoremap <silent> ] :WhichKey ']'<CR>
 
 
 let g:leader_map[','] = {
