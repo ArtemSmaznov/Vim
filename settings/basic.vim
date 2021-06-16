@@ -16,7 +16,8 @@ filetype plugin on
 filetype indent on
 
 " With a map leader it's possible to do extra key combinations
-let mapleader = " "
+let g:mapleader = " "
+let g:maplocalleader = ","
 
 " General abbreviations
 iab xdate <C-r>=strftime("%d/%m/%y %H:%M:%S")<cr>

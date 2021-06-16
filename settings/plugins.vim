@@ -62,6 +62,7 @@ call plug#end()
 " ░█░░░█░█░█░█░█▀▀░░█░░█░█░▀▀█
 " ░▀▀▀░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀░▀▀▀
 
+source $HOME/.vim/settings/plugins/which-key.vim
 " source $HOME/.vim/settings/plugins/ack.vim
 source $HOME/.vim/settings/plugins/airline.vim
 source $HOME/.vim/settings/plugins/auto-pairs.vim
@@ -81,7 +82,6 @@ source $HOME/.vim/settings/plugins/tabularize.vim
 source $HOME/.vim/settings/plugins/tags.vim
 source $HOME/.vim/settings/plugins/tmuxline.vim
 " source $HOME/.vim/settings/plugins/vimwiki.vim
-source $HOME/.vim/settings/plugins/which-key.vim
 " source $HOME/.vim/settings/plugins/yankstack.vim
 
 
@@ -94,3 +94,5 @@ autocmd VimEnter *
       \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
       \|   PlugInstall --sync | q
       \| endif
+
+map <leader>hrp :PlugInstall --sync<cr>

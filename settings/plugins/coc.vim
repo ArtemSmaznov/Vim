@@ -67,6 +67,7 @@ nmap <silent> gR <Plug>(coc-references)
 
 " Use K to show documentation in preview window
 nnoremap <leader>hk :call <SID>show_documentation()<CR>
+let g:leader_map.h['k']   = 'Search Documentation' 
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -85,6 +86,7 @@ nmap <F2> <Plug>(coc-rename)
 " Remap for format selected region
 xmap <leader>cf  <Plug>(coc-format-selected)
 nmap <leader>cf  <Plug>(coc-format-selected)
+let g:leader_map.c['f'] = 'Format' 
 
 augroup mygroup
   autocmd!
@@ -96,13 +98,16 @@ augroup end
 
 " Remap for do codeAction of current line
 nmap <leader>c<space> <Plug>(coc-codeaction)
+let g:leader_map.c[' '] = 'Code action' 
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 xmap <leader>cv <Plug>(coc-codeaction-selected)
 nmap <leader>cv <Plug>(coc-codeaction-selected)
+let g:leader_map.c['v'] = 'Code action selected' 
 
 " Fix autofix problem of current line
 nmap <leader>ca  <Plug>(coc-fix-current)
+let g:leader_map.c['a'] = 'Fix current' 
 
 " Create mappings for function text object, requires document symbols feature of languageserver.
 xmap if <Plug>(coc-funcobj-i)
@@ -130,34 +135,41 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 
 " Show all diagnostics
 nnoremap <silent> <leader>cd  :<C-u>CocList diagnostics<cr>
+let g:leader_map.c['d'] = 'Diagnostics' 
 
 " Manage extensions
 nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
+let g:leader_map.c['e'] = 'Extensions' 
 
 " Show commands
 nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
+let g:leader_map.c['c'] = 'Commands' 
 
 " Find symbol of current document
 nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
+let g:leader_map.c['o'] = 'Outline' 
 
 " Search workspace symbols
 nnoremap <silent> <leader>cs  :<C-u>CocList -I symbols<cr>
+let g:leader_map.c['s'] = 'Symbols' 
 
-" Do default action for next item.
-" nnoremap <silent> <leader>cj  :<C-u>CocNext<CR>
+nnoremap <silent> <leader>cj  :<C-u>CocNext<CR>
+let g:leader_map.c['j'] = 'Default action for next item' 
 
-" Do default action for previous item. (K is taken)
-" nnoremap <silent> <leader>ck  :<C-u>CocPrev<CR>
+nnoremap <silent> <leader>ck  :<C-u>CocPrev<CR>
+let g:leader_map.c['k'] = 'Default action for previous item' 
 
-" Resume latest coc list
 nnoremap <silent> <leader>cp  :<C-u>CocListResume<CR>
+let g:leader_map.c['p'] = 'Resume latest coc list' 
 
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Coc-Explorer
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nmap <C-n> :CocCommand explorer<CR>
 nmap <leader><Tab> :CocCommand explorer<CR>
 nmap <leader>tn :CocCommand explorer<CR>
+let g:leader_map.t['n'] = 'File tree' 
+let g:leader_map['<Tab>'] = 'File tree' 
+
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif

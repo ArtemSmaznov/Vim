@@ -12,6 +12,55 @@
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
+" f section
+map <leader>ff :Files<CR>
+map <leader>fr :History<CR>
+
+let g:leader_map.f['f'] = 'Find file' 
+let g:leader_map.f['r'] = 'Recent files' 
+
+" h section
+map <leader>hb :Maps<CR>
+nnoremap <leader>hh :Helptags<CR>
+nnoremap <leader>ht :Colors<CR>
+
+let g:leader_map.h['b']   = 'Bindings' 
+let g:leader_map.h['h']   = 'Search Help' 
+let g:leader_map.h['t']   = 'Load theme' 
+
+" p section
+nnoremap <leader>p' :Marks<CR>
+nnoremap <leader>p/ :History/<CR>
+nnoremap <leader>p: :History:<CR>
+map <leader>pb :Buffers<CR>
+map <leader>pc :Commands<CR>
+map <leader>pf :Filetypes<CR>
+map <leader>pw :Windows<CR>
+
+let g:leader_map.p["'"] = 'Search marks' 
+let g:leader_map.p['/'] = 'Search history' 
+let g:leader_map.p[':'] = 'Commands history' 
+let g:leader_map.p['b'] = 'Switch buffer' 
+let g:leader_map.p['c'] = 'Search all commands' 
+let g:leader_map.p['f'] = 'Switch filetype' 
+let g:leader_map.p['w'] = 'Switch window' 
+
+" s section
+map <leader>sb :BLines<CR>
+map <leader>sB :Lines<CR>
+nnoremap <leader>sp :Rg<CR>
+nnoremap <leader>st :BTags<CR>
+nnoremap <leader>sT :Tags<CR>
+
+let g:leader_map.s['b'] = 'Search buffer' 
+let g:leader_map.s['B'] = 'Search all open buffers' 
+let g:leader_map.s['p'] = 'Search project' 
+let g:leader_map.s['t'] = 'Search Tags in buffer' 
+let g:leader_map.s['T'] = 'Search Tags in all buffers' 
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 let g:fzf_tags_command = 'ctags -R'
 " Border color
 let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' } }

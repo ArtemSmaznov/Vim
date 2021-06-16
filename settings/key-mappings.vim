@@ -3,6 +3,7 @@
 "
 " Sections:
 "    -> General
+"    -> Reload
 "    -> Buffers
 "    -> Windows
 "    -> Tabs
@@ -16,8 +17,37 @@
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
+" Save file
+map <leader>fs :write<cr>
+map <leader>fS :wa<cr>
+
 " Disable search highlight
 map <silent> <leader><leader> :noh<cr>
+
+" Open terminal in a split
+map <leader>` :term<cr>
+
+" CD to current directory
+map <leader>fc :cd %:p:h<cr>:pwd<cr>
+
+" Search with vimgrep
+map <leader>fv :vimgrep **/* 
+
+" Paste mode
+map <leader>tp :setlocal paste!<cr>
+
+" Spell check
+map <leader>ts :setlocal spell!<cr>
+
+" Insert fancy title
+map <leader>it :r !toilet -f pagga 
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Reload
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>hre :source $MYVIMRC<cr>
+map <leader>hrr :source %<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -53,10 +83,40 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Resize windows
-noremap <leader>= :resize +5<CR>
-noremap <leader>- :resize -5<CR>
-noremap <leader>, :vertical:resize -5<CR>
-noremap <leader>. :vertical:resize +5<CR>
+map <leader>w+ :resize +5<cr>
+map <leader>w- :resize -5<cr>
+map <leader>w< :vertical :resize -5<cr>
+map <leader>w> :vertical :resize +5<cr>
+map <leader>w= <C-w>=
+map <leader>w_ <C-w>_
+map <leader>w\| <C-w>\|
+
+" Standard controlls
+map <leader>wb <C-w>b
+map <leader>wc <C-w>c
+map <leader>wd <C-w>c
+map <leader>wh <C-w>h
+map <leader>wH <C-w>H
+map <leader>wj <C-w>j
+map <leader>wJ <C-w>J
+map <leader>wk <C-w>k
+map <leader>wK <C-w>K
+map <leader>wl <C-w>l
+map <leader>wL <C-w>L
+map <leader>wn <C-w>n
+map <leader>wo <C-w>o
+map <leader>wp <C-w>p
+map <leader>wq <C-w>q
+map <leader>wr <C-w>r
+map <leader>wR <C-w>R
+map <leader>ws <C-w>s
+map <leader>wS <C-w>S
+map <leader>wt <C-w>t
+map <leader>wT <C-w>T
+map <leader>wv <C-w>v
+map <leader>wV <C-w>V
+map <leader>ww <C-w>w
+map <leader>wW <C-w>W
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -123,4 +183,5 @@ noremap <tab> :norm za<cr>
 noremap <tab><tab> :norm zA<cr>
 noremap <S-tab> :norm zR<cr>
 noremap <S-tab><S-tab> :norm zM<cr>
+
 
