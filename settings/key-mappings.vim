@@ -123,11 +123,12 @@ map <leader>wW <C-w>W
 " => Tabs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Useful mappings for managing tabs
-map <leader>ttn :tabnew<cr>
-map <leader>tto :tabonly<cr>
-map <leader>ttc :tabclose<cr>
-map <leader>ttm :tabmove 
-map <leader>tt<leader> :tabnext<cr>
+map <leader><Tab><Tab> :tabnext<cr>
+map <leader><Tab>c :tabclose<cr>
+map <leader><Tab>m :tabmove 
+map <leader><Tab>n :tabnew<cr>
+map <leader><Tab>o :tabonly<cr>
+
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1

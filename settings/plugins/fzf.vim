@@ -16,17 +16,17 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 map <leader>ff :Files<CR>
 map <leader>fr :History<CR>
 
-let g:leader_map.f['f'] = 'Find file' 
-let g:leader_map.f['r'] = 'Recent files' 
+let g:which_key_map.f['f'] = 'Find file' 
+let g:which_key_map.f['r'] = 'Recent files' 
 
 " h section
 map <leader>hb :Maps<CR>
 nnoremap <leader>hh :Helptags<CR>
 nnoremap <leader>ht :Colors<CR>
 
-let g:leader_map.h['b']   = 'Bindings' 
-let g:leader_map.h['h']   = 'Search Help' 
-let g:leader_map.h['t']   = 'Load theme' 
+let g:which_key_map.h['b']   = 'Bindings' 
+let g:which_key_map.h['h']   = 'Search Help' 
+let g:which_key_map.h['t']   = 'Load theme' 
 
 " p section
 nnoremap <leader>p' :Marks<CR>
@@ -37,13 +37,13 @@ map <leader>pc :Commands<CR>
 map <leader>pf :Filetypes<CR>
 map <leader>pw :Windows<CR>
 
-let g:leader_map.p["'"] = 'Search marks' 
-let g:leader_map.p['/'] = 'Search history' 
-let g:leader_map.p[':'] = 'Commands history' 
-let g:leader_map.p['b'] = 'Switch buffer' 
-let g:leader_map.p['c'] = 'Search all commands' 
-let g:leader_map.p['f'] = 'Switch filetype' 
-let g:leader_map.p['w'] = 'Switch window' 
+let g:which_key_map.p["'"] = 'Search marks' 
+let g:which_key_map.p['/'] = 'Search history' 
+let g:which_key_map.p[':'] = 'Commands history' 
+let g:which_key_map.p['b'] = 'Switch buffer' 
+let g:which_key_map.p['c'] = 'Search all commands' 
+let g:which_key_map.p['f'] = 'Switch filetype' 
+let g:which_key_map.p['w'] = 'Switch window' 
 
 " s section
 map <leader>sb :BLines<CR>
@@ -52,11 +52,11 @@ nnoremap <leader>sp :Rg<CR>
 nnoremap <leader>st :BTags<CR>
 nnoremap <leader>sT :Tags<CR>
 
-let g:leader_map.s['b'] = 'Search buffer' 
-let g:leader_map.s['B'] = 'Search all open buffers' 
-let g:leader_map.s['p'] = 'Search project' 
-let g:leader_map.s['t'] = 'Search Tags in buffer' 
-let g:leader_map.s['T'] = 'Search Tags in all buffers' 
+let g:which_key_map.s['b'] = 'Search buffer' 
+let g:which_key_map.s['B'] = 'Search all open buffers' 
+let g:which_key_map.s['p'] = 'Search project' 
+let g:which_key_map.s['t'] = 'Search Tags in buffer' 
+let g:which_key_map.s['T'] = 'Search Tags in all buffers' 
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

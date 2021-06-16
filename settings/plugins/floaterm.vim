@@ -11,7 +11,7 @@ map <leader>pp :FloatermNew python<cr>
 map <leader>pr :FloatermNew ranger<cr>
 map <leader>pv :FloatermNew vifm<cr>
 
-let g:leader_map.p['`'] = 'Terminal' 
-let g:leader_map.p['p'] = 'Python' 
-let g:leader_map.p['r'] = 'Ranger' 
-let g:leader_map.p['v'] = 'Vifm' 
+let g:which_key_map.p['`'] = 'Terminal' 
+let g:which_key_map.p['p'] = 'Python' 
+let g:which_key_map.p['r'] = 'Ranger' 
+let g:which_key_map.p['v'] = 'Vifm' 

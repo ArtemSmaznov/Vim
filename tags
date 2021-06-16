@@ -75,7 +75,11 @@ $r	after/ftplugin/python.vim	/^inoremap <buffer> $r return $/;"	m	language:Vim
 <leader>1	after/ftplugin/python.vim	/^map <buffer> <leader>1 \/class $/;"	m	language:Vim
 <leader>2	after/ftplugin/python.vim	/^map <buffer> <leader>2 \/def $/;"	m	language:Vim
 <leader><	settings/key-mappings.vim	/^map <leader>< :BufExplorerHorizontalSplit<cr>$/;"	m	language:Vim
-<leader><Tab>	settings/plugins/coc.vim	/^nmap <leader><Tab> :CocCommand explorer<CR>$/;"	m	language:Vim
+<leader><Tab><Tab>	settings/key-mappings.vim	/^map <leader><Tab><Tab> :tabnext<cr>$/;"	m	language:Vim
+<leader><Tab>c	settings/key-mappings.vim	/^map <leader><Tab>c :tabclose<cr>$/;"	m	language:Vim
+<leader><Tab>m	settings/key-mappings.vim	/^map <leader><Tab>m :tabmove $/;"	m	language:Vim
+<leader><Tab>n	settings/key-mappings.vim	/^map <leader><Tab>n :tabnew<cr>$/;"	m	language:Vim
+<leader><Tab>o	settings/key-mappings.vim	/^map <leader><Tab>o :tabonly<cr>$/;"	m	language:Vim
 <leader><leader>	settings/key-mappings.vim	/^map <silent> <leader><leader> :noh<cr>$/;"	m	language:Vim
 <leader>C	after/ftplugin/python.vim	/^map <buffer> <leader>C ?class $/;"	m	language:Vim
 <leader>D	after/ftplugin/python.vim	/^map <buffer> <leader>D ?def $/;"	m	language:Vim
@@ -165,12 +169,7 @@ $r	after/ftplugin/python.vim	/^inoremap <buffer> $r return $/;"	m	language:Vim
 <leader>tn	settings/plugins/coc.vim	/^nmap <leader>tn :CocCommand explorer<CR>$/;"	m	language:Vim
 <leader>tp	settings/key-mappings.vim	/^map <leader>tp :setlocal paste!<cr>$/;"	m	language:Vim
 <leader>ts	settings/key-mappings.vim	/^map <leader>ts :setlocal spell!<cr>$/;"	m	language:Vim
-<leader>tt<leader>	settings/key-mappings.vim	/^map <leader>tt<leader> :tabnext<cr>$/;"	m	language:Vim
-<leader>ttc	settings/key-mappings.vim	/^map <leader>ttc :tabclose<cr>$/;"	m	language:Vim
 <leader>ttl	settings/key-mappings.vim	/^nmap <leader>ttl :exe "tabn ".g:lasttab<CR>$/;"	m	language:Vim
-<leader>ttm	settings/key-mappings.vim	/^map <leader>ttm :tabmove $/;"	m	language:Vim
-<leader>ttn	settings/key-mappings.vim	/^map <leader>ttn :tabnew<cr>$/;"	m	language:Vim
-<leader>tto	settings/key-mappings.vim	/^map <leader>tto :tabonly<cr>$/;"	m	language:Vim
 <leader>w+	settings/key-mappings.vim	/^map <leader>w+ :resize +5<cr>$/;"	m	language:Vim
 <leader>w-	settings/key-mappings.vim	/^map <leader>w- :resize -5<cr>$/;"	m	language:Vim
 <leader>w<	settings/key-mappings.vim	/^map <leader>w< :vertical :resize -5<cr>$/;"	m	language:Vim
@@ -205,6 +204,8 @@ $r	after/ftplugin/python.vim	/^inoremap <buffer> $r return $/;"	m	language:Vim
 <leader>ww	settings/key-mappings.vim	/^map <leader>ww <C-w>w$/;"	m	language:Vim
 <leader>x	settings/plugins/coc.vim	/^xmap <leader>x  <Plug>(coc-convert-snippet)$/;"	m	language:Vim
 <leader>yl	settings/plugins/yankstack.vim	/^nmap <leader>yl :Yanks<cr>$/;"	m	language:Vim
+<localleader>	settings/plugins/which-key.vim	/^nnoremap <silent> <localleader> :<c-u>WhichKey ','<CR>$/;"	m	language:Vim
+<localleader>	settings/plugins/which-key.vim	/^vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>$/;"	m	language:Vim
 <plug>(plug-preview)	autoload/plug.vim	/^    nnoremap <silent> <buffer> <plug>(plug-preview) :silent! call <SID>preview_commit()<cr>$/;"	m	language:Vim
 <tab>	settings/key-mappings.vim	/^noremap <tab> :norm za<cr>$/;"	m	language:Vim
 <tab><tab>	settings/key-mappings.vim	/^noremap <tab><tab> :norm zA<cr>$/;"	m	language:Vim
@@ -254,10 +255,10 @@ U	autoload/plug.vim	/^  xnoremap <silent> <buffer> U  :call <SID>status_update()
 VisualSelection	settings/basic.vim	/^function! VisualSelection(direction, extra_filter) range$/;"	f	language:Vim
 W	settings/key-mappings.vim	/^command! W execute 'w !sudo tee % > \/dev\/null' <bar> edit!$/;"	c	language:Vim
 X	autoload/plug.vim	/^    nnoremap <silent> <buffer> X :call <SID>revert()<cr>$/;"	m	language:Vim
-[	settings/plugins/which-key.vim	/^nnoremap <silent> [ :WhichKey '['<CR>$/;"	m	language:Vim
+[	settings/plugins/which-key.vim	/^nnoremap <silent> [ :<c-u>WhichKey '['<CR>$/;"	m	language:Vim
 [[	autoload/plug.vim	/^  nnoremap <silent> <buffer> [[ :silent! call <SID>section('b')<cr>$/;"	m	language:Vim
 [g	settings/plugins/coc.vim	/^nmap <silent> [g <Plug>(coc-diagnostic-prev)$/;"	m	language:Vim
-]	settings/plugins/which-key.vim	/^nnoremap <silent> ] :WhichKey ']'<CR>$/;"	m	language:Vim
+]	settings/plugins/which-key.vim	/^nnoremap <silent> ] :<c-u>WhichKey ']'<CR>$/;"	m	language:Vim
 ]]	autoload/plug.vim	/^  nnoremap <silent> <buffer> ]] :silent! call <SID>section('')<cr>$/;"	m	language:Vim
 ]g	settings/plugins/coc.vim	/^nmap <silent> ]g <Plug>(coc-diagnostic-next)$/;"	m	language:Vim
 af	settings/plugins/coc.vim	/^omap af <Plug>(coc-funcobj-a)$/;"	m	language:Vim
@@ -307,6 +308,15 @@ g:airline#extensions#tabline#show_tab_nr	settings/plugins/airline.vim	/^let g:ai
 g:airline#extensions#tmuxline#enabled	settings/plugins/airline.vim	/^let g:airline#extensions#tmuxline#enabled = 1$/;"	v	language:Vim
 g:airline#extensions#tmuxline#snapshot_file	settings/plugins/airline.vim	/^let g:airline#extensions#tmuxline#snapshot_file =$/;"	v	language:Vim
 g:airline_powerline_fonts	settings/plugins/airline.vim	/^let g:airline_powerline_fonts = 1$/;"	v	language:Vim
+g:bracket_map	settings/plugins/coc.vim	/^let g:bracket_map.g = 'Coc Problem'$/;"	v	language:Vim
+g:bracket_map	settings/plugins/gitGutter.vim	/^let g:bracket_map.c = 'Git Hunk'$/;"	v	language:Vim
+g:bracket_map	settings/plugins/which-key.vim	/^let g:bracket_map = {}$/;"	v	language:Vim
+g:bracket_map	settings/plugins/which-key.vim	/^let g:bracket_map.s = 'Spell Check Problem'$/;"	v	language:Vim
+g:bracket_map	settings/plugins/which-key.vim	/^let g:bracket_map['"'] = 'Move around comments'$/;"	v	language:Vim
+g:bracket_map	settings/plugins/which-key.vim	/^let g:bracket_map['M'] = 'Move around'$/;"	v	language:Vim
+g:bracket_map	settings/plugins/which-key.vim	/^let g:bracket_map['['] = 'Move around functions'$/;"	v	language:Vim
+g:bracket_map	settings/plugins/which-key.vim	/^let g:bracket_map[']'] = 'Move around functions'$/;"	v	language:Vim
+g:bracket_map	settings/plugins/which-key.vim	/^let g:bracket_map['m'] = 'Move around'$/;"	v	language:Vim
 g:bufExplorerDefaultHelp	settings/plugins/buffExplorer.vim	/^let g:bufExplorerDefaultHelp=0$/;"	v	language:Vim
 g:bufExplorerDisableDefaultKeyMapping	settings/plugins/buffExplorer.vim	/^let g:bufExplorerDisableDefaultKeyMapping=1$/;"	v	language:Vim
 g:bufExplorerFindActive	settings/plugins/buffExplorer.vim	/^let g:bufExplorerFindActive=1$/;"	v	language:Vim
@@ -335,126 +345,6 @@ g:fzf_layout	settings/plugins/fzf.vim	/^let g:fzf_layout = {'up':'~90%', 'window
 g:fzf_tags_command	settings/plugins/fzf.vim	/^let g:fzf_tags_command = 'ctags -R'$/;"	v	language:Vim
 g:gitgutter_enabled	settings/plugins/gitGutter.vim	/^let g:gitgutter_enabled=1$/;"	v	language:Vim
 g:lasttab	settings/key-mappings.vim	/^let g:lasttab = 1$/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c[' '] = 'Code action' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c['a'] = 'Fix current' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c['c'] = 'Commands' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c['d'] = 'Diagnostics' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c['e'] = 'Extensions' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c['f'] = 'Format' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c['j'] = 'Default action for next item' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c['k'] = 'Default action for previous item' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c['o'] = 'Outline' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c['p'] = 'Resume latest coc list' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c['s'] = 'Symbols' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.c['v'] = 'Code action selected' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.h['k']   = 'Search Documentation' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map.t['n'] = 'File tree' $/;"	v	language:Vim
-g:leader_map	settings/plugins/coc.vim	/^let g:leader_map['<Tab>'] = 'File tree' $/;"	v	language:Vim
-g:leader_map	settings/plugins/colorizer.vim	/^let g:leader_map.t['c'] = 'Color highlights' $/;"	v	language:Vim
-g:leader_map	settings/plugins/floaterm.vim	/^let g:leader_map.p['`'] = 'Terminal' $/;"	v	language:Vim
-g:leader_map	settings/plugins/floaterm.vim	/^let g:leader_map.p['p'] = 'Python' $/;"	v	language:Vim
-g:leader_map	settings/plugins/floaterm.vim	/^let g:leader_map.p['r'] = 'Ranger' $/;"	v	language:Vim
-g:leader_map	settings/plugins/floaterm.vim	/^let g:leader_map.p['v'] = 'Vifm' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.f['f'] = 'Find file' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.f['r'] = 'Recent files' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.h['b']   = 'Bindings' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.h['h']   = 'Search Help' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.h['t']   = 'Load theme' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.p["'"] = 'Search marks' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.p[':'] = 'Commands history' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.p['\/'] = 'Search history' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.p['b'] = 'Switch buffer' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.p['c'] = 'Search all commands' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.p['f'] = 'Switch filetype' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.p['w'] = 'Switch window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.s['B'] = 'Search all open buffers' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.s['T'] = 'Search Tags in all buffers' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.s['b'] = 'Search buffer' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.s['p'] = 'Search project' $/;"	v	language:Vim
-g:leader_map	settings/plugins/fzf.vim	/^let g:leader_map.s['t'] = 'Search Tags in buffer' $/;"	v	language:Vim
-g:leader_map	settings/plugins/gitGutter.vim	/^let g:leader_map.g      = { 'name' : '+git' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/gitGutter.vim	/^let g:leader_map.g['d'] = 'Diff Split' $/;"	v	language:Vim
-g:leader_map	settings/plugins/gitGutter.vim	/^let g:leader_map.g['g'] = 'Status' $/;"	v	language:Vim
-g:leader_map	settings/plugins/gitGutter.vim	/^let g:leader_map.g['p'] = 'Preview hunk' $/;"	v	language:Vim
-g:leader_map	settings/plugins/gitGutter.vim	/^let g:leader_map.g['s'] = 'Stage hunk' $/;"	v	language:Vim
-g:leader_map	settings/plugins/gitGutter.vim	/^let g:leader_map.g['u'] = 'Undo hunk' $/;"	v	language:Vim
-g:leader_map	settings/plugins/minimap.vim	/^let g:leader_map.t['M'] = { 'name' : '+minimap...' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/minimap.vim	/^let g:leader_map.t['M']['c'] = 'Close minimap' $/;"	v	language:Vim
-g:leader_map	settings/plugins/minimap.vim	/^let g:leader_map.t['M']['o'] = 'Open minimap' $/;"	v	language:Vim
-g:leader_map	settings/plugins/minimap.vim	/^let g:leader_map.t['M']['u'] = 'Update minimap' $/;"	v	language:Vim
-g:leader_map	settings/plugins/minimap.vim	/^let g:leader_map.t['m'] = 'Minimap' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map =  {}$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b = { 'name' : '+buffer' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b['K'] = 'Kill all buffers' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b['N'] = 'New empty tab' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b['['] = 'Previous buffer'$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b[']'] = 'Next buffer'$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b['d'] = 'Kill buffer' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b['k'] = 'Kill buffer'$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b['l'] = 'Switch buffers' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b['n'] = 'Next buffer' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.b['p'] = 'Previous buffer' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.c = { 'name' : '+code' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.f = { 'name' : '+file' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.f.e = { 'name' : '+find-config' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.f.e.d = { 'name' : '+dotfiles' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.f.e.q = { 'name' : '+qtile' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.f.e.v = { 'name' : '+vim' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.f['S'] = 'Save all files' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.f['c'] = 'CD to current directory' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.f['s'] = 'Save file' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.f['v'] = 'Grep' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.h = { 'name' : '+help' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.h.r      = { 'name' : '+reload' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.h.r['e'] = 'Reload env' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.h.r['p'] = 'Reload plugins' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.h.r['r'] = 'Reload' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.i = { 'name' : '+insert' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.i['t'] = 'Insert Toilet title' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.p = { 'name' : '+popup' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.s = { 'name' : '+search' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.t = { 'name' : '+toggle' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.t['p'] = 'Paste mode' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.t['s'] = 'Spell check' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w = { 'name' : '+window' }$/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['+'] = 'Increase window height' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['-'] = 'Decrease window height' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['<'] = 'Decrease window width' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['='] = 'Balance windows' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['>'] = 'Increase window width' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['H'] = 'Move window left' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['J'] = 'Move window down' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['K'] = 'Move window up' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['L'] = 'Move window right' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['R'] = 'Rotate windows upwards' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['S'] = 'Split and follow window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['T'] = 'Tear off window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['V'] = 'VSplit and follow window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['W'] = 'Previous window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['_'] = 'Set window height' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['b'] = 'Bottom-right window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['c'] = 'Close window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['d'] = 'Close window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['h'] = 'Left window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['j'] = 'Down window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['k'] = 'Up window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['l'] = 'Right window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['n'] = 'New window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['o'] = 'Enlargen window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['p'] = 'Last window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['q'] = 'Quit vim' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['r'] = 'Rotate windows downwards' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['s'] = 'Split window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['t'] = 'Top-left window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['v'] = 'VSplit window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['w'] = 'Next window' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map.w['|'] = 'Set window width' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map[' '] = 'Hide search highlights' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map['<'] = 'Switch buffer' $/;"	v	language:Vim
-g:leader_map	settings/plugins/which-key.vim	/^let g:leader_map['`'] = 'Terminal' $/;"	v	language:Vim
-g:left_square_bracket_map	settings/plugins/which-key.vim	/^let g:left_square_bracket_map = {}$/;"	v	language:Vim
-g:left_square_bracket_map	settings/plugins/which-key.vim	/^let g:left_square_bracket_map.c = [ '<Plug>(GitGutterNextHunk)', 'Next Git Hunk' ]$/;"	v	language:Vim
-g:left_square_bracket_map	settings/plugins/which-key.vim	/^let g:left_square_bracket_map.g = [ '<Plug>(coc-diagnostic-next)', 'Next Coc Problem' ]$/;"	v	language:Vim
 g:lightline	settings/plugins/lightline.vim	/^let g:lightline = {$/;"	v	language:Vim
 g:lightline	settings/plugins/lightline.vim	/^let g:lightline.active = {$/;"	v	language:Vim
 g:lightline	settings/plugins/lightline.vim	/^let g:lightline.colorscheme = 'jellybeans'$/;"	v	language:Vim
@@ -465,6 +355,7 @@ g:lightline	settings/plugins/lightline.vim	/^let g:lightline.tab = {$/;"	v	langu
 g:lightline	settings/plugins/lightline.vim	/^let g:lightline.tabline_separator = { 'left': ' ', 'right': ' ' }$/;"	v	language:Vim
 g:lightline	settings/plugins/lightline.vim	/^let g:lightline.tabline_subseparator = { 'left': '|', 'right': '|' }$/;"	v	language:Vim
 g:loaded_plug	autoload/plug.vim	/^let g:loaded_plug = 1$/;"	v	language:Vim
+g:local_key_map	settings/plugins/which-key.vim	/^let g:local_key_map = {}$/;"	v	language:Vim
 g:mapleader	settings/basic.vim	/^let g:mapleader = " "$/;"	v	language:Vim
 g:maplocalleader	settings/basic.vim	/^let g:maplocalleader = ","$/;"	v	language:Vim
 g:minimap_close	settings/plugins/minimap.vim	/^let g:minimap_close='<leader>tMc'$/;"	v	language:Vim
@@ -476,9 +367,6 @@ g:plugs	autoload/plug.vim	/^    let g:plugs[name] = spec$/;"	v	language:Vim
 g:plugs	autoload/plug.vim	/^  let g:plugs = {}$/;"	v	language:Vim
 g:plugs_order	autoload/plug.vim	/^  let g:plugs_order = []$/;"	v	language:Vim
 g:plugs_order	autoload/plug.vim	/^  let g:plugs_order = get(g:, 'plugs_order', keys(g:plugs))$/;"	v	language:Vim
-g:right_square_bracket_map	settings/plugins/which-key.vim	/^let g:right_square_bracket_map = {}$/;"	v	language:Vim
-g:right_square_bracket_map	settings/plugins/which-key.vim	/^let g:right_square_bracket_map.c = [ '<Plug>(GitGutterNextHunk)', 'Next Git Hunk' ]$/;"	v	language:Vim
-g:right_square_bracket_map	settings/plugins/which-key.vim	/^let g:right_square_bracket_map.g = [ '<Plug>(coc-diagnostic-next)', 'Next Coc Problem' ]$/;"	v	language:Vim
 g:sneak#label	settings/plugins/sneak.vim	/^let g:sneak#label = 1$/;"	v	language:Vim
 g:sneak#s_next	settings/plugins/sneak.vim	/^let g:sneak#s_next = 1$/;"	v	language:Vim
 g:sneak#use_ic_scs	settings/plugins/sneak.vim	/^let g:sneak#use_ic_scs = 1$/;"	v	language:Vim
@@ -494,6 +382,124 @@ g:which_key_default_group_name	settings/plugins/which-key.vim	/^let g:which_key_
 g:which_key_display_names	settings/plugins/which-key.vim	/^let g:which_key_display_names = { ' ': '⎵', '<CR>': '↵', '<TAB>': '⇆' }$/;"	v	language:Vim
 g:which_key_fallback_to_native_key	settings/plugins/which-key.vim	/^let g:which_key_fallback_to_native_key=1$/;"	v	language:Vim
 g:which_key_flatten	settings/plugins/which-key.vim	/^let g:which_key_flatten = 1$/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c[' '] = 'Code action' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c['a'] = 'Fix current' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c['c'] = 'Commands' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c['d'] = 'Diagnostics' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c['e'] = 'Extensions' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c['f'] = 'Format' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c['j'] = 'Default action for next item' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c['k'] = 'Default action for previous item' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c['o'] = 'Outline' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c['p'] = 'Resume latest coc list' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c['s'] = 'Symbols' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.c['v'] = 'Code action selected' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.h['k'] = 'Search Documentation' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map.t['n'] = 'File tree' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/coc.vim	/^let g:which_key_map['x'] = 'Convert to snippet' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/colorizer.vim	/^let g:which_key_map.t['c'] = 'Color highlights' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/floaterm.vim	/^let g:which_key_map.p['`'] = 'Terminal' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/floaterm.vim	/^let g:which_key_map.p['p'] = 'Python' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/floaterm.vim	/^let g:which_key_map.p['r'] = 'Ranger' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/floaterm.vim	/^let g:which_key_map.p['v'] = 'Vifm' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.f['f'] = 'Find file' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.f['r'] = 'Recent files' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.h['b']   = 'Bindings' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.h['h']   = 'Search Help' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.h['t']   = 'Load theme' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.p["'"] = 'Search marks' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.p[':'] = 'Commands history' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.p['\/'] = 'Search history' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.p['b'] = 'Switch buffer' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.p['c'] = 'Search all commands' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.p['f'] = 'Switch filetype' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.p['w'] = 'Switch window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.s['B'] = 'Search all open buffers' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.s['T'] = 'Search Tags in all buffers' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.s['b'] = 'Search buffer' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.s['p'] = 'Search project' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/fzf.vim	/^let g:which_key_map.s['t'] = 'Search Tags in buffer' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/gitGutter.vim	/^let g:which_key_map.g      = { 'name' : '+git' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/gitGutter.vim	/^let g:which_key_map.g['d'] = 'Diff Split' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/gitGutter.vim	/^let g:which_key_map.g['g'] = 'Status' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/gitGutter.vim	/^let g:which_key_map.g['p'] = 'Preview hunk' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/gitGutter.vim	/^let g:which_key_map.g['s'] = 'Stage hunk' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/gitGutter.vim	/^let g:which_key_map.g['u'] = 'Undo hunk' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/minimap.vim	/^let g:which_key_map.t['M'] = { 'name' : '+minimap...' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/minimap.vim	/^let g:which_key_map.t['M']['c'] = 'Close minimap' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/minimap.vim	/^let g:which_key_map.t['M']['o'] = 'Open minimap' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/minimap.vim	/^let g:which_key_map.t['M']['u'] = 'Update minimap' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/minimap.vim	/^let g:which_key_map.t['m'] = 'Minimap' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/tabularize.vim	/^let g:which_key_map.c['t'] = 'Tabularize by...' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map =  {}$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.b = { 'name' : '+buffer' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.b['K'] = 'Kill all buffers' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.b['N'] = 'New empty tab' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.b['['] = 'Previous buffer'$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.b[']'] = 'Next buffer'$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.b['d'] = 'Kill buffer' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.b['k'] = 'Kill buffer'$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.b['l'] = 'Switch buffers' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.b['n'] = 'Next buffer' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.b['p'] = 'Previous buffer' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.c = { 'name' : '+code' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.f = { 'name' : '+file' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.f.e = { 'name' : '+find-config' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.f.e.d = { 'name' : '+dotfiles' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.f.e.q = { 'name' : '+qtile' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.f.e.v = { 'name' : '+vim' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.f['S'] = 'Save all files' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.f['c'] = 'CD to current directory' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.f['s'] = 'Save file' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.f['v'] = 'Grep' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.h = { 'name' : '+help' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.h.r      = { 'name' : '+reload' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.h.r['e'] = 'Reload env' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.h.r['p'] = 'Reload plugins' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.h.r['r'] = 'Reload' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.i = { 'name' : '+insert' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.i['t'] = 'Insert Toilet title' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.p = { 'name' : '+popup' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.s = { 'name' : '+search' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.t = { 'name' : '+toggle' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.t['p'] = 'Paste mode' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.t['s'] = 'Spell check' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w = { 'name' : '+window' }$/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['+'] = 'Increase window height' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['-'] = 'Decrease window height' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['<'] = 'Decrease window width' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['='] = 'Balance windows' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['>'] = 'Increase window width' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['H'] = 'Move window left' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['J'] = 'Move window down' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['K'] = 'Move window up' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['L'] = 'Move window right' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['R'] = 'Rotate windows upwards' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['S'] = 'Split and follow window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['T'] = 'Tear off window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['V'] = 'VSplit and follow window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['W'] = 'Previous window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['_'] = 'Set window height' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['b'] = 'Bottom-right window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['c'] = 'Close window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['d'] = 'Close window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['h'] = 'Left window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['j'] = 'Down window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['k'] = 'Up window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['l'] = 'Right window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['n'] = 'New window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['o'] = 'Enlargen window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['p'] = 'Last window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['q'] = 'Quit vim' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['r'] = 'Rotate windows downwards' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['s'] = 'Split window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['t'] = 'Top-left window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['v'] = 'VSplit window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['w'] = 'Next window' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map.w['|'] = 'Set window width' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map[' '] = 'Hide search highlights' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map['<'] = 'Switch buffer' $/;"	v	language:Vim
+g:which_key_map	settings/plugins/which-key.vim	/^let g:which_key_map['`'] = 'Terminal' $/;"	v	language:Vim
 g:which_key_max_size	settings/plugins/which-key.vim	/^let g:which_key_max_size = 0$/;"	v	language:Vim
 g:which_key_position	settings/plugins/which-key.vim	/^let g:which_key_position = 'botright'$/;"	v	language:Vim
 g:which_key_use_floating_win	settings/plugins/which-key.vim	/^let g:which_key_use_floating_win = 0$/;"	v	language:Vim

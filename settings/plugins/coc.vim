@@ -54,10 +54,12 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Or use `complete_info` if your vim support it, like:
 " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 xmap <leader>x  <Plug>(coc-convert-snippet)
+let g:which_key_map['x'] = 'Convert to snippet' 
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+let g:bracket_map.g = 'Coc Problem'
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -67,7 +69,7 @@ nmap <silent> gR <Plug>(coc-references)
 
 " Use K to show documentation in preview window
 nnoremap <leader>hk :call <SID>show_documentation()<CR>
-let g:leader_map.h['k']   = 'Search Documentation' 
+let g:which_key_map.h['k'] = 'Search Documentation' 
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -86,7 +88,7 @@ nmap <F2> <Plug>(coc-rename)
 " Remap for format selected region
 xmap <leader>cf  <Plug>(coc-format-selected)
 nmap <leader>cf  <Plug>(coc-format-selected)
-let g:leader_map.c['f'] = 'Format' 
+let g:which_key_map.c['f'] = 'Format' 
 
 augroup mygroup
   autocmd!
@@ -98,16 +100,16 @@ augroup end
 
 " Remap for do codeAction of current line
 nmap <leader>c<space> <Plug>(coc-codeaction)
-let g:leader_map.c[' '] = 'Code action' 
+let g:which_key_map.c[' '] = 'Code action' 
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 xmap <leader>cv <Plug>(coc-codeaction-selected)
 nmap <leader>cv <Plug>(coc-codeaction-selected)
-let g:leader_map.c['v'] = 'Code action selected' 
+let g:which_key_map.c['v'] = 'Code action selected' 
 
 " Fix autofix problem of current line
 nmap <leader>ca  <Plug>(coc-fix-current)
-let g:leader_map.c['a'] = 'Fix current' 
+let g:which_key_map.c['a'] = 'Fix current' 
 
 " Create mappings for function text object, requires document symbols feature of languageserver.
 xmap if <Plug>(coc-funcobj-i)
@@ -135,41 +137,41 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 
 " Show all diagnostics
 nnoremap <silent> <leader>cd  :<C-u>CocList diagnostics<cr>
-let g:leader_map.c['d'] = 'Diagnostics' 
+let g:which_key_map.c['d'] = 'Diagnostics' 
 
 " Manage extensions
 nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
-let g:leader_map.c['e'] = 'Extensions' 
+let g:which_key_map.c['e'] = 'Extensions' 
 
 " Show commands
 nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
-let g:leader_map.c['c'] = 'Commands' 
+let g:which_key_map.c['c'] = 'Commands' 
 
 " Find symbol of current document
 nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
-let g:leader_map.c['o'] = 'Outline' 
+let g:which_key_map.c['o'] = 'Outline' 
 
 " Search workspace symbols
 nnoremap <silent> <leader>cs  :<C-u>CocList -I symbols<cr>
-let g:leader_map.c['s'] = 'Symbols' 
+let g:which_key_map.c['s'] = 'Symbols' 
 
 nnoremap <silent> <leader>cj  :<C-u>CocNext<CR>
-let g:leader_map.c['j'] = 'Default action for next item' 
+let g:which_key_map.c['j'] = 'Default action for next item' 
 
 nnoremap <silent> <leader>ck  :<C-u>CocPrev<CR>
-let g:leader_map.c['k'] = 'Default action for previous item' 
+let g:which_key_map.c['k'] = 'Default action for previous item' 
 
 nnoremap <silent> <leader>cp  :<C-u>CocListResume<CR>
-let g:leader_map.c['p'] = 'Resume latest coc list' 
+let g:which_key_map.c['p'] = 'Resume latest coc list' 
 
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Coc-Explorer
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <leader><Tab> :CocCommand explorer<CR>
+" nmap <leader><Tab> :CocCommand explorer<CR>
 nmap <leader>tn :CocCommand explorer<CR>
-let g:leader_map.t['n'] = 'File tree' 
-let g:leader_map['<Tab>'] = 'File tree' 
+let g:which_key_map.t['n'] = 'File tree' 
+" let g:which_key_map['<Tab>'] = 'File tree' 
 
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
