@@ -2,6 +2,7 @@
 .netrwhist
 spell
 after/vimrc
+sessions/*
 plugged/*
 plugged/ack.vim/.netrwhist
 temp_dirs/undodir/*

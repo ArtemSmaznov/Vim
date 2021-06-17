@@ -12,14 +12,22 @@
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-" f section
+
+" <leader> section
+nnoremap <leader>/ :Rg<CR>
+
+let g:which_key_map['/'] = 'Search project' 
+
+
+" +find section
 map <leader>ff :Files<CR>
 map <leader>fr :History<CR>
 
 let g:which_key_map.f['f'] = 'Find file' 
 let g:which_key_map.f['r'] = 'Recent files' 
 
-" h section
+
+" +help section
 map <leader>hb :Maps<CR>
 nnoremap <leader>hh :Helptags<CR>
 nnoremap <leader>ht :Colors<CR>
@@ -28,7 +36,8 @@ let g:which_key_map.h['b']   = 'Bindings'
 let g:which_key_map.h['h']   = 'Search Help' 
 let g:which_key_map.h['t']   = 'Load theme' 
 
-" p section
+
+" +popup section
 nnoremap <leader>p' :Marks<CR>
 nnoremap <leader>p/ :History/<CR>
 nnoremap <leader>p: :History:<CR>
@@ -45,7 +54,8 @@ let g:which_key_map.p['c'] = 'Search all commands'
 let g:which_key_map.p['f'] = 'Switch filetype' 
 let g:which_key_map.p['w'] = 'Switch window' 
 
-" s section
+
+" +search section
 map <leader>sb :BLines<CR>
 map <leader>sB :Lines<CR>
 nnoremap <leader>sp :Rg<CR>

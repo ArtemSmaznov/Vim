@@ -17,60 +17,56 @@
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
-" Save file
-map <leader>fs :write<cr>
-map <leader>fS :wa<cr>
-
-" Clear search highlights
+" <leader> section
 nnoremap <silent> <leader><Esc> :nohlsearch<cr>
 
-" Open terminal in a split
-map <leader>` :term<cr>
-
-" CD to current directory
+" +file section
 map <leader>fc :cd %:p:h<cr>:pwd<cr>
-
-" Search with vimgrep
+map <leader>fs :write<cr>
+map <leader>fS :write 
 map <leader>fv :vimgrep **/* 
 
-" Paste mode
+" +toggle section
 map <leader>tp :setlocal paste!<cr>
-
-" Spell check
 map <leader>ts :setlocal spell!<cr>
-
-" Insert fancy title
 map <leader>it :r !toilet -f pagga 
 
-
-" Q section
+" +quit/session section
+map <leader>ql :source $HOME/.vim/sessions/quick-session.vim<cr>
+map <leader>qL :source $HOME/.vim/sessions/
 map <leader>qq :qa<cr>
 map <leader>qQ :qa!<cr>
+map <leader>qs :mksession! $HOME/.vim/sessions/quick-session.vim<cr>
+map <leader>qS :mksession $HOME/.vim/sessions/
 
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Reload
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>hre :source $MYVIMRC<cr>
-map <leader>hrr :source %<cr>
+" +help section
+  " +reload section
+  map <leader>hre :source $MYVIMRC<cr>
+  map <leader>hrr :source %<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" <leader> section
 map <leader>< :BufExplorerHorizontalSplit<cr>
+map <leader>` :b#<cr>
 
-" b group
+" +buffer section
 map <leader>b[ :bprevious<cr>
 map <leader>b] :bnext<cr>
+map <leader>bb :BufExplorerHorizontalSplit<cr>
 map <leader>bd :Bclose<cr>
 map <leader>bk :Bclose<cr>
 map <leader>bK :bufdo bd<cr>
 map <leader>bn :bnext<cr>
 map <leader>bN :tabe<cr>
+" map <leader>bO :<bar> %bd <bar> e#<cr>
 map <leader>bp :bprevious<cr>
-map <leader>bl :BufExplorerHorizontalSplit<cr>
+map <leader>bl :b#<cr>
+map <leader>bs :write<cr>
+map <leader>bS :wa<cr>
+map <leader>bu :W<cr>
 
 " Arrows
 nnoremap <Up> :blast<cr>
@@ -88,6 +84,10 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" <leader> section
+map <leader>w` :term<cr>
+
+" +window section
 " Resize windows
 map <leader>w+ :resize +5<cr>
 map <leader>w- :resize -5<cr>
@@ -128,24 +128,40 @@ map <leader>wW <C-w>W
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tabs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Useful mappings for managing tabs
-map <leader><Tab><Tab> :tabnext<cr>
+" +<Tab> section
+map <leader><Tab>. :tabs<cr>
+map <leader><Tab>0 :$tabnext<cr>
+map <leader><Tab>1 :1tabnext<cr>
+map <leader><Tab>2 :2tabnext<cr>
+map <leader><Tab>3 :3tabnext<cr>
+map <leader><Tab>4 :4tabnext<cr>
+map <leader><Tab>5 :5tabnext<cr>
+map <leader><Tab>6 :6tabnext<cr>
+map <leader><Tab>7 :7tabnext<cr>
+map <leader><Tab>8 :8tabnext<cr>
+map <leader><Tab>9 :9tabnext<cr>
+map <leader><Tab>[ :tabprevious<cr>
+map <leader><Tab>] :tabnext<cr>
+map <leader><Tab>` :tabnext #<cr>
 map <leader><Tab>c :tabclose<cr>
+map <leader><Tab>d :tabclose<cr>
 map <leader><Tab>m :tabmove 
 map <leader><Tab>n :tabnew<cr>
-map <leader><Tab>o :tabonly<cr>
+map <leader><Tab>O :tabonly<cr>
+map <leader><Tab>{ :-tabmove<cr>
+map <leader><Tab>} :+tabmove<cr>
 
 
-" Let 'tl' toggle between this and the last accessed tab
+" Toggle between this and the last accessed tab
 let g:lasttab = 1
-nmap <leader>ttl :exe "tabn ".g:lasttab<CR>
+nmap <leader><Tab>l :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Edit config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vim
+" +vim section
 map <leader>fevr :e! $HOME/.vim/vimrc<cr>
 map <leader>fevb :e! $HOME/.vim/settings/basic.vim<cr>
 map <leader>fevp :e! $HOME/.vim/settings/plugins.vim<cr>
@@ -153,7 +169,7 @@ map <leader>fevu :e! $HOME/.vim/settings/ui.vim<cr>
 map <leader>fevk :e! $HOME/.vim/settings/key-mappings.vim<cr>
 map <leader>fevw :e! $HOME/.vim/settings/plugins/which-key.vim<cr>
 
-" qTile
+" +qtile section
 map <leader>feqb :e! $HOME/.config/qtile/lib/bars.py<cr>
 map <leader>feqg :e! $HOME/.config/qtile/settings/groups.py<cr>
 map <leader>feqk :e! $HOME/.config/qtile/keys/bindings.py<cr>
@@ -161,7 +177,7 @@ map <leader>feql :e! $HOME/.config/qtile/settings/layouts.py<cr>
 map <leader>feqt :e! $HOME/.config/qtile/theme/default.py<cr>
 map <leader>feqw :e! $HOME/.config/qtile/lib/widgets/general.py<cr>
 
-" Dotfiles
+" +dotfiles section
 map <leader>fedb :e! $HOME/.bashrc<cr>
 map <leader>fedz :e! $HOME/.zshrc<cr>
 map <leader>feda :e! $HOME/.config/aliasrc<cr>
