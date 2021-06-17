@@ -43,6 +43,12 @@ map <leader>ts :setlocal spell!<cr>
 map <leader>it :r !toilet -f pagga 
 
 
+" Q section
+map <leader>qq :qa<cr>
+map <leader>qQ :qa!<cr>
+
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Reload
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

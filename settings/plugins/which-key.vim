@@ -61,6 +61,11 @@ let g:which_key_map.i = { 'name' : '+insert' }
 let g:which_key_map.i['t'] = 'Insert Toilet title' 
 
 let g:which_key_map.p = { 'name' : '+popup' }
+
+let g:which_key_map.q = { 'name' : '+quit/session' }
+let g:which_key_map.q['q'] = 'Quit Vim' 
+let g:which_key_map.q['Q'] = 'Quit Vim without saving' 
+
 let g:which_key_map.s = { 'name' : '+search' }
 
 let g:which_key_map.t = { 'name' : '+toggle' }
