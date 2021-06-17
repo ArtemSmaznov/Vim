@@ -21,8 +21,8 @@ command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 map <leader>fs :write<cr>
 map <leader>fS :wa<cr>
 
-" Disable search highlight
-map <silent> <leader><leader> :noh<cr>
+" Clear search highlights
+nnoremap <silent> <ESC> :noh<cr>
 
 " Open terminal in a split
 map <leader>` :term<cr>

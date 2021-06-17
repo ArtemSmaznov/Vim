@@ -25,7 +25,6 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 " Define prefix dictionary
 let g:which_key_map =  {}
 
-let g:which_key_map[' '] = 'Hide search highlights' 
 let g:which_key_map['<'] = 'Switch buffer' 
 let g:which_key_map['`'] = 'Terminal' 
 
@@ -43,7 +42,7 @@ let g:which_key_map.b['l'] = 'Switch buffers'
 let g:which_key_map.c = { 'name' : '+code' }
 
 let g:which_key_map.f = { 'name' : '+file' }
-let g:which_key_map.f.e = { 'name' : '+find-config' }
+let g:which_key_map.f.e = { 'name' : '+edit-config' }
 let g:which_key_map.f.e.q = { 'name' : '+qtile' }
 let g:which_key_map.f.e.d = { 'name' : '+dotfiles' }
 let g:which_key_map.f.e.v = { 'name' : '+vim' }
