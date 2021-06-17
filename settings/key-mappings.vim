@@ -22,7 +22,7 @@ map <leader>fs :write<cr>
 map <leader>fS :wa<cr>
 
 " Clear search highlights
-nnoremap <silent> <ESC> :noh<cr>
+nnoremap <silent> <leader><Esc> :nohlsearch<cr>
 
 " Open terminal in a split
 map <leader>` :term<cr>

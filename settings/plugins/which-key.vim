@@ -26,6 +26,7 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 let g:which_key_map =  {}
 
 let g:which_key_map['<'] = 'Switch buffer' 
+let g:which_key_map['<Esc>'] = 'Clear search highlights' 
 let g:which_key_map['`'] = 'Terminal' 
 
 let g:which_key_map.b = { 'name' : '+buffer' }
