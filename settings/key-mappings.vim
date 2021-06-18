@@ -140,6 +140,8 @@ map <leader><Tab>6 :6tabnext<cr>
 map <leader><Tab>7 :7tabnext<cr>
 map <leader><Tab>8 :8tabnext<cr>
 map <leader><Tab>9 :9tabnext<cr>
+map <leader><Tab>< :0tabmove<cr>
+map <leader><Tab>> :$tabmove<cr>
 map <leader><Tab>[ :tabprevious<cr>
 map <leader><Tab>] :tabnext<cr>
 map <leader><Tab>` :tabnext #<cr>
