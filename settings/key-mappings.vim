@@ -3,7 +3,6 @@
 "
 " Sections:
 "    -> General
-"    -> Reload
 "    -> Buffers
 "    -> Windows
 "    -> Tabs
@@ -79,10 +78,10 @@ nnoremap <Right> :bnext<cr>
 " => Windows
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" map <C-j> <C-W>j
+" map <C-k> <C-W>k
+" map <C-h> <C-W>h
+" map <C-l> <C-W>l
 
 " <leader> section
 map <leader>w` :term<cr>
@@ -91,16 +90,16 @@ map <leader>w` :term<cr>
 " Resize windows
 map <leader>w+ :resize +5<cr>
 map <leader>w- :resize -5<cr>
-map <leader>w< :vertical :resize -5<cr>
-map <leader>w> :vertical :resize +5<cr>
+map <leader>w< :vertical resize -5<cr>
+map <leader>w> :vertical resize +5<cr>
 map <leader>w= <C-w>=
-map <leader>w_ <C-w>_
-map <leader>w\| <C-w>\|
+map <leader>w_ :resize<cr>
+map <leader>w\| :vertical resize<cr>
 
 " Standard controlls
 map <leader>wb <C-w>b
-map <leader>wc <C-w>c
-map <leader>wd <C-w>c
+map <leader>wc :close<cr>
+map <leader>wd :close<cr>
 map <leader>wh <C-w>h
 map <leader>wH <C-w>H
 map <leader>wj <C-w>j
@@ -109,18 +108,18 @@ map <leader>wk <C-w>k
 map <leader>wK <C-w>K
 map <leader>wl <C-w>l
 map <leader>wL <C-w>L
-map <leader>wn <C-w>n
-map <leader>wo <C-w>o
+map <leader>wn :new<cr>
+map <leader>wo :only<cr>
 map <leader>wp <C-w>p
-map <leader>wq <C-w>q
+map <leader>wq :quit<cr>
 map <leader>wr <C-w>r
 map <leader>wR <C-w>R
-map <leader>ws <C-w>s
-map <leader>wS <C-w>S
+map <leader>ws :split<cr><C-w>p
+map <leader>wS :split<cr>
 map <leader>wt <C-w>t
 map <leader>wT <C-w>T
-map <leader>wv <C-w>v
-map <leader>wV <C-w>V
+map <leader>wv :vsplit<cr><C-w>p
+map <leader>wV :vsplit<cr>
 map <leader>ww <C-w>w
 map <leader>wW <C-w>W
 
@@ -198,6 +197,12 @@ nnoremap K :m-2<cr>==
 nnoremap J :m+<cr>==
 vnoremap K :m '<-2<cr>gv=gv
 vnoremap J :m '>+1<cr>gv=gv
+
+" Move a line of text using Alt+j/k in all modes 
+nnoremap <A-k> :m-2<cr>==
+nnoremap <A-j> :m+<cr>==
+vnoremap <A-k> :m '<-2<cr>gv=gv
+vnoremap <A-j> :m '>+1<cr>gv=gv
 
 " Increase/Decrease numbers
 noremap g- <C-x>
