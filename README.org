@@ -1,0 +1,4 @@
+#+TITLE: Vim
+#+AUTHOR: Artem Smaznov
+#+DESCRIPTION: You either love it or don't know that it exists
+#+STARTUP: overview
