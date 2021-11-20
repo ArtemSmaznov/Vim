@@ -14,7 +14,9 @@ set splitbelow       " Horizontal splits will automatically be below
 set splitright       " Vertical splits will automatically be to the right
 
 " Open diffs in vertical splits
-set diffopt+=vertical
+if !has("mac") || !has("macunix")
+  set diffopt+=vertical
+endif
 
 " Disable scrollbars 
 set guioptions-=r
