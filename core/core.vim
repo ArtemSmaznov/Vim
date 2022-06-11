@@ -9,47 +9,6 @@ source $HOME/.vim/core/core-packages.vim
 source $HOME/.vim/core/core-ui.vim
 source $HOME/.vim/core/core-keybindings.vim
 
-syntax enable  " Enable syntax highlighting
-set encoding=utf-8 " Set utf8 as standard encoding and en_US as the standard language
-set ffs=unix,dos,mac " Use Unix as the standard file type
-
-" Set font according to system
-if has("mac") || has("macunix")
-  set gfn=IBM\ Plex\ Mono:h14,Hack:h14,Source\ Code\ Pro:h15,Menlo:h15
-elseif has("win16") || has("win32")
-  set gfn=Hack\ Nerd\ Font\ Mono:h10,Source\ Code\ Pro:h12,IBM\ Plex\ Mono:h14,Consolas:h11
-elseif has("gui_gtk2")
-  set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("linux")
-  set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("unix")
-  set gfn=Monospace\ 11
-endif
-
-" Enable 256 colors palette in Gnome Terminal
-if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-endif
-
-if exists('$TMUX') 
-  if has('nvim')
-    set termguicolors
-  else
-    set term=screen-256color 
-  endif
-endif
-
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-  set guioptions-=T
-  set guioptions-=e
-  set t_Co=256
-  set guitablabel=%M\ %t
-endif
-
-set spelllang=en_us,ru_ru
-
 " Returns true if paste mode is enabled
 function! HasPaste()
   if &paste
@@ -123,3 +82,6 @@ endfunc
 func! CurrentFileDir(cmd)
   return a:cmd . " " . expand("%:p:h") . "/"
 endfunc
+
+set encoding=utf-8 " Set utf8 as standard encoding and en_US as the standard language
+set ffs=unix,dos,mac " Use Unix as the standard file type

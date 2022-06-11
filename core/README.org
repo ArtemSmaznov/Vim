@@ -6,15 +6,34 @@
 
 * Table of Contents :toc:
 - [[#core][Core]]
+- [[#editor][Editor]]
+  - [[#general-abbreviations][General abbreviations]]
+  - [[#search][Search]]
+  - [[#files-backups-and-undo][Files, Backups and Undo]]
+  - [[#ignore-compiled-files][Ignore Compiled Files]]
+  - [[#text-tab-and-indent-related][Text, tab and indent related]]
+  - [[#tabs-windows-and-buffers][Tabs, windows and buffers]]
+  - [[#mouse][Mouse]]
+  - [[#sound][Sound]]
+  - [[#backspace][Backspace]]
+  - [[#sudo-save][Sudo Save]]
+- [[#basic][Basic]]
+  - [[#colors-and-fonts][Colors and Fonts]]
+  - [[#spell-checking][Spell Checking]]
+  - [[#helper-functions][Helper functions]]
 - [[#packages][Packages]]
 - [[#ui][UI]]
+  - [[#color-scheme][Color Scheme]]
+  - [[#visual-elements][Visual Elements]]
+  - [[#remove-separator-pipes][Remove separator pipes]]
+  - [[#disable-scroll-bars][Disable Scroll-bars]]
 - [[#keybindings][Keybindings]]
-  - [[#general][General]]
-  - [[#buffers][Buffers]]
-  - [[#windows][Windows]]
-  - [[#tabs][Tabs]]
-  - [[#edit-config][Edit config]]
-  - [[#file-navigation][File navigation]]
+  - [[#leader---leader][Leader - <Leader>]]
+  - [[#command-mode][Command Mode]]
+  - [[#arrows][Arrows]]
+  - [[#numbers][Numbers]]
+  - [[#folds][Folds]]
+  - [[#navigation][Navigation]]
 
 * Core
 Enable file type plugins
@@ -36,6 +55,89 @@ source $HOME/.vim/core/core-editor.vim
 source $HOME/.vim/core/core-packages.vim
 source $HOME/.vim/core/core-ui.vim
 source $HOME/.vim/core/core-keybindings.vim
+#+end_src
+
+* Helper functions
+#+begin_src vimrc
+" Returns true if paste mode is enabled
+function! HasPaste()
+  if &paste
+    return 'PASTE MODE  '
+  endif
+  return ''
+endfunction
+
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+  let l:currentBufNum = bufnr("%")
+  let l:alternateBufNum = bufnr("#")
+
+  if buflisted(l:alternateBufNum)
+    buffer #
+  else
+    bnext
+  endif
+
+  if bufnr("%") == l:currentBufNum
+    new
+  endif
+
+  if buflisted(l:currentBufNum)
+    execute("bdelete! ".l:currentBufNum)
+  endif
+endfunction
+
+function! CmdLine(str)
+  call feedkeys(":" . a:str)
+endfunction 
+
+function! VisualSelection(direction, extra_filter) range
+  let l:saved_reg = @"
+  execute "normal! vgvy"
+
+  let l:pattern = escape(@", "\\/.*'$^~[]")
+  let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+  if a:direction == 'gv'
+    call CmdLine("Ack '" . l:pattern . "' " )
+  elseif a:direction == 'replace'
+    call CmdLine("%s" . '/'. l:pattern . '/')
+  endif
+
+  let @/ = l:pattern
+  let @" = l:saved_reg
+endfunction
+
+func! DeleteTillSlash()
+  let g:cmd = getcmdline()
+
+  if has("win16") || has("win32")
+    let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
+  else
+    let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
+  endif
+
+  if g:cmd == g:cmd_edited
+    if has("win16") || has("win32")
+      let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
+    else
+      let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
+    endif
+  endif   
+
+  return g:cmd_edited
+endfunc
+
+func! CurrentFileDir(cmd)
+  return a:cmd . " " . expand("%:p:h") . "/"
+endfunc
+#+end_src
+
+* File Handling
+#+begin_src vimrc
+set encoding=utf-8 " Set utf8 as standard encoding and en_US as the standard language
+set ffs=unix,dos,mac " Use Unix as the standard file type
 #+end_src
 
 * Editor
@@ -78,6 +180,16 @@ try
   set undofile
 catch
 endtry
+#+end_src
+
+** Ignore Compiled Files
+#+begin_src vimrc
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+  set wildignore+=.git\*,.hg\*,.svn\*,**\node_modules\**
+else
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,**/node_modules/**,*/.DS_Store
+endif
 #+end_src
 
 ** Text, tab and indent related
@@ -158,129 +270,29 @@ if has("gui_macvim")
 endif
 #+end_src
 
-* Basic
-** Colors and Fonts
+** Backspace
+Configure backspace so it acts as it should act
 #+begin_src vimrc
-syntax enable  " Enable syntax highlighting
-set encoding=utf-8 " Set utf8 as standard encoding and en_US as the standard language
-set ffs=unix,dos,mac " Use Unix as the standard file type
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+#+end_src
 
-" Set font according to system
-if has("mac") || has("macunix")
-  set gfn=IBM\ Plex\ Mono:h14,Hack:h14,Source\ Code\ Pro:h15,Menlo:h15
-elseif has("win16") || has("win32")
-  set gfn=Hack\ Nerd\ Font\ Mono:h10,Source\ Code\ Pro:h12,IBM\ Plex\ Mono:h14,Consolas:h11
-elseif has("gui_gtk2")
-  set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("linux")
-  set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("unix")
-  set gfn=Monospace\ 11
-endif
+** Sudo Save
+=:W= sudo saves the file
+useful for handling the permission-denied error
+#+begin_src vimrc
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+#+end_src
 
-" Enable 256 colors palette in Gnome Terminal
-if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-endif
-
-if exists('$TMUX') 
-  if has('nvim')
-    set termguicolors
-  else
-    set term=screen-256color 
-  endif
-endif
-
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-  set guioptions-=T
-  set guioptions-=e
-  set t_Co=256
-  set guitablabel=%M\ %t
-endif
+** Syntax highlighting
+Enable syntax highlighting
+#+begin_src vimrc
+syntax enable
 #+end_src
 
 ** Spell Checking
 #+begin_src vimrc
-set spelllang=en_us,ru_ru
-#+end_src
-
-** Helper functions
-#+begin_src vimrc
-" Returns true if paste mode is enabled
-function! HasPaste()
-  if &paste
-    return 'PASTE MODE  '
-  endif
-  return ''
-endfunction
-
-" Don't close window, when deleting a buffer
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-  let l:currentBufNum = bufnr("%")
-  let l:alternateBufNum = bufnr("#")
-
-  if buflisted(l:alternateBufNum)
-    buffer #
-  else
-    bnext
-  endif
-
-  if bufnr("%") == l:currentBufNum
-    new
-  endif
-
-  if buflisted(l:currentBufNum)
-    execute("bdelete! ".l:currentBufNum)
-  endif
-endfunction
-
-function! CmdLine(str)
-  call feedkeys(":" . a:str)
-endfunction 
-
-function! VisualSelection(direction, extra_filter) range
-  let l:saved_reg = @"
-  execute "normal! vgvy"
-
-  let l:pattern = escape(@", "\\/.*'$^~[]")
-  let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-  if a:direction == 'gv'
-    call CmdLine("Ack '" . l:pattern . "' " )
-  elseif a:direction == 'replace'
-    call CmdLine("%s" . '/'. l:pattern . '/')
-  endif
-
-  let @/ = l:pattern
-  let @" = l:saved_reg
-endfunction
-
-func! DeleteTillSlash()
-  let g:cmd = getcmdline()
-
-  if has("win16") || has("win32")
-    let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
-  else
-    let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
-  endif
-
-  if g:cmd == g:cmd_edited
-    if has("win16") || has("win32")
-      let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
-    else
-      let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
-    endif
-  endif   
-
-  return g:cmd_edited
-endfunc
-
-func! CurrentFileDir(cmd)
-  return a:cmd . " " . expand("%:p:h") . "/"
-endfunc
+set spelllang=en_us
 #+end_src
 
 * Packages
@@ -388,6 +400,28 @@ map <leader>hrp :PlugInstall --sync<cr>
 :PROPERTIES:
 :header-args: :tangle core-ui.vim
 :END:
+** Color Scheme
+#+begin_src vimrc
+set background=dark
+colorscheme gruvbox8
+#+end_src
+
+** Fonts
+#+begin_src vimrc
+" Set font according to system
+if has("mac") || has("macunix")
+  set gfn=IBM\ Plex\ Mono:h14,Hack:h14,Source\ Code\ Pro:h15,Menlo:h15
+elseif has("win16") || has("win32")
+  set gfn=Hack\ Nerd\ Font\ Mono:h10,Source\ Code\ Pro:h12,IBM\ Plex\ Mono:h14,Consolas:h11
+elseif has("gui_gtk2")
+  set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
+elseif has("linux")
+  set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
+elseif has("unix")
+  set gfn=Monospace\ 11
+endif
+#+end_src
+
 ** Visual Elements
 #+begin_src vimrc
 set foldcolumn=1     " Add a bit extra margin to the left
@@ -417,132 +451,47 @@ set guioptions-=l
 set guioptions-=L
 #+end_src
 
+** Terminal Colors
+Enable 256 colors palette in Gnome Terminal
+#+begin_src vimrc
+if $COLORTERM == 'gnome-terminal'
+  set t_Co=256
+endif
+#+end_src
+
+#+begin_src vimrc
+if exists('$TMUX') 
+  if has('nvim')
+    set termguicolors
+  else
+    set term=screen-256color 
+  endif
+endif
+#+end_src
+
+** GUI Mode
+Set extra options when running in GUI mode
+#+begin_src vimrc
+if has("gui_running")
+  set guioptions-=T
+  set guioptions-=e
+  set t_Co=256
+  set guitablabel=%M\ %t
+endif
+#+end_src
+
 * Keybindings
 :PROPERTIES:
 :header-args: :tangle core-keybindings.vim
 :END:
-** Backspace
-Configure backspace so it acts as it should act
+** Leader - <Leader>
 #+begin_src vimrc
-set backspace=eol,start,indent
-set whichwrap+=<,>,h,l
-#+end_src
-
-** General
-#+begin_src vimrc
-" :W sudo saves the file
-" (useful for handling the permission-denied error)
-command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
-
-" <leader> section
 nnoremap <silent> <leader><Esc> :nohlsearch<cr>
-
-" +file section
-map <leader>fc :cd %:p:h<cr>:pwd<cr>
-map <leader>fs :write<cr>
-map <leader>fS :write
-map <leader>fv :vimgrep **/*
-
-" +toggle section
-map <leader>tp :setlocal paste!<cr>
-map <leader>ts :setlocal spell!<cr>
-map <leader>it :r !toilet -f pagga
-
-" +quit/session section
-map <leader>ql :source $HOME/.vim/sessions/quick-session.vim<cr>
-map <leader>qL :source $HOME/.vim/sessions/
-map <leader>qq :qa<cr>
-map <leader>qQ :qa!<cr>
-map <leader>qs :mksession! $HOME/.vim/sessions/quick-session.vim<cr>
-map <leader>qS :mksession $HOME/.vim/sessions/
-
-" +help section
-" +reload section
-map <leader>hre :source $MYVIMRC<cr>
-map <leader>hrr :source %<cr>
-#+end_src
-
-** Buffers
-#+begin_src vimrc
-" <leader> section
 map <leader>< :BufExplorerHorizontalSplit<cr>
 map <leader>` :b#<cr>
-
-" +buffer section
-map <leader>b[ :bprevious<cr>
-map <leader>b] :bnext<cr>
-map <leader>bb :BufExplorerHorizontalSplit<cr>
-map <leader>bd :Bclose<cr>
-map <leader>bk :Bclose<cr>
-map <leader>bK :bufdo bd<cr>
-map <leader>bn :bnext<cr>
-map <leader>bN :tabe<cr>
-" map <leader>bO :<bar> %bd <bar> e#<cr>
-map <leader>bp :bprevious<cr>
-map <leader>bl :b#<cr>
-map <leader>bs :write<cr>
-map <leader>bS :wa<cr>
-map <leader>bu :W<cr>
-
-" Arrows
-nnoremap <Up> :blast<cr>
-nnoremap <Down> :bfirst<cr>
-nnoremap <Left> :bprevious<cr>
-nnoremap <Right> :bnext<cr>
 #+end_src
-
-** Windows
+*** TAB -> +workspace
 #+begin_src vimrc
-" Smart way to move between windows
-" map <C-j> <C-W>j
-" map <C-k> <C-W>k
-" map <C-h> <C-W>h
-" map <C-l> <C-W>l
-
-" <leader> section
-map <leader>w` :term<cr>
-
-" +window section
-" Resize windows
-map <leader>w+ :resize +5<cr>
-map <leader>w- :resize -5<cr>
-map <leader>w< :vertical resize -5<cr>
-map <leader>w> :vertical resize +5<cr>
-map <leader>w= <C-w>=
-map <leader>w_ :resize<cr>
-map <leader>w\| :vertical resize<cr>
-
-" Standard controlls
-map <leader>wb <C-w>b
-map <leader>wc :close<cr>
-map <leader>wd :close<cr>
-map <leader>wh <C-w>h
-map <leader>wH <C-w>H
-map <leader>wj <C-w>j
-map <leader>wJ <C-w>J
-map <leader>wk <C-w>k
-map <leader>wK <C-w>K
-map <leader>wl <C-w>l
-map <leader>wL <C-w>L
-map <leader>wn :new<cr>
-map <leader>wo :only<cr>
-map <leader>wp <C-w>p
-map <leader>wq :quit<cr>
-map <leader>wr <C-w>r
-map <leader>wR <C-w>R
-map <leader>ws :split<cr><C-w>p
-map <leader>wS :split<cr>
-map <leader>wt <C-w>t
-map <leader>wT <C-w>T
-map <leader>wv :vsplit<cr><C-w>p
-map <leader>wV :vsplit<cr>
-map <leader>ww <C-w>w
-map <leader>wW <C-w>W
-#+end_src
-
-** Tabs
-#+begin_src vimrc
-" +<Tab> section
 map <leader><Tab>. :tabs<cr>
 map <leader><Tab>0 :$tabnext<cr>
 map <leader><Tab>1 :1tabnext<cr>
@@ -574,32 +523,173 @@ nmap <leader><Tab>l :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 #+end_src
 
-** File navigation
+*** B -> +buffer
 #+begin_src vimrc
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+map <leader>b[ :bprevious<cr>
+map <leader>b] :bnext<cr>
+map <leader>bb :BufExplorerHorizontalSplit<cr>
+map <leader>bd :Bclose<cr>
+map <leader>bk :Bclose<cr>
+map <leader>bK :bufdo bd<cr>
+map <leader>bn :bnext<cr>
+map <leader>bN :tabe<cr>
+" map <leader>bO :<bar> %bd <bar> e#<cr>
+map <leader>bp :bprevious<cr>
+map <leader>bl :b#<cr>
+map <leader>bs :write<cr>
+map <leader>bS :wa<cr>
+map <leader>bu :W<cr>
+#+end_src
 
-" Move a line of text using Shift+j/k in all modes
-nnoremap K :m-2<cr>==
-nnoremap J :m+<cr>==
-vnoremap K :m '<-2<cr>gv=gv
-vnoremap J :m '>+1<cr>gv=gv
+*** C -> +code
+#+begin_src vimrc
 
-" Move a line of text using Alt+j/k in all modes
-nnoremap <A-k> :m-2<cr>==
-nnoremap <A-j> :m+<cr>==
-vnoremap <A-k> :m '<-2<cr>gv=gv
-vnoremap <A-j> :m '>+1<cr>gv=gv
+#+end_src
 
-" Increase/Decrease numbers
-noremap g- <C-x>
+*** F -> +file
+#+begin_src vimrc
+map <leader>fc :cd %:p:h<cr>:pwd<cr>
+map <leader>fs :write<cr>
+map <leader>fS :write
+map <leader>fv :vimgrep **/*
+#+end_src
+
+*** G -> +git
+#+begin_src vimrc
+
+#+end_src
+
+*** H -> +help
+#+begin_src vimrc
+#+end_src
+
+**** R -> +Reload
+#+begin_src vimrc
+map <leader>hre :source $MYVIMRC<cr>
+map <leader>hrr :source %<cr>
+#+end_src
+
+*** I -> +insert
+#+begin_src vimrc
+
+#+end_src
+
+*** O -> +open
+#+begin_src vimrc
+
+#+end_src
+
+*** P -> +popup (project)
+#+begin_src vimrc
+
+#+end_src
+
+*** Q -> +quit/session
+#+begin_src vimrc
+map <leader>ql :source $HOME/.vim/sessions/quick-session.vim<cr>
+map <leader>qL :source $HOME/.vim/sessions/
+map <leader>qq :qa<cr>
+map <leader>qQ :qa!<cr>
+map <leader>qs :mksession! $HOME/.vim/sessions/quick-session.vim<cr>
+map <leader>qS :mksession $HOME/.vim/sessions/
+#+end_src
+
+*** S -> +search
+#+begin_src vimrc
+
+#+end_src
+
+*** T -> +toggle
+#+begin_src vimrc
+map <leader>tp :setlocal paste!<cr>
+map <leader>ts :setlocal spell!<cr>
+map <leader>it :r !toilet -f pagga
+#+end_src
+
+*** W -> +window
+#+begin_src vimrc
+map <leader>w` :term<cr>
+#+end_src
+
+Resize windows
+#+begin_src vimrc
+map <leader>w+ :resize +5<cr>
+map <leader>w- :resize -5<cr>
+map <leader>w< :vertical resize -5<cr>
+map <leader>w> :vertical resize +5<cr>
+map <leader>w= <C-w>=
+map <leader>w_ :resize<cr>
+map <leader>w\| :vertical resize<cr>
+#+end_src
+
+Standard controls
+#+begin_src vimrc
+map <leader>wb <C-w>b
+map <leader>wc :close<cr>
+map <leader>wd :close<cr>
+map <leader>wh <C-w>h
+map <leader>wH <C-w>H
+map <leader>wj <C-w>j
+map <leader>wJ <C-w>J
+map <leader>wk <C-w>k
+map <leader>wK <C-w>K
+map <leader>wl <C-w>l
+map <leader>wL <C-w>L
+map <leader>wn :new<cr>
+map <leader>wo :only<cr>
+map <leader>wp <C-w>p
+map <leader>wq :quit<cr>
+map <leader>wr <C-w>r
+map <leader>wR <C-w>R
+map <leader>ws :split<cr><C-w>p
+map <leader>wS :split<cr>
+map <leader>wt <C-w>t
+map <leader>wT <C-w>T
+map <leader>wv :vsplit<cr><C-w>p
+map <leader>wV :vsplit<cr>
+map <leader>ww <C-w>w
+map <leader>wW <C-w>W
+#+end_src
+
+** Command Mode
+#+begin_src vimrc
+map <A-x> :
+#+end_src
+
+** Arrows
+#+begin_src vimrc
+nnoremap <Up> :blast<cr>
+nnoremap <Down> :bfirst<cr>
+nnoremap <Left> :bprevious<cr>
+nnoremap <Right> :bnext<cr>
+#+end_src
+
+** Numbers
+Increment/Decrement number at point
+#+begin_src vimrc
 noremap g= <C-a>
+noremap g- <C-x>
+#+end_src
 
-" Folds
+** Folds
+#+begin_src vimrc
 noremap <tab> :norm za<cr>
 noremap <tab><tab> :norm zA<cr>
 noremap <S-tab> :norm zR<cr>
 noremap <S-tab><S-tab> :norm zM<cr>
+#+end_src
+
+** Visual Selection Search
+#+begin_src vimrc
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+#+end_src
+
+** Moving Lines
+Move a line of text using Alt+j/k in all modes
+#+begin_src vimrc
+nnoremap <A-k> :m-2<cr>==
+nnoremap <A-j> :m+<cr>==
+vnoremap <A-k> :m '<-2<cr>gv=gv
+vnoremap <A-j> :m '>+1<cr>gv=gv
 #+end_src

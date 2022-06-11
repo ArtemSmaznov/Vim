@@ -27,6 +27,13 @@ try
 catch
 endtry
 
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+  set wildignore+=.git\*,.hg\*,.svn\*,**\node_modules\**
+else
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,**/node_modules/**,*/.DS_Store
+endif
+
 set tabstop=2             " Insert 2 spaces for a tab
 set shiftwidth=2          " Change the number of spaces for indentation
 set smarttab              " Makes tabbing smarter will realize you have 2 vs 4
@@ -87,3 +94,12 @@ set tm=500
 if has("gui_macvim")
   autocmd GUIEnter * set vb t_vb=
 endif
+
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+syntax enable
+
+set spelllang=en_us

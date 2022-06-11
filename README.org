@@ -9,16 +9,20 @@
 - [[#editor][Editor]]
 - [[#keybindings][Keybindings]]
 - [[#ui][UI]]
+  - [[#color-scheme][Color Scheme]]
+  - [[#ignore-compiled-files][Ignore Compiled Files]]
 - [[#local-overwrite][Local Overwrite]]
 
 * Description
  A Vim config inspired by Doom Emacs and set to match my Emacs config as close as possible.
 * Editor
+** Comments
 Stop newline continuation of comments
 #+begin_src vimrc
 autocmd BufNewFile,BufRead,BufEnter * setlocal fo-=cro
 #+end_src
 
+** Diffs
 Open diffs in vertical splits
 #+begin_src vimrc
 if !has("mac") || !has("macunix")
@@ -26,6 +30,7 @@ if !has("mac") || !has("macunix")
 endif
 #+end_src
 
+** Scroll Margins
 Step size for navigating with CTRL+e/y
 #+begin_src vimrc
 noremap <C-e> 4<C-e>
@@ -37,22 +42,17 @@ Leave 7 lines on screen above/below the cursor
 set so=7
 #+end_src
 
+** Spell Checking
+#+begin_src vimrc
+set spelllang=en_us,ru_ru
+#+end_src
+
 * Keybindings
 * UI
-Colorscheme
+** Color Scheme
 #+begin_src vimrc
 set background=dark
 colorscheme gruvbox8
-#+end_src
-
-Ignore compiled files
-#+begin_src vimrc
-set wildignore=*.o,*~,*.pyc
-if has("win16") || has("win32")
-  set wildignore+=.git\*,.hg\*,.svn\*,**\node_modules\**
-else
-  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,**/node_modules/**,*/.DS_Store
-endif
 #+end_src
 
 * Local Overwrite
