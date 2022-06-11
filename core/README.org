@@ -1,0 +1,605 @@
+#+TITLE: Doom CORE
+#+AUTHOR: Artem Smaznov
+#+DESCRIPTION: Core configuration for Doom Vim
+#+STARTUP: overview
+#+PROPERTY: header-args :tangle core.vim
+
+* Table of Contents :toc:
+- [[#core][Core]]
+- [[#packages][Packages]]
+- [[#ui][UI]]
+- [[#keybindings][Keybindings]]
+  - [[#general][General]]
+  - [[#buffers][Buffers]]
+  - [[#windows][Windows]]
+  - [[#tabs][Tabs]]
+  - [[#edit-config][Edit config]]
+  - [[#file-navigation][File navigation]]
+
+* Core
+Enable file type plugins
+#+begin_src vimrc
+filetype plugin on
+filetype indent on
+#+end_src
+
+Leader Key
+With a map leader it's possible to do extra key combinations
+#+begin_src vimrc
+let g:mapleader = " "
+let g:maplocalleader = ","
+#+end_src
+
+Sources
+#+begin_src vimrc
+source $HOME/.vim/core/core-editor.vim
+source $HOME/.vim/core/core-packages.vim
+source $HOME/.vim/core/core-ui.vim
+source $HOME/.vim/core/core-keybindings.vim
+#+end_src
+
+* Editor
+:PROPERTIES:
+:header-args: :tangle core-editor.vim
+:END:
+** General abbreviations
+#+begin_src vimrc
+iab xdate <C-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
+#+end_src
+
+** Search
+#+begin_src vimrc
+set ignorecase " Ignore case when searching
+set smartcase  " When searching try to be smart about cases
+set hlsearch   " Highlight search results
+set incsearch  " Makes search act like search in modern browsers
+set magic      " For regular expressions turn magic on
+
+set wildmenu   " Turn on the Wild menu
+#+end_src
+
+** Files, Backups and Undo
+#+begin_src vimrc
+set nobackup              " This is recommended by coc
+set nowritebackup         " This is recommended by coc
+set noswapfile
+
+set history=500       " Sets how many lines of history VIM has to remember
+set clipboard=unnamed " Copy paste between vim and everything else
+
+" Set to auto read when a file is changed from the outside
+set autoread
+" au FocusGained,BufEnter * checktime
+au FocusGained * checktime
+
+" Turn persistent undo on - you can undo even when you close a buffer/VIM
+try
+  set undodir=$HOME/.vim/temp_dirs/undodir
+  set undofile
+catch
+endtry
+#+end_src
+
+** Text, tab and indent related
+#+begin_src vimrc
+set tabstop=2             " Insert 2 spaces for a tab
+set shiftwidth=2          " Change the number of spaces for indentation
+set smarttab              " Makes tabbing smarter will realize you have 2 vs 4
+set expandtab             " Converts tabs to spaces
+
+" Linebreak on 500 characters
+set linebreak
+" set textwidth=500
+
+set autoindent  " Good auto indent
+set smartindent " Makes indenting smart
+set wrap        " Wrap lines
+
+" CTRL+A/X will only treat numbers as decimals or hex
+set nrformats=bin,hex
+#+end_src
+
+** Tabs, windows and buffers
+#+begin_src vimrc
+set hidden     " A buffer becomes hidden when it is abandoned
+
+" Specify the behavior when switching between buffers 
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
+
+" Return to last edit position when opening files (You want this!)
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Delete trailing white space on save, useful for some filetypes
+fun! CleanExtraSpaces()
+  let save_cursor = getpos(".")
+  let old_query = getreg('/')
+  silent! %s/\s\+$//e
+  call setpos('.', save_cursor)
+  call setreg('/', old_query)
+endfun
+
+if has("autocmd")
+  autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
+endif
+#+end_src
+
+** Mouse
+Enable Mouse Support
+#+begin_src vimrc
+set mouse=a
+
+if !has('nvim')
+  set ttymouse=sgr
+  set termwinsize=15x0 " Set size for terminal
+endif
+
+set lazyredraw " Don't redraw while executing macros (good performance config)
+set showmatch  " Show matching brackets when text indicator is over them
+set mat=2      " How many tenths of a second to blink when matching brackets
+#+end_src
+
+** Sound
+No annoying sound on errors
+#+begin_src vimrc
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+#+end_src
+
+Properly disable sound on errors on MacVim
+#+begin_src vimrc
+if has("gui_macvim")
+  autocmd GUIEnter * set vb t_vb=
+endif
+#+end_src
+
+* Basic
+** Colors and Fonts
+#+begin_src vimrc
+syntax enable  " Enable syntax highlighting
+set encoding=utf-8 " Set utf8 as standard encoding and en_US as the standard language
+set ffs=unix,dos,mac " Use Unix as the standard file type
+
+" Set font according to system
+if has("mac") || has("macunix")
+  set gfn=IBM\ Plex\ Mono:h14,Hack:h14,Source\ Code\ Pro:h15,Menlo:h15
+elseif has("win16") || has("win32")
+  set gfn=Hack\ Nerd\ Font\ Mono:h10,Source\ Code\ Pro:h12,IBM\ Plex\ Mono:h14,Consolas:h11
+elseif has("gui_gtk2")
+  set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
+elseif has("linux")
+  set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
+elseif has("unix")
+  set gfn=Monospace\ 11
+endif
+
+" Enable 256 colors palette in Gnome Terminal
+if $COLORTERM == 'gnome-terminal'
+  set t_Co=256
+endif
+
+if exists('$TMUX') 
+  if has('nvim')
+    set termguicolors
+  else
+    set term=screen-256color 
+  endif
+endif
+
+
+" Set extra options when running in GUI mode
+if has("gui_running")
+  set guioptions-=T
+  set guioptions-=e
+  set t_Co=256
+  set guitablabel=%M\ %t
+endif
+#+end_src
+
+** Spell Checking
+#+begin_src vimrc
+set spelllang=en_us,ru_ru
+#+end_src
+
+** Helper functions
+#+begin_src vimrc
+" Returns true if paste mode is enabled
+function! HasPaste()
+  if &paste
+    return 'PASTE MODE  '
+  endif
+  return ''
+endfunction
+
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+  let l:currentBufNum = bufnr("%")
+  let l:alternateBufNum = bufnr("#")
+
+  if buflisted(l:alternateBufNum)
+    buffer #
+  else
+    bnext
+  endif
+
+  if bufnr("%") == l:currentBufNum
+    new
+  endif
+
+  if buflisted(l:currentBufNum)
+    execute("bdelete! ".l:currentBufNum)
+  endif
+endfunction
+
+function! CmdLine(str)
+  call feedkeys(":" . a:str)
+endfunction 
+
+function! VisualSelection(direction, extra_filter) range
+  let l:saved_reg = @"
+  execute "normal! vgvy"
+
+  let l:pattern = escape(@", "\\/.*'$^~[]")
+  let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+  if a:direction == 'gv'
+    call CmdLine("Ack '" . l:pattern . "' " )
+  elseif a:direction == 'replace'
+    call CmdLine("%s" . '/'. l:pattern . '/')
+  endif
+
+  let @/ = l:pattern
+  let @" = l:saved_reg
+endfunction
+
+func! DeleteTillSlash()
+  let g:cmd = getcmdline()
+
+  if has("win16") || has("win32")
+    let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
+  else
+    let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
+  endif
+
+  if g:cmd == g:cmd_edited
+    if has("win16") || has("win32")
+      let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
+    else
+      let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
+    endif
+  endif   
+
+  return g:cmd_edited
+endfunc
+
+func! CurrentFileDir(cmd)
+  return a:cmd . " " . expand("%:p:h") . "/"
+endfunc
+#+end_src
+
+* Packages
+:PROPERTIES:
+:header-args: :tangle core-packages.vim
+:END:
+#+begin_src vimrc
+call plug#begin('$HOME/.vim/plugged')
+
+" ======> LSP <======
+" Plug 'neoclide/coc.nvim', {'branch': 'release'} " LSP support for Vim & Neovim
+Plug 'tpope/vim-cucumber'                       " Filetype plugin for Cucumber
+Plug 'pangloss/vim-javascript'                  " Filetype plugin for JavaScript
+Plug 'plasticboy/vim-markdown'                  " Filetype plugin for Markdown
+Plug 'rust-lang/rust.vim'                       " Filetype plugin for Rust
+Plug 'cespare/vim-toml'                         " Filetype plugin for TOML
+Plug 'leafgarland/typescript-vim'               " Filetype plugin for TypeScript
+
+" ======> Text <======
+Plug 'jiangmiao/auto-pairs'                     " Insert or delete brackets, parens, quotes in pair
+Plug 'godlygeek/tabular'                        " Configurable, flexible, intuitive text aligning
+Plug 'terryma/vim-expand-region'                " Incremental visual selection
+Plug 'michaeljsmith/vim-indent-object'          " Text objests based on indent levels
+" Plug 'maxbrunsfeld/vim-yankstack'               " Plugin for storing and cycling through yanked text strings
+Plug 'tpope/vim-commentary'                     " Plugin for commenting code
+Plug 'tpope/vim-surround'                       " Plugin for deleting, changing, and adding surroundings
+Plug 'tpope/vim-repeat'                         " Repeat.vim remaps `.` in a way that plugins can tap into it
+Plug 'honza/vim-snippets'
+Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'christoomey/vim-system-copy'
+" Plug 'vimwiki/vimwiki'
+
+" ======> Navigation <======
+" Plug 'mileszs/ack.vim'                          " Plugin that integrates ack with Vim
+" Plug 'ctrlpvim/ctrlp.vim'                       " Fuzzy file, buffer, mru, tag, ... finder
+Plug 'szw/vim-tags'
+Plug 'jlanzarotta/bufexplorer'                  " Buffer Explorer
+Plug 'farmergreg/vim-lastplace'                 " Intelligently reopen files where you left off
+Plug 'justinmk/vim-sneak'
+Plug 'psliwka/vim-smoothie'
+Plug 'severin-lemaignan/vim-minimap'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" ======> Other <======
+Plug 'chrisbra/Colorizer',
+Plug 'vim-airline/vim-airline'
+Plug 'edkolev/tmuxline.vim'
+Plug 'airblade/vim-gitgutter'                   " A Vim plugin which shows a git diff in the gutter
+Plug 'tpope/vim-fugitive'                       " A Git wrapper so awesome, it should be illegal
+Plug 'liuchengxu/vim-which-key'
+Plug 'ryanoasis/vim-devicons' 
+Plug 'voldikss/vim-floaterm'
+
+" ======> New Plugins to try <====== 
+" Plug 'airblade/vim-rooter'
+
+" ======> Themes <======
+Plug 'lifepillar/vim-gruvbox8'
+
+call plug#end()
+
+
+" ░█▀▀░█▀█░█▀█░█▀▀░▀█▀░█▀▀░█▀▀
+" ░█░░░█░█░█░█░█▀▀░░█░░█░█░▀▀█
+" ░▀▀▀░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀░▀▀▀
+
+source $HOME/.vim/settings/plugins/which-key.vim
+" source $HOME/.vim/settings/plugins/ack.vim
+source $HOME/.vim/settings/plugins/airline.vim
+source $HOME/.vim/settings/plugins/auto-pairs.vim
+source $HOME/.vim/settings/plugins/buffExplorer.vim
+" source $HOME/.vim/settings/plugins/coc.vim
+source $HOME/.vim/settings/plugins/colorizer.vim
+source $HOME/.vim/settings/plugins/commentary.vim
+" source $HOME/.vim/settings/plugins/ctrlp.vim 
+source $HOME/.vim/settings/plugins/floaterm.vim
+source $HOME/.vim/settings/plugins/fzf.vim 
+source $HOME/.vim/settings/plugins/gitGutter.vim
+source $HOME/.vim/settings/plugins/minimap.vim
+source $HOME/.vim/settings/plugins/sneak.vim
+source $HOME/.vim/settings/plugins/system-copy.vim
+source $HOME/.vim/settings/plugins/surround.vim
+source $HOME/.vim/settings/plugins/tabularize.vim
+source $HOME/.vim/settings/plugins/tags.vim
+source $HOME/.vim/settings/plugins/tmuxline.vim
+" source $HOME/.vim/settings/plugins/vimwiki.vim
+" source $HOME/.vim/settings/plugins/yankstack.vim
+
+
+" ░█▄█░▀█▀░█▀▀░█▀▀░
+" ░█░█░░█░░▀▀█░█░░░
+" ░▀░▀░▀▀▀░▀▀▀░▀▀▀░
+
+" Automatically install missing plugins on startup
+autocmd VimEnter *
+      \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+      \|   PlugInstall --sync | q
+      \| endif
+
+map <leader>hrp :PlugInstall --sync<cr>
+#+end_src
+
+* UI
+:PROPERTIES:
+:header-args: :tangle core-ui.vim
+:END:
+** Visual Elements
+#+begin_src vimrc
+set foldcolumn=1     " Add a bit extra margin to the left
+set signcolumn=yes   " Always show the signcolumn, otherwise it would shift the text each time
+set ruler            " Always show current position
+set number           " Show line numbers
+set relativenumber   " Make line numbers relative
+set cursorline       " Enable highlighting of the current line
+set showtabline=2    " Always show tabs
+set laststatus=2     " Always display the status line
+set showcmd          " Show commands
+set cmdheight=1      " Height of the command bar
+set splitbelow       " Horizontal splits will automatically be below
+set splitright       " Vertical splits will automatically be to the right
+#+end_src
+
+** Remove separator pipes
+#+begin_src vimrc
+set fillchars+=vert:\ 
+#+end_src
+
+** Disable Scroll-bars 
+#+begin_src vimrc
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
+#+end_src
+
+* Keybindings
+:PROPERTIES:
+:header-args: :tangle core-keybindings.vim
+:END:
+** Backspace
+Configure backspace so it acts as it should act
+#+begin_src vimrc
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+#+end_src
+
+** General
+#+begin_src vimrc
+" :W sudo saves the file
+" (useful for handling the permission-denied error)
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+" <leader> section
+nnoremap <silent> <leader><Esc> :nohlsearch<cr>
+
+" +file section
+map <leader>fc :cd %:p:h<cr>:pwd<cr>
+map <leader>fs :write<cr>
+map <leader>fS :write
+map <leader>fv :vimgrep **/*
+
+" +toggle section
+map <leader>tp :setlocal paste!<cr>
+map <leader>ts :setlocal spell!<cr>
+map <leader>it :r !toilet -f pagga
+
+" +quit/session section
+map <leader>ql :source $HOME/.vim/sessions/quick-session.vim<cr>
+map <leader>qL :source $HOME/.vim/sessions/
+map <leader>qq :qa<cr>
+map <leader>qQ :qa!<cr>
+map <leader>qs :mksession! $HOME/.vim/sessions/quick-session.vim<cr>
+map <leader>qS :mksession $HOME/.vim/sessions/
+
+" +help section
+" +reload section
+map <leader>hre :source $MYVIMRC<cr>
+map <leader>hrr :source %<cr>
+#+end_src
+
+** Buffers
+#+begin_src vimrc
+" <leader> section
+map <leader>< :BufExplorerHorizontalSplit<cr>
+map <leader>` :b#<cr>
+
+" +buffer section
+map <leader>b[ :bprevious<cr>
+map <leader>b] :bnext<cr>
+map <leader>bb :BufExplorerHorizontalSplit<cr>
+map <leader>bd :Bclose<cr>
+map <leader>bk :Bclose<cr>
+map <leader>bK :bufdo bd<cr>
+map <leader>bn :bnext<cr>
+map <leader>bN :tabe<cr>
+" map <leader>bO :<bar> %bd <bar> e#<cr>
+map <leader>bp :bprevious<cr>
+map <leader>bl :b#<cr>
+map <leader>bs :write<cr>
+map <leader>bS :wa<cr>
+map <leader>bu :W<cr>
+
+" Arrows
+nnoremap <Up> :blast<cr>
+nnoremap <Down> :bfirst<cr>
+nnoremap <Left> :bprevious<cr>
+nnoremap <Right> :bnext<cr>
+#+end_src
+
+** Windows
+#+begin_src vimrc
+" Smart way to move between windows
+" map <C-j> <C-W>j
+" map <C-k> <C-W>k
+" map <C-h> <C-W>h
+" map <C-l> <C-W>l
+
+" <leader> section
+map <leader>w` :term<cr>
+
+" +window section
+" Resize windows
+map <leader>w+ :resize +5<cr>
+map <leader>w- :resize -5<cr>
+map <leader>w< :vertical resize -5<cr>
+map <leader>w> :vertical resize +5<cr>
+map <leader>w= <C-w>=
+map <leader>w_ :resize<cr>
+map <leader>w\| :vertical resize<cr>
+
+" Standard controlls
+map <leader>wb <C-w>b
+map <leader>wc :close<cr>
+map <leader>wd :close<cr>
+map <leader>wh <C-w>h
+map <leader>wH <C-w>H
+map <leader>wj <C-w>j
+map <leader>wJ <C-w>J
+map <leader>wk <C-w>k
+map <leader>wK <C-w>K
+map <leader>wl <C-w>l
+map <leader>wL <C-w>L
+map <leader>wn :new<cr>
+map <leader>wo :only<cr>
+map <leader>wp <C-w>p
+map <leader>wq :quit<cr>
+map <leader>wr <C-w>r
+map <leader>wR <C-w>R
+map <leader>ws :split<cr><C-w>p
+map <leader>wS :split<cr>
+map <leader>wt <C-w>t
+map <leader>wT <C-w>T
+map <leader>wv :vsplit<cr><C-w>p
+map <leader>wV :vsplit<cr>
+map <leader>ww <C-w>w
+map <leader>wW <C-w>W
+#+end_src
+
+** Tabs
+#+begin_src vimrc
+" +<Tab> section
+map <leader><Tab>. :tabs<cr>
+map <leader><Tab>0 :$tabnext<cr>
+map <leader><Tab>1 :1tabnext<cr>
+map <leader><Tab>2 :2tabnext<cr>
+map <leader><Tab>3 :3tabnext<cr>
+map <leader><Tab>4 :4tabnext<cr>
+map <leader><Tab>5 :5tabnext<cr>
+map <leader><Tab>6 :6tabnext<cr>
+map <leader><Tab>7 :7tabnext<cr>
+map <leader><Tab>8 :8tabnext<cr>
+map <leader><Tab>9 :9tabnext<cr>
+map <leader><Tab>< :0tabmove<cr>
+map <leader><Tab>> :$tabmove<cr>
+map <leader><Tab>[ :tabprevious<cr>
+map <leader><Tab>] :tabnext<cr>
+map <leader><Tab>` :tabnext #<cr>
+map <leader><Tab>c :tabclose<cr>
+map <leader><Tab>d :tabclose<cr>
+map <leader><Tab>m :tabmove
+map <leader><Tab>n :tabnew<cr>
+map <leader><Tab>O :tabonly<cr>
+map <leader><Tab>{ :-tabmove<cr>
+map <leader><Tab>} :+tabmove<cr>
+
+
+" Toggle between this and the last accessed tab
+let g:lasttab = 1
+nmap <leader><Tab>l :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+#+end_src
+
+** File navigation
+#+begin_src vimrc
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+" Move a line of text using Shift+j/k in all modes
+nnoremap K :m-2<cr>==
+nnoremap J :m+<cr>==
+vnoremap K :m '<-2<cr>gv=gv
+vnoremap J :m '>+1<cr>gv=gv
+
+" Move a line of text using Alt+j/k in all modes
+nnoremap <A-k> :m-2<cr>==
+nnoremap <A-j> :m+<cr>==
+vnoremap <A-k> :m '<-2<cr>gv=gv
+vnoremap <A-j> :m '>+1<cr>gv=gv
+
+" Increase/Decrease numbers
+noremap g- <C-x>
+noremap g= <C-a>
+
+" Folds
+noremap <tab> :norm za<cr>
+noremap <tab><tab> :norm zA<cr>
+noremap <S-tab> :norm zR<cr>
+noremap <S-tab><S-tab> :norm zM<cr>
+#+end_src

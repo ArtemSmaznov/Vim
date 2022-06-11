@@ -1,4 +1,65 @@
-#+TITLE: Vim
+#+TITLE: Doom Vim
 #+AUTHOR: Artem Smaznov
-#+DESCRIPTION: You either love it or don't know that it exists
+#+DESCRIPTION: You either love it or don't know that it exists.
 #+STARTUP: overview
+#+PROPERTY: header-args :tangle config.vim
+
+* Table of Contents :toc:
+- [[#description][Description]]
+- [[#editor][Editor]]
+- [[#keybindings][Keybindings]]
+- [[#ui][UI]]
+- [[#local-overwrite][Local Overwrite]]
+
+* Description
+ A Vim config inspired by Doom Emacs and set to match my Emacs config as close as possible.
+* Editor
+Stop newline continuation of comments
+#+begin_src vimrc
+autocmd BufNewFile,BufRead,BufEnter * setlocal fo-=cro
+#+end_src
+
+Open diffs in vertical splits
+#+begin_src vimrc
+if !has("mac") || !has("macunix")
+  set diffopt+=vertical
+endif
+#+end_src
+
+Step size for navigating with CTRL+e/y
+#+begin_src vimrc
+noremap <C-e> 4<C-e>
+noremap <C-y> 4<C-y>
+#+end_src
+
+Leave 7 lines on screen above/below the cursor
+#+begin_src vimrc
+set so=7
+#+end_src
+
+* Keybindings
+* UI
+Colorscheme
+#+begin_src vimrc
+set background=dark
+colorscheme gruvbox8
+#+end_src
+
+Ignore compiled files
+#+begin_src vimrc
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+  set wildignore+=.git\*,.hg\*,.svn\*,**\node_modules\**
+else
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,**/node_modules/**,*/.DS_Store
+endif
+#+end_src
+
+* Local Overwrite
+Load custom configuration overwrites from and external file
+#+begin_src vimrc
+try
+  source $HOME/.vim/after/vimrc
+catch
+endtry
+#+end_src

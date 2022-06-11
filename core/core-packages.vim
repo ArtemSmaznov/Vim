@@ -1,11 +1,7 @@
-" ░█▀█░█░░░█░█░█▀▀░▀█▀░█▀█░█▀▀
-" ░█▀▀░█░░░█░█░█░█░░█░░█░█░▀▀█
-" ░▀░░░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
-
 call plug#begin('$HOME/.vim/plugged')
 
 " ======> LSP <======
-Plug 'neoclide/coc.nvim', {'branch': 'release'} " LSP support for Vim & Neovim
+" Plug 'neoclide/coc.nvim', {'branch': 'release'} " LSP support for Vim & Neovim
 Plug 'tpope/vim-cucumber'                       " Filetype plugin for Cucumber
 Plug 'pangloss/vim-javascript'                  " Filetype plugin for JavaScript
 Plug 'plasticboy/vim-markdown'                  " Filetype plugin for Markdown
@@ -67,7 +63,7 @@ source $HOME/.vim/settings/plugins/which-key.vim
 source $HOME/.vim/settings/plugins/airline.vim
 source $HOME/.vim/settings/plugins/auto-pairs.vim
 source $HOME/.vim/settings/plugins/buffExplorer.vim
-source $HOME/.vim/settings/plugins/coc.vim
+" source $HOME/.vim/settings/plugins/coc.vim
 source $HOME/.vim/settings/plugins/colorizer.vim
 source $HOME/.vim/settings/plugins/commentary.vim
 " source $HOME/.vim/settings/plugins/ctrlp.vim 

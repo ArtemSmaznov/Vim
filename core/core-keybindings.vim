@@ -1,18 +1,7 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Key Mappings that are specific to plugins are defined per plugin under 'plug-configs' directory
-"
-" Sections:
-"    -> General
-"    -> Buffers
-"    -> Windows
-"    -> Tabs
-"    -> Edit config
-"    -> File navigation
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :W sudo saves the file 
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+" :W sudo saves the file
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
@@ -22,13 +11,13 @@ nnoremap <silent> <leader><Esc> :nohlsearch<cr>
 " +file section
 map <leader>fc :cd %:p:h<cr>:pwd<cr>
 map <leader>fs :write<cr>
-map <leader>fS :write 
-map <leader>fv :vimgrep **/* 
+map <leader>fS :write
+map <leader>fv :vimgrep **/*
 
 " +toggle section
 map <leader>tp :setlocal paste!<cr>
 map <leader>ts :setlocal spell!<cr>
-map <leader>it :r !toilet -f pagga 
+map <leader>it :r !toilet -f pagga
 
 " +quit/session section
 map <leader>ql :source $HOME/.vim/sessions/quick-session.vim<cr>
@@ -39,14 +28,10 @@ map <leader>qs :mksession! $HOME/.vim/sessions/quick-session.vim<cr>
 map <leader>qS :mksession $HOME/.vim/sessions/
 
 " +help section
-  " +reload section
-  map <leader>hre :source $MYVIMRC<cr>
-  map <leader>hrr :source %<cr>
+" +reload section
+map <leader>hre :source $MYVIMRC<cr>
+map <leader>hrr :source %<cr>
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " <leader> section
 map <leader>< :BufExplorerHorizontalSplit<cr>
 map <leader>` :b#<cr>
@@ -73,10 +58,6 @@ nnoremap <Down> :bfirst<cr>
 nnoremap <Left> :bprevious<cr>
 nnoremap <Right> :bnext<cr>
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Windows
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Smart way to move between windows
 " map <C-j> <C-W>j
 " map <C-k> <C-W>k
@@ -123,10 +104,6 @@ map <leader>wV :vsplit<cr>
 map <leader>ww <C-w>w
 map <leader>wW <C-w>W
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Tabs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " +<Tab> section
 map <leader><Tab>. :tabs<cr>
 map <leader><Tab>0 :$tabnext<cr>
@@ -146,7 +123,7 @@ map <leader><Tab>] :tabnext<cr>
 map <leader><Tab>` :tabnext #<cr>
 map <leader><Tab>c :tabclose<cr>
 map <leader><Tab>d :tabclose<cr>
-map <leader><Tab>m :tabmove 
+map <leader><Tab>m :tabmove
 map <leader><Tab>n :tabnew<cr>
 map <leader><Tab>O :tabonly<cr>
 map <leader><Tab>{ :-tabmove<cr>
@@ -158,47 +135,18 @@ let g:lasttab = 1
 nmap <leader><Tab>l :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Edit config
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" +vim section
-map <leader>fevr :e! $HOME/.vim/vimrc<cr>
-map <leader>fevb :e! $HOME/.vim/settings/basic.vim<cr>
-map <leader>fevp :e! $HOME/.vim/settings/plugins.vim<cr>
-map <leader>fevu :e! $HOME/.vim/settings/ui.vim<cr>
-map <leader>fevk :e! $HOME/.vim/settings/key-mappings.vim<cr>
-map <leader>fevw :e! $HOME/.vim/settings/plugins/which-key.vim<cr>
-
-" +qtile section
-map <leader>feqb :e! $HOME/.config/qtile/lib/bars.py<cr>
-map <leader>feqg :e! $HOME/.config/qtile/settings/groups.py<cr>
-map <leader>feqk :e! $HOME/.config/qtile/keys/bindings.py<cr>
-map <leader>feql :e! $HOME/.config/qtile/settings/layouts.py<cr>
-map <leader>feqt :e! $HOME/.config/qtile/theme/default.py<cr>
-map <leader>feqw :e! $HOME/.config/qtile/lib/widgets/general.py<cr>
-
-" +dotfiles section
-map <leader>fedb :e! $HOME/.bashrc<cr>
-map <leader>fedz :e! $HOME/.zshrc<cr>
-map <leader>feda :e! $HOME/.config/aliasrc<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => File navigation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
-" Move a line of text using Shift+j/k in all modes 
+" Move a line of text using Shift+j/k in all modes
 nnoremap K :m-2<cr>==
 nnoremap J :m+<cr>==
 vnoremap K :m '<-2<cr>gv=gv
 vnoremap J :m '>+1<cr>gv=gv
 
-" Move a line of text using Alt+j/k in all modes 
+" Move a line of text using Alt+j/k in all modes
 nnoremap <A-k> :m-2<cr>==
 nnoremap <A-j> :m+<cr>==
 vnoremap <A-k> :m '<-2<cr>gv=gv
@@ -213,5 +161,3 @@ noremap <tab> :norm za<cr>
 noremap <tab><tab> :norm zA<cr>
 noremap <S-tab> :norm zR<cr>
 noremap <S-tab><S-tab> :norm zM<cr>
-
-
