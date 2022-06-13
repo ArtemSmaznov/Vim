@@ -129,6 +129,8 @@ map <leader>hrr :source %<cr>
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i      = { 'name' : '+insert' } | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['t'] = 'Insert Toilet title'  | endif
 
+map <leader>it :r !toilet -f pagga
+
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.o = { 'name' : '+open' } | endif
 
 if has_key(plugs, 'vim-floaterm')
@@ -202,7 +204,6 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['s'] = 'Spell check' 
 
 map <leader>tp :setlocal paste!<cr>
 map <leader>ts :setlocal spell!<cr>
-map <leader>it :r !toilet -f pagga
 
 if has_key(plugs, 'vim-minimap')
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['m']      = 'Minimap'                  | endif

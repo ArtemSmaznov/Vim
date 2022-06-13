@@ -56,8 +56,9 @@ let g:maplocalleader = ","
 
 Sources
 #+begin_src vimrc
-source $HOME/.vim/core/core-editor.vim
 source $HOME/.vim/packages.vim
+source $HOME/.vim/modules/source.vim
+source $HOME/.vim/core/core-editor.vim
 source $HOME/.vim/core/core-ui.vim
 source $HOME/.vim/core/core-keybindings.vim
 #+end_src
@@ -587,6 +588,8 @@ map <leader>hrr :source %<cr>
 #+begin_src vimrc
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i      = { 'name' : '+insert' } | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['t'] = 'Insert Toilet title'  | endif
+
+map <leader>it :r !toilet -f pagga
 #+end_src
 
 *** o -> +open
@@ -688,7 +691,6 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['s'] = 'Spell check' 
 
 map <leader>tp :setlocal paste!<cr>
 map <leader>ts :setlocal spell!<cr>
-map <leader>it :r !toilet -f pagga
 #+end_src
 
 Mini-map

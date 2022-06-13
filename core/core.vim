@@ -4,8 +4,9 @@ filetype indent on
 let g:mapleader = " "
 let g:maplocalleader = ","
 
-source $HOME/.vim/core/core-editor.vim
 source $HOME/.vim/packages.vim
+source $HOME/.vim/modules/source.vim
+source $HOME/.vim/core/core-editor.vim
 source $HOME/.vim/core/core-ui.vim
 source $HOME/.vim/core/core-keybindings.vim
 
