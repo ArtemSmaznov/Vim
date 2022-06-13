@@ -51,7 +51,7 @@ Leader Key
 With a map leader it's possible to do extra key combinations
 #+begin_src vimrc
 let g:mapleader = " "
-let g:maplocalleader = ","
+let g:maplocalleader = " m"
 #+end_src
 
 Sources
@@ -436,6 +436,7 @@ map <leader>` :b#<cr>
 
 *** TAB -> +workspace
 #+begin_src vimrc
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<TAB>']      = { 'name' : '+workspace' }  | endif
 map <leader><Tab>. :tabs<cr>
 map <leader><Tab>0 :$tabnext<cr>
 map <leader><Tab>1 :1tabnext<cr>

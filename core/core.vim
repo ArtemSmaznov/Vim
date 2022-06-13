@@ -2,7 +2,7 @@ filetype plugin on
 filetype indent on
 
 let g:mapleader = " "
-let g:maplocalleader = ","
+let g:maplocalleader = " m"
 
 source $HOME/.vim/packages.vim
 source $HOME/.vim/modules/source.vim

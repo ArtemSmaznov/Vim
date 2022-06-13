@@ -5,6 +5,8 @@ Plug 'tommcdo/vim-lion'
 Plug 'liuchengxu/vim-which-key'
 Plug 'tpope/vim-commentary'                     " Plugin for commenting code
 Plug 'tpope/vim-surround'                       " Plugin for deleting, changing, and adding surroundings
+Plug 'jiangmiao/auto-pairs'                     " Insert or delete brackets, parens, quotes in pair
+Plug 'justinmk/vim-sneak'
 
 " LSP
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}        " LSP support for Vim & Neovim
@@ -26,7 +28,6 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'lifepillar/vim-gruvbox8'
 
 " ======> Text <======
-Plug 'jiangmiao/auto-pairs'                     " Insert or delete brackets, parens, quotes in pair
 Plug 'terryma/vim-expand-region'                " Incremental visual selection
 Plug 'michaeljsmith/vim-indent-object'          " Text objests based on indent levels
 " Plug 'maxbrunsfeld/vim-yankstack'               " Plugin for storing and cycling through yanked text strings
@@ -42,7 +43,6 @@ Plug 'christoomey/vim-system-copy'
 Plug 'szw/vim-tags'
 Plug 'jlanzarotta/bufexplorer'                  " Buffer Explorer
 Plug 'farmergreg/vim-lastplace'                 " Intelligently reopen files where you left off
-Plug 'justinmk/vim-sneak'
 Plug 'psliwka/vim-smoothie'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'

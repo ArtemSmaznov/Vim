@@ -6,6 +6,7 @@ map <leader>< :BufExplorerHorizontalSplit<cr>
 nnoremap <silent> <leader><Esc> :nohlsearch<cr>
 map <leader>` :b#<cr>
 
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<TAB>']      = { 'name' : '+workspace' }  | endif
 map <leader><Tab>. :tabs<cr>
 map <leader><Tab>0 :$tabnext<cr>
 map <leader><Tab>1 :1tabnext<cr>
