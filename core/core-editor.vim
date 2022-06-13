@@ -100,6 +100,4 @@ set whichwrap+=<,>,h,l
 
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
-syntax enable
-
 set spelllang=en_us

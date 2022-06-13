@@ -6,6 +6,7 @@
 
 * Table of Contents :toc:
 - [[#core][Core]]
+- [[#helper-functions][Helper functions]]
 - [[#editor][Editor]]
   - [[#general-abbreviations][General abbreviations]]
   - [[#search][Search]]
@@ -17,23 +18,27 @@
   - [[#sound][Sound]]
   - [[#backspace][Backspace]]
   - [[#sudo-save][Sudo Save]]
-- [[#basic][Basic]]
-  - [[#colors-and-fonts][Colors and Fonts]]
   - [[#spell-checking][Spell Checking]]
-  - [[#helper-functions][Helper functions]]
-- [[#packages][Packages]]
+- [[#file-handling][File Handling]]
+  - [[#file-types][File Types]]
+- [[#syntax-highlighting][Syntax highlighting]]
+  - [[#ssh-hosts][SSH Hosts]]
 - [[#ui][UI]]
   - [[#color-scheme][Color Scheme]]
+  - [[#fonts][Fonts]]
   - [[#visual-elements][Visual Elements]]
   - [[#remove-separator-pipes][Remove separator pipes]]
   - [[#disable-scroll-bars][Disable Scroll-bars]]
+  - [[#terminal-colors][Terminal Colors]]
+  - [[#gui-mode][GUI Mode]]
 - [[#keybindings][Keybindings]]
   - [[#leader---leader][Leader - <Leader>]]
   - [[#command-mode][Command Mode]]
   - [[#arrows][Arrows]]
   - [[#numbers][Numbers]]
   - [[#folds][Folds]]
-  - [[#navigation][Navigation]]
+  - [[#visual-selection-search][Visual Selection Search]]
+  - [[#moving-lines][Moving Lines]]
 
 * Core
 Enable file type plugins
@@ -52,7 +57,7 @@ let g:maplocalleader = ","
 Sources
 #+begin_src vimrc
 source $HOME/.vim/core/core-editor.vim
-source $HOME/.vim/core/core-packages.vim
+source $HOME/.vim/packages.vim
 source $HOME/.vim/core/core-ui.vim
 source $HOME/.vim/core/core-keybindings.vim
 #+end_src
@@ -132,12 +137,6 @@ endfunc
 func! CurrentFileDir(cmd)
   return a:cmd . " " . expand("%:p:h") . "/"
 endfunc
-#+end_src
-
-* File Handling
-#+begin_src vimrc
-set encoding=utf-8 " Set utf8 as standard encoding and en_US as the standard language
-set ffs=unix,dos,mac " Use Unix as the standard file type
 #+end_src
 
 * Editor
@@ -284,116 +283,54 @@ useful for handling the permission-denied error
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 #+end_src
 
-** Syntax highlighting
-Enable syntax highlighting
-#+begin_src vimrc
-syntax enable
-#+end_src
-
 ** Spell Checking
 #+begin_src vimrc
 set spelllang=en_us
 #+end_src
 
-* Packages
-:PROPERTIES:
-:header-args: :tangle core-packages.vim
-:END:
+* File Handling
 #+begin_src vimrc
-call plug#begin('$HOME/.vim/plugged')
+set encoding=utf-8 " Set utf8 as standard encoding and en_US as the standard language
+set ffs=unix,dos,mac " Use Unix as the standard file type
+#+end_src
 
-" ======> LSP <======
-" Plug 'neoclide/coc.nvim', {'branch': 'release'} " LSP support for Vim & Neovim
-Plug 'tpope/vim-cucumber'                       " Filetype plugin for Cucumber
-Plug 'pangloss/vim-javascript'                  " Filetype plugin for JavaScript
-Plug 'plasticboy/vim-markdown'                  " Filetype plugin for Markdown
-Plug 'rust-lang/rust.vim'                       " Filetype plugin for Rust
-Plug 'cespare/vim-toml'                         " Filetype plugin for TOML
-Plug 'leafgarland/typescript-vim'               " Filetype plugin for TypeScript
+** File Types
+#+begin_src vimrc :tangle ../filetype.vim
+au BufNewFile,BufRead known_hosts,authorized_keys,*.pub setfiletype sshhosts
+#+end_src
 
-" ======> Text <======
-Plug 'jiangmiao/auto-pairs'                     " Insert or delete brackets, parens, quotes in pair
-Plug 'godlygeek/tabular'                        " Configurable, flexible, intuitive text aligning
-Plug 'terryma/vim-expand-region'                " Incremental visual selection
-Plug 'michaeljsmith/vim-indent-object'          " Text objests based on indent levels
-" Plug 'maxbrunsfeld/vim-yankstack'               " Plugin for storing and cycling through yanked text strings
-Plug 'tpope/vim-commentary'                     " Plugin for commenting code
-Plug 'tpope/vim-surround'                       " Plugin for deleting, changing, and adding surroundings
-Plug 'tpope/vim-repeat'                         " Repeat.vim remaps `.` in a way that plugins can tap into it
-Plug 'honza/vim-snippets'
-Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'christoomey/vim-system-copy'
-" Plug 'vimwiki/vimwiki'
+* Syntax highlighting
+Enable syntax highlighting
+#+begin_src vimrc
+syntax enable
+#+end_src
 
-" ======> Navigation <======
-" Plug 'mileszs/ack.vim'                          " Plugin that integrates ack with Vim
-" Plug 'ctrlpvim/ctrlp.vim'                       " Fuzzy file, buffer, mru, tag, ... finder
-Plug 'szw/vim-tags'
-Plug 'jlanzarotta/bufexplorer'                  " Buffer Explorer
-Plug 'farmergreg/vim-lastplace'                 " Intelligently reopen files where you left off
-Plug 'justinmk/vim-sneak'
-Plug 'psliwka/vim-smoothie'
-Plug 'severin-lemaignan/vim-minimap'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+** SSH Hosts
+:PROPERTIES:
+:header-args: :tangle ../syntax/sshhosts.vim
+:END:
+IP, Port or HostName
+#+begin_src vimrc
+syn match sshhost "\d\{1,3}\.\d\{1,3}\.\d\{1,3}\.\d\{1,3}"
+syn match sshhost ":\d\+"
+syn match sshhost "[0-9a-zA-Z_-]\+@.\+"
+#+end_src
 
-" ======> Other <======
-Plug 'chrisbra/Colorizer',
-Plug 'vim-airline/vim-airline'
-Plug 'edkolev/tmuxline.vim'
-Plug 'airblade/vim-gitgutter'                   " A Vim plugin which shows a git diff in the gutter
-Plug 'tpope/vim-fugitive'                       " A Git wrapper so awesome, it should be illegal
-Plug 'liuchengxu/vim-which-key'
-Plug 'ryanoasis/vim-devicons' 
-Plug 'voldikss/vim-floaterm'
+Website
+#+begin_src vimrc
+syn match sshsite ".\+\(,\)\@="
+#+end_src
 
-" ======> New Plugins to try <====== 
-" Plug 'airblade/vim-rooter'
+Public SSH key
+#+begin_src vimrc
+syn match sshpubkey "AAAA[0-9a-zA-Z+/]\+[=]\{0,2}"
+#+end_src
 
-" ======> Themes <======
-Plug 'lifepillar/vim-gruvbox8'
-
-call plug#end()
-
-
-" ░█▀▀░█▀█░█▀█░█▀▀░▀█▀░█▀▀░█▀▀
-" ░█░░░█░█░█░█░█▀▀░░█░░█░█░▀▀█
-" ░▀▀▀░▀▀▀░▀░▀░▀░░░▀▀▀░▀▀▀░▀▀▀
-
-source $HOME/.vim/settings/plugins/which-key.vim
-" source $HOME/.vim/settings/plugins/ack.vim
-source $HOME/.vim/settings/plugins/airline.vim
-source $HOME/.vim/settings/plugins/auto-pairs.vim
-source $HOME/.vim/settings/plugins/buffExplorer.vim
-" source $HOME/.vim/settings/plugins/coc.vim
-source $HOME/.vim/settings/plugins/colorizer.vim
-source $HOME/.vim/settings/plugins/commentary.vim
-" source $HOME/.vim/settings/plugins/ctrlp.vim 
-source $HOME/.vim/settings/plugins/floaterm.vim
-source $HOME/.vim/settings/plugins/fzf.vim 
-source $HOME/.vim/settings/plugins/gitGutter.vim
-source $HOME/.vim/settings/plugins/minimap.vim
-source $HOME/.vim/settings/plugins/sneak.vim
-source $HOME/.vim/settings/plugins/system-copy.vim
-source $HOME/.vim/settings/plugins/surround.vim
-source $HOME/.vim/settings/plugins/tabularize.vim
-source $HOME/.vim/settings/plugins/tags.vim
-source $HOME/.vim/settings/plugins/tmuxline.vim
-" source $HOME/.vim/settings/plugins/vimwiki.vim
-" source $HOME/.vim/settings/plugins/yankstack.vim
-
-
-" ░█▄█░▀█▀░█▀▀░█▀▀░
-" ░█░█░░█░░▀▀█░█░░░
-" ░▀░▀░▀▀▀░▀▀▀░▀▀▀░
-
-" Automatically install missing plugins on startup
-autocmd VimEnter *
-      \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-      \|   PlugInstall --sync | q
-      \| endif
-
-map <leader>hrp :PlugInstall --sync<cr>
+Define the default highlighting
+#+begin_src vimrc
+hi def link sshsite Statement
+hi def link sshhost Special 
+hi def link sshpubkey SpecialKey
 #+end_src
 
 * UI
@@ -485,11 +422,17 @@ endif
 :header-args: :tangle core-keybindings.vim
 :END:
 ** Leader - <Leader>
+*** Root
 #+begin_src vimrc
-nnoremap <silent> <leader><Esc> :nohlsearch<cr>
+if has_key(plugs, 'vim-which-key') | let g:which_key_map['<']     = 'Switch buffer'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Esc>'] = 'Clear search highlights' | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map['`']     = 'Switch to last buffer'   | endif
+
 map <leader>< :BufExplorerHorizontalSplit<cr>
+nnoremap <silent> <leader><Esc> :nohlsearch<cr>
 map <leader>` :b#<cr>
 #+end_src
+
 *** TAB -> +workspace
 #+begin_src vimrc
 map <leader><Tab>. :tabs<cr>
@@ -523,8 +466,24 @@ nmap <leader><Tab>l :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 #+end_src
 
-*** B -> +buffer
+*** b -> +buffer
 #+begin_src vimrc
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b      = { 'name' : '+buffer' }  | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['['] = 'Previous buffer'       | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b[']'] = 'Next buffer'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['b'] = 'Switch buffer'         | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['d'] = 'Kill buffer'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['k'] = 'Kill buffer'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['K'] = 'Kill all buffers'      | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['n'] = 'Next buffer'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['N'] = 'New empty tab'         | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['O'] = 'Kill other buffers'    | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['p'] = 'Previous buffer'       | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['l'] = 'Switch to last buffer' | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['s'] = 'Save buffer'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['S'] = 'Save all buffers'      | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['u'] = 'Save buffer as root'   | endif
+
 map <leader>b[ :bprevious<cr>
 map <leader>b] :bnext<cr>
 map <leader>bb :BufExplorerHorizontalSplit<cr>
@@ -541,51 +500,156 @@ map <leader>bS :wa<cr>
 map <leader>bu :W<cr>
 #+end_src
 
-*** C -> +code
+*** c -> +code
 #+begin_src vimrc
-
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.c = { 'name' : '+code' } | endif
 #+end_src
 
-*** F -> +file
+*** f -> +file
 #+begin_src vimrc
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f      = { 'name' : '+file' }      | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['c'] = 'CD to current directory' | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['s'] = 'Save file'               | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['S'] = 'Save as...'              | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['v'] = 'Grep'                    | endif
+
 map <leader>fc :cd %:p:h<cr>:pwd<cr>
 map <leader>fs :write<cr>
 map <leader>fS :write
 map <leader>fv :vimgrep **/*
 #+end_src
 
-*** G -> +git
+FZF
 #+begin_src vimrc
+if has_key(plugs, 'fzf')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['f'] = 'Find file'    | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['r'] = 'Recent files' | endif
 
+    map <leader>ff :Files<CR>
+    map <leader>fr :History<CR>
+endif
 #+end_src
 
-*** H -> +help
+*** g -> +git
 #+begin_src vimrc
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.g      = { 'name' : '+git' } | endif
+#+end_src
+
+Git Gutter
+#+begin_src vimrc
+if has_key(plugs, 'vim-gitgutter')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['d'] = 'Diff Split'        | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['g'] = 'Status'            | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['p'] = 'Preview hunk'      | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['s'] = 'Stage hunk'        | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['u'] = 'Undo hunk'         | endif
+    if has_key(plugs, 'vim-which-key') | let g:bracket_map.c        = 'Git Hunk'          | endif
+
+    nnoremap <silent> <leader>gd :vertical Gdiffsplit<cr>
+    nnoremap <silent> <leader>gg :Git<cr>
+
+    nmap <leader>gp <Plug>(GitGutterPreviewHunk)
+    map <leader>gs <Plug>(GitGutterStageHunk)
+    nmap <leader>gu <Plug>(GitGutterUndoHunk)
+endif
+#+end_src
+
+*** h -> +help
+#+begin_src vimrc
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h = { 'name' : '+help' } | endif
+#+end_src
+
+FZF
+#+begin_src vimrc
+if has_key(plugs, 'fzf')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['b'] = 'Bindings'    | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['h'] = 'Search Help' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['t'] = 'Load theme'  | endif
+
+    map <leader>hb :Maps<CR>
+    nnoremap <leader>hh :Helptags<CR>
+    nnoremap <leader>ht :Colors<CR>
+endif
 #+end_src
 
 **** R -> +Reload
 #+begin_src vimrc
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r      = { 'name' : '+reload' } | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['e'] = 'Reload env'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['p'] = 'Reload plugins'       | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['r'] = 'Reload'               | endif
+
 map <leader>hre :source $MYVIMRC<cr>
 map <leader>hrr :source %<cr>
 #+end_src
 
-*** I -> +insert
+*** i -> +insert
 #+begin_src vimrc
-
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.i      = { 'name' : '+insert' } | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['t'] = 'Insert Toilet title'  | endif
 #+end_src
 
-*** O -> +open
+*** o -> +open
 #+begin_src vimrc
-
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.o = { 'name' : '+open' } | endif
 #+end_src
 
-*** P -> +popup (project)
+Float Term
 #+begin_src vimrc
+if has_key(plugs, 'vim-floaterm')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['`'] = 'Terminal' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['p'] = 'Python'   | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['r'] = 'Ranger'   | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['v'] = 'Vifm'     | endif
 
+    map <leader>o` :FloatermToggle<cr>
+    map <leader>op :FloatermNew python<cr>
+    map <leader>or :FloatermNew ranger<cr>
+    map <leader>ov :FloatermNew vifm<cr>
+endif
 #+end_src
 
-*** Q -> +quit/session
+*** m -> +<localleader>
 #+begin_src vimrc
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.m = { 'name' : '+<localleader>' } | endif
+#+end_src
+
+*** p -> +popup (project)
+#+begin_src vimrc
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.p = { 'name' : '+popup' } | endif
+#+end_src
+
+FZF
+#+begin_src vimrc
+if has_key(plugs, 'fzf')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p["'"] = 'Search marks'        | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['/'] = 'Search history'      | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p[':'] = 'Commands history'    | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['b'] = 'Switch buffer'       | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['c'] = 'Search all commands' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['f'] = 'Switch filetype'     | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['w'] = 'Switch window'       | endif
+
+    nnoremap <leader>p' :Marks<CR>
+    nnoremap <leader>p/ :History/<CR>
+    nnoremap <leader>p: :History:<CR>
+    map <leader>pb :Buffers<CR>
+    map <leader>pc :Commands<CR>
+    map <leader>pf :Filetypes<CR>
+    map <leader>pw :Windows<CR>
+endif
+#+end_src
+
+*** q -> +quit/session
+#+begin_src vimrc
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.q      = { 'name' : '+quit/session' } | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['l'] = 'Quick load session'         | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['L'] = 'Load session from file'     | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['q'] = 'Quit Vim'                   | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['Q'] = 'Quit Vim without saving'    | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['s'] = 'Quick save current session' | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['S'] = 'Save session to file'       | endif
+
 map <leader>ql :source $HOME/.vim/sessions/quick-session.vim<cr>
 map <leader>qL :source $HOME/.vim/sessions/
 map <leader>qq :qa<cr>
@@ -594,36 +658,108 @@ map <leader>qs :mksession! $HOME/.vim/sessions/quick-session.vim<cr>
 map <leader>qS :mksession $HOME/.vim/sessions/
 #+end_src
 
-*** S -> +search
+*** s -> +search
 #+begin_src vimrc
-
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.s = { 'name' : '+search' } | endif
 #+end_src
 
-*** T -> +toggle
+FZF
 #+begin_src vimrc
+if has_key(plugs, 'fzf')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['b'] = 'Search buffer'              | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['B'] = 'Search all open buffers'    | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['p'] = 'Search project'             | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['t'] = 'Search Tags in buffer'      | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['T'] = 'Search Tags in all buffers' | endif
+
+    map <leader>sb :BLines<CR>
+    map <leader>sB :Lines<CR>
+    nnoremap <leader>sp :Rg<CR>
+    nnoremap <leader>st :BTags<CR>
+    nnoremap <leader>sT :Tags<CR>
+endif
+#+end_src
+
+*** t -> +toggle
+#+begin_src vimrc
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.t      = { 'name' : '+toggle' } | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['p'] = 'Paste mode'           | endif 
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['s'] = 'Spell check'          | endif 
+
 map <leader>tp :setlocal paste!<cr>
 map <leader>ts :setlocal spell!<cr>
 map <leader>it :r !toilet -f pagga
 #+end_src
 
-*** W -> +window
+Mini-map
 #+begin_src vimrc
-map <leader>w` :term<cr>
+if has_key(plugs, 'vim-minimap')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['m']      = 'Minimap'                  | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['M']      = { 'name' : '+minimap...' } | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['M']['c'] = 'Close minimap'            | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['M']['o'] = 'Open minimap'             | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['M']['u'] = 'Update minimap'           | endif
+    
+    let g:minimap_show='<leader>tMo'
+    let g:minimap_update='<leader>tMu'
+    let g:minimap_close='<leader>tMc'
+    let g:minimap_toggle='<leader>tm'
+endif
 #+end_src
 
-Resize windows
+Colorizer
 #+begin_src vimrc
+if has_key(plugs, 'Colorizer')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['c'] = 'Color highlights' | endif
+    
+    nnoremap <leader>tc :ColorToggle<cr>
+endif
+#+end_src
+
+*** w -> +window
+#+begin_src vimrc
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w      = { 'name' : '+window' }       | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['+'] = 'Increase window height'     | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['-'] = 'Decrease window height'     | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['<'] = 'Decrease window width'      | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['='] = 'Balance windows'            | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['>'] = 'Increase window width'      | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['_'] = 'Set window height'          | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['`'] = 'Open a terminal in a split' | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['b'] = 'Bottom-right window'        | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['c'] = 'Close window'               | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['d'] = 'Close window'               | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['h'] = 'Left window'                | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['H'] = 'Move window left'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['j'] = 'Down window'                | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['J'] = 'Move window down'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['k'] = 'Up window'                  | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['K'] = 'Move window up'             | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['l'] = 'Right window'               | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['L'] = 'Move window right'          | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['n'] = 'New window'                 | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['o'] = 'Enlargen window'            | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['p'] = 'Last window'                | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['q'] = 'Quit window'                | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['r'] = 'Rotate windows downwards'   | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['R'] = 'Rotate windows upwards'     | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['s'] = 'Split window'               | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['S'] = 'Split and follow window'    | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['t'] = 'Top-left window'            | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['T'] = 'Tear off window'            | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['v'] = 'VSplit window'              | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['V'] = 'VSplit and follow window'   | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['w'] = 'Next window'                | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['W'] = 'Previous window'            | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['|'] = 'Set window width'           | endif
+
 map <leader>w+ :resize +5<cr>
 map <leader>w- :resize -5<cr>
 map <leader>w< :vertical resize -5<cr>
-map <leader>w> :vertical resize +5<cr>
 map <leader>w= <C-w>=
+map <leader>w> :vertical resize +5<cr>
 map <leader>w_ :resize<cr>
-map <leader>w\| :vertical resize<cr>
-#+end_src
-
-Standard controls
-#+begin_src vimrc
+map <leader>w` :term<cr>
 map <leader>wb <C-w>b
 map <leader>wc :close<cr>
 map <leader>wd :close<cr>
@@ -649,6 +785,7 @@ map <leader>wv :vsplit<cr><C-w>p
 map <leader>wV :vsplit<cr>
 map <leader>ww <C-w>w
 map <leader>wW <C-w>W
+map <leader>w\| :vertical resize<cr>
 #+end_src
 
 ** Command Mode

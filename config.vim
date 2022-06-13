@@ -11,7 +11,7 @@ set so=7
 
 set spelllang=en_us,ru_ru
 
-set background=dark
+" set background=dark
 colorscheme gruvbox8
 
 try

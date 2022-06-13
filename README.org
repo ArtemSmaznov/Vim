@@ -51,7 +51,7 @@ set spelllang=en_us,ru_ru
 * UI
 ** Color Scheme
 #+begin_src vimrc
-set background=dark
+" set background=dark
 colorscheme gruvbox8
 #+end_src
 

@@ -5,7 +5,7 @@ let g:mapleader = " "
 let g:maplocalleader = ","
 
 source $HOME/.vim/core/core-editor.vim
-source $HOME/.vim/core/core-packages.vim
+source $HOME/.vim/packages.vim
 source $HOME/.vim/core/core-ui.vim
 source $HOME/.vim/core/core-keybindings.vim
 
@@ -85,3 +85,5 @@ endfunc
 
 set encoding=utf-8 " Set utf8 as standard encoding and en_US as the standard language
 set ffs=unix,dos,mac " Use Unix as the standard file type
+
+syntax enable
