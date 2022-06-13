@@ -437,6 +437,7 @@ map <leader>` :b#<cr>
 *** TAB -> +workspace
 #+begin_src vimrc
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map['<TAB>']      = { 'name' : '+workspace' }  | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<C-I>']      = { 'name' : '+workspace' }  | endif
 map <leader><Tab>. :tabs<cr>
 map <leader><Tab>0 :$tabnext<cr>
 map <leader><Tab>1 :1tabnext<cr>
@@ -509,15 +510,33 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.c = { 'name' : '+code' 
 
 *** f -> +file
 #+begin_src vimrc
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f      = { 'name' : '+file' }      | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['c'] = 'CD to current directory' | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['s'] = 'Save file'               | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['S'] = 'Save as...'              | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['v'] = 'Grep'                    | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f      = { 'name' : '+file' }          | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['c'] = 'CD to current directory'     | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['C'] = 'Copy this file'              | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['d'] = 'Find directory'              | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['D'] = 'Delete this file'            | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['e'] = 'Find file in vim.d'          | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['E'] = 'Browse vim.d'                | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['F'] = 'Find file from here'         | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['l'] = 'Locate file'                 | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['p'] = 'Find file in private config' | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['P'] = 'Browse private config'       | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['R'] = 'Rename/move file'            | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['s'] = 'Save file'                   | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['S'] = 'Save as...'                  | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['u'] = 'Sudo find file'              | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['U'] = 'Sudo this file'              | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['y'] = 'Yank file path'              | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['Y'] = 'Yank file path from project' | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['v'] = 'Grep?'                       | endif
 
 map <leader>fc :cd %:p:h<cr>:pwd<cr>
+map <silent> <leader>fD :if confirm('Really delete "' . expand('%') . '"?', "&Yes\n&No", 1)==1 <Bar> exe ":call delete(@%)" <Bar> exe ":Bclose" <Bar> endif<cr>
+
+map <leader>fy :let @" = expand('%:p')<cr>:let @+ = expand('%:p')<cr>:echo "Copied path to clipboard: " . expand('%:p')<cr>
+map <leader>fY :let @" = expand('%')<cr>:let @+ = expand('%')<cr>:echo "Copied path to clipboard: " . expand('%')<cr>
 map <leader>fs :write<cr>
-map <leader>fS :write
+map <leader>fS :write 
 map <leader>fv :vimgrep **/*
 #+end_src
 

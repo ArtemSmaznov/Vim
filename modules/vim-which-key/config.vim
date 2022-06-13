@@ -4,10 +4,12 @@ let g:which_key_vertical = 0
 let g:which_key_position = 'botright'
 let g:which_key_use_floating_win = 0
 let g:which_key_fallback_to_native_key=1
-let g:which_key_display_names = { ' ': 'SPC', '<CR>': 'RET', '<TAB>': 'TAB', '<ESC>': 'ESC' }
+let g:which_key_display_names = { ' ': 'SPC', '<CR>': 'RET', '<C-H>': 'BS', '<C-I>': 'TAB','<TAB>': 'TAB', '<ESC>': 'ESC' }
 " let g:which_key_display_names = { ' ': '⎵', '<CR>': '↵', '<TAB>': '⇆' }
 let g:which_key_centered = 0
 let g:which_key_default_group_name = '+prefix'
+let g:which_key_exit = "\<C-G>"
+
 
 autocmd! FileType which_key
 autocmd  FileType which_key set laststatus=0 noshowmode noruler
