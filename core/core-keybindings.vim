@@ -116,7 +116,7 @@ if has_key(plugs, 'vim-gitgutter')
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['p'] = 'Preview hunk'      | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['s'] = 'Stage hunk'        | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['u'] = 'Undo hunk'         | endif
-    if has_key(plugs, 'vim-which-key') | let g:bracket_map.c        = 'Git Hunk'          | endif
+    if has_key(plugs, 'vim-which-key') | let g:squre_bracket_map.c        = 'Git Hunk'          | endif
 
     nnoremap <silent> <leader>gd :vertical Gdiffsplit<cr>
     nnoremap <silent> <leader>gg :Git<cr>
@@ -129,37 +129,37 @@ endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.h = { 'name' : '+help' } | endif
 
 if has_key(plugs, 'fzf')
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['b'] = 'Bindings'    | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['h'] = 'Search Help' | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['t'] = 'Load theme'  | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['k'] = 'describe-key'         | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['s'] = 'help-search-headings' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['t'] = 'load-theme'           | endif
 
-    map <leader>hb :Maps<CR>
-    nnoremap <leader>hh :Helptags<CR>
+    map <leader>hk :Maps<CR>
+    nnoremap <leader>hs :Helptags<CR>
     nnoremap <leader>ht :Colors<CR>
 endif
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r      = { 'name' : '+reload' } | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['e'] = 'Reload env'           | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['p'] = 'Reload plugins'       | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['r'] = 'Reload'               | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['e'] = 'reload-env'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['p'] = 'reload-packages'      | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['r'] = 'reload'               | endif
 
 map <leader>hre :source $MYVIMRC<cr>
 map <leader>hrr :source %<cr>
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i      = { 'name' : '+insert' } | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['t'] = 'Insert Toilet title'  | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['t'] = 'Toilet pagga'         | endif
 
 map <leader>it :r !toilet -f pagga
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.o = { 'name' : '+open' } | endif
 
 if has_key(plugs, 'vim-floaterm')
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['`'] = 'Terminal' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['t'] = 'Toggle term popup' | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['p'] = 'Python'   | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['r'] = 'Ranger'   | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['v'] = 'Vifm'     | endif
 
-    map <leader>o` :FloatermToggle<cr>
+    map <leader>ot :FloatermToggle<cr>
     map <leader>op :FloatermNew python<cr>
     map <leader>or :FloatermNew ranger<cr>
     map <leader>ov :FloatermNew vifm<cr>
@@ -188,8 +188,8 @@ if has_key(plugs, 'fzf')
 endif
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.q      = { 'name' : '+quit/session' } | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['l'] = 'Quick load session'         | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['L'] = 'Load session from file'     | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['l'] = 'Restore last session'       | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['L'] = 'Restore session from file'  | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['q'] = 'Quit Vim'                   | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['Q'] = 'Quit Vim without saving'    | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['s'] = 'Quick save current session' | endif
@@ -220,7 +220,7 @@ endif
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.t      = { 'name' : '+toggle' } | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['p'] = 'Paste mode'           | endif 
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['s'] = 'Spell check'          | endif 
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['s'] = 'Spell checker'        | endif 
 
 map <leader>tp :setlocal paste!<cr>
 map <leader>ts :setlocal spell!<cr>
@@ -239,7 +239,7 @@ if has_key(plugs, 'vim-minimap')
 endif
 
 if has_key(plugs, 'Colorizer')
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['c'] = 'Color highlights' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['c'] = 'Colors' | endif
     
     nnoremap <leader>tc :ColorToggle<cr>
 endif
@@ -313,20 +313,42 @@ map <leader>ww <C-w>w
 map <leader>wW <C-w>W
 map <leader>w\| :vertical resize<cr>
 
-map <A-x> :
+" if has_key(plugs, 'vim-which-key') | let g:g_map['m'] = 'middle-of-visual-line' | endif
+" if has_key(plugs, 'vim-which-key') | let g:g_map['M'] = 'percentage-of-line'    | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['-'] = 'number/dec-at-point'    | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['='] = 'number/inc-at-point'    | endif
+
+noremap g- <C-x>
+noremap g= <C-a>
+
+if has_key(plugs, 'vim-exchange')
+    if has_key(plugs, 'vim-which-key') | let g:g_map["x"] = 'vim-exchange'        | endif
+
+    nmap gx <Plug>(Exchange)
+    nmap gxx <Plug>(ExchangeLine)
+    nmap gxc <Plug>(ExchangeClear)
+    xmap gx <Plug>(Exchange)
+endif
+
+
+
+
 
 nnoremap <Up> :blast<cr>
 nnoremap <Down> :bfirst<cr>
 nnoremap <Left> :bprevious<cr>
 nnoremap <Right> :bnext<cr>
 
-noremap g= <C-a>
-noremap g- <C-x>
+if has_key(plugs, 'vim-which-key') | let g:squre_bracket_map['['] = 'Move around functions' | endif
+if has_key(plugs, 'vim-which-key') | let g:squre_bracket_map[']'] = 'Move around functions' | endif
+if has_key(plugs, 'vim-which-key') | let g:squre_bracket_map['"'] = 'Move around comments'  | endif
 
 noremap <tab> :norm za<cr>
 noremap <tab><tab> :norm zA<cr>
 noremap <S-tab> :norm zR<cr>
 noremap <S-tab><S-tab> :norm zM<cr>
+
+map <A-x> :
 
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>

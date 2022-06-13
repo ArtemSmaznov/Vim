@@ -59,7 +59,7 @@ let g:which_key_map['x'] = 'Convert to snippet'
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
-let g:bracket_map.g = 'Coc Problem'
+let g:squre_bracket_map.g = 'Coc Problem'
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)

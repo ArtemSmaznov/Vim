@@ -7,6 +7,7 @@ Plug 'tpope/vim-commentary'                     " Plugin for commenting code
 Plug 'tpope/vim-surround'                       " Plugin for deleting, changing, and adding surroundings
 Plug 'jiangmiao/auto-pairs'                     " Insert or delete brackets, parens, quotes in pair
 Plug 'justinmk/vim-sneak'
+Plug 'tommcdo/vim-exchange'
 
 " LSP
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}        " LSP support for Vim & Neovim

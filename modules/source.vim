@@ -8,6 +8,7 @@ if has_key(plugs, 'vim-system-copy') | source $HOME/.vim/modules/vim-system-copy
 if has_key(plugs, 'vim-tags')        | source $HOME/.vim/modules/vim-tags/config.vim        | endif
 if has_key(plugs, 'auto-pairs')      | source $HOME/.vim/modules/auto-pairs/config.vim      | endif
 if has_key(plugs, 'vim-sneak')       | source $HOME/.vim/modules/vim-sneak/config.vim       | endif
+if has_key(plugs, 'vim-exchange')    | source $HOME/.vim/modules/vim-exchange/config.vim       | endif
 
 " TODO
 if has_key(plugs, 'vim-which-key')   | source $HOME/.vim/modules/vim-which-key/config.vim   | endif

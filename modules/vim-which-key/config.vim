@@ -54,17 +54,27 @@ let g:local_key_map = {}
 " ░█░█░░█░░█▀█░█▀▀░█▀▄
 " ░▀▀▀░░▀░░▀░▀░▀▀▀░▀░▀
 
-" register dictionary for the []-prefix
-call which_key#register('[', "g:bracket_map")
-call which_key#register(']', "g:bracket_map")
+" []
+call which_key#register('[', "g:squre_bracket_map")
+call which_key#register(']', "g:squre_bracket_map")
 nnoremap <silent> [ :<c-u>WhichKey '['<CR>
 nnoremap <silent> ] :<c-u>WhichKey ']'<CR>
+let g:squre_bracket_map = {}
 
-" Define prefix dictionary
-let g:bracket_map = {}
+" g
+call which_key#register('g', "g:g_map")
+nnoremap <silent> g :<c-u>WhichKey 'g'<CR>
+vnoremap <silent> g :<c-u>WhichKeyVisual 'g'<CR>
+let g:g_map = {}
 
-let g:bracket_map['['] = 'Move around functions'
-let g:bracket_map[']'] = 'Move around functions'
-let g:bracket_map['"'] = 'Move around comments'
-let g:bracket_map['m'] = 'Move around'
-let g:bracket_map['M'] = 'Move around'
+" z
+call which_key#register('z', "g:z_map")
+nnoremap <silent> z :<c-u>WhichKey 'z'<CR>
+vnoremap <silent> z :<c-u>WhichKeyVisual 'z'<CR>
+let g:z_map = {}
+
+" Z
+call which_key#register('Z', "g:Z_map")
+nnoremap <silent> Z :<c-u>WhichKey 'Z'<CR>
+vnoremap <silent> Z :<c-u>WhichKeyVirual 'Z'<CR>
+let g:Z_map = {}
