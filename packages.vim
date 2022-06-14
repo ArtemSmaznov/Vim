@@ -23,6 +23,7 @@ Plug 'cespare/vim-toml'          , { 'for': 'toml' }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 
 " UI
+Plug 'psliwka/vim-smoothie' " Smooth scrolling
 Plug 'ryanoasis/vim-devicons'
 
 " Themes
@@ -44,7 +45,6 @@ Plug 'christoomey/vim-system-copy'
 Plug 'szw/vim-tags'
 Plug 'jlanzarotta/bufexplorer'                  " Buffer Explorer
 Plug 'farmergreg/vim-lastplace'                 " Intelligently reopen files where you left off
-Plug 'psliwka/vim-smoothie'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 

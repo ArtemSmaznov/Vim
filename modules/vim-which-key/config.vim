@@ -28,16 +28,6 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 " Define prefix dictionary
 let g:which_key_map =  {}
 
-let g:which_key_map.b = { 'name' : '+buffer' }
-let g:which_key_map.c = { 'name' : '+code' }
-let g:which_key_map.f = { 'name' : '+file' }
-let g:which_key_map.h = { 'name' : '+help' }
-let g:which_key_map.i = { 'name' : '+insert' }
-let g:which_key_map.p = { 'name' : '+popup' }
-let g:which_key_map.q = { 'name' : '+quit/session' }
-let g:which_key_map.s = { 'name' : '+search' }
-let g:which_key_map.t = { 'name' : '+toggle' }
-
 " ░█░░░█▀█░█▀▀░█▀█░█░░
 " ░█░░░█░█░█░░░█▀█░█░░
 " ░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀

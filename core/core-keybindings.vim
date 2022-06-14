@@ -1,3 +1,14 @@
+" https://vim.fandom.com/wiki/Quick_generic_option_toggling
+function! Toggle_Mode( mode, enable_message, disable_message )
+    execute 'setlocal ' . a:mode . '!'
+    execute 'echo (&' . a:mode' ? "' . a:enable_message . '" : "' . a:disable_message . '")'
+endfunction
+
+function! Cycle_Line_Numbers()
+    setlocal number!
+    set relativenumber! number?
+endfunction
+
 if has_key(plugs, 'vim-which-key') | let g:which_key_map['<']     = 'Switch buffer'           | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Esc>'] = 'Clear search highlights' | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map['`']     = 'Switch to last buffer'   | endif
@@ -6,8 +17,10 @@ map <leader>< :BufExplorerHorizontalSplit<cr>
 nnoremap <silent> <leader><Esc> :nohlsearch<cr>
 map <leader>` :b#<cr>
 
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<TAB>']      = { 'name' : '+workspace' }  | endif
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<C-I>']      = { 'name' : '+workspace' }  | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']      = { 'name' : '+workspace' }   | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']['0'] = 'Switch to final workspace' | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']['1'] = 'Switch to 1st workspace'   | endif
+
 map <leader><Tab>. :tabs<cr>
 map <leader><Tab>0 :$tabnext<cr>
 map <leader><Tab>1 :1tabnext<cr>
@@ -218,12 +231,20 @@ if has_key(plugs, 'fzf')
     nnoremap <leader>sT :Tags<CR>
 endif
 
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.t      = { 'name' : '+toggle' } | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['p'] = 'Paste mode'           | endif 
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['s'] = 'Spell checker'        | endif 
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.t      = { 'name' : '+toggle' }   | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['l'] = 'Line numbers'           | endif 
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['p'] = 'Paste mode'             | endif 
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['w'] = 'Soft line wrapping'     | endif 
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['r'] = 'Read-only mode'         | endif 
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['s'] = 'Spell checker'          | endif 
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['|'] = 'Fill column indicator'  | endif 
 
-map <leader>tp :setlocal paste!<cr>
-map <leader>ts :setlocal spell!<cr>
+nnoremap <leader>tl :call Cycle_Line_Numbers()<cr>
+nnoremap <leader>tp :call Toggle_Mode('paste'   , 'Paste mode enabled in current buffer'      , 'Paste mode disabled in current buffer')<cr>
+nnoremap <leader>tw :call Toggle_Mode('wrap'    , 'Visual-Line mode enabled in current buffer', 'Visual-Line mode disabled in current buffer')<cr>
+nnoremap <leader>tr :call Toggle_Mode('readonly', 'Read-Only mode enabled in current buffer'  , 'Read-Only mode disabled in current buffer')<cr>
+nnoremap <leader>ts :call Toggle_Mode('spell'   , 'Spell mode enabled in current buffer'      , 'Spell mode disabled in current buffer')<cr>
+nnoremap <leader>t\| :execute "set colorcolumn=" . (&colorcolumn == "" ? "-0" : "")<cr>
 
 if has_key(plugs, 'vim-minimap')
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['m']      = 'Minimap'                  | endif
@@ -313,13 +334,21 @@ map <leader>ww <C-w>w
 map <leader>wW <C-w>W
 map <leader>w\| :vertical resize<cr>
 
-" if has_key(plugs, 'vim-which-key') | let g:g_map['m'] = 'middle-of-visual-line' | endif
-" if has_key(plugs, 'vim-which-key') | let g:g_map['M'] = 'percentage-of-line'    | endif
-if has_key(plugs, 'vim-which-key') | let g:g_map['-'] = 'number/dec-at-point'    | endif
-if has_key(plugs, 'vim-which-key') | let g:g_map['='] = 'number/inc-at-point'    | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['$'] = 'end-of-visual-line'       | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['-'] = 'number/dec-at-point'      | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['0'] = 'beginning-of-visual-line' | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['8'] = 'what-cursor-position'     | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['='] = 'number/inc-at-point'      | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['m'] = 'middle-of-visual-line'    | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['M'] = 'percentage-of-line'       | endif
 
+map g$ g$
 noremap g- <C-x>
+map g0 g0
+map g8 g8
 noremap g= <C-a>
+map gm gm
+map gM gM
 
 if has_key(plugs, 'vim-exchange')
     if has_key(plugs, 'vim-which-key') | let g:g_map["x"] = 'vim-exchange'        | endif
@@ -330,9 +359,25 @@ if has_key(plugs, 'vim-exchange')
     xmap gx <Plug>(Exchange)
 endif
 
+if has_key(plugs, 'vim-which-key') | let g:z_map['+']    = 'scroll-bottom-line-to-top' | endif
+if has_key(plugs, 'vim-which-key') | let g:z_map['-']    = 'scroll-line-to-bottom'     | endif
+if has_key(plugs, 'vim-which-key') | let g:z_map['.']    = 'scroll-line-to-center'     | endif
+if has_key(plugs, 'vim-which-key') | let g:z_map['=']    = 'ispell-word'               | endif
+if has_key(plugs, 'vim-which-key') | let g:z_map['^']    = 'scroll-top-line-to-bottom' | endif
+if has_key(plugs, 'vim-which-key') | let g:z_map['b']    = 'scroll-line-to-bottom'     | endif
+if has_key(plugs, 'vim-which-key') | let g:z_map['g']    = 'add-word'                  | endif
+if has_key(plugs, 'vim-which-key') | let g:z_map['t']    = 'scroll-line-to-top'        | endif
+if has_key(plugs, 'vim-which-key') | let g:z_map['z']    = 'scroll-line-to-center'     | endif
+if has_key(plugs, 'vim-which-key') | let g:z_map['<CR>'] = 'scroll-line-to-top'        | endif
 
+map z= z=
+map zg zg
 
+if has_key(plugs, 'vim-which-key') | let g:Z_map['Q'] = 'vim-quit'                | endif
+if has_key(plugs, 'vim-which-key') | let g:Z_map['Z'] = 'save-modified-and-close' | endif
 
+map ZQ ZQ
+map ZZ ZZ
 
 nnoremap <Up> :blast<cr>
 nnoremap <Down> :bfirst<cr>
