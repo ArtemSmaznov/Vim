@@ -1,12 +1,20 @@
-" https://vim.fandom.com/wiki/Quick_generic_option_toggling
 function! Toggle_Mode( mode, enable_message, disable_message )
     execute 'setlocal ' . a:mode . '!'
     execute 'echo (&' . a:mode' ? "' . a:enable_message . '" : "' . a:disable_message . '")'
 endfunction
 
 function! Cycle_Line_Numbers()
-    setlocal number!
-    set relativenumber! number?
+    if &number && &relativenumber
+        setlocal norelativenumber
+        echo 'Switched to normal line numbers'
+    elseif &number && ! &relativenumber
+        setlocal nonumber
+        echo 'Switched to disabled line numbers'
+    else
+        setlocal number
+        setlocal relativenumber
+        echo 'Switched to relative line numbers'
+    endif
 endfunction
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map['<']     = 'Switch buffer'           | endif

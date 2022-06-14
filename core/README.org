@@ -32,6 +32,7 @@
   - [[#terminal-colors][Terminal Colors]]
   - [[#gui-mode][GUI Mode]]
 - [[#keybindings][Keybindings]]
+  - [[#helper-functions-1][Helper Functions]]
   - [[#leader---leader][Leader - <Leader>]]
   - [[#g][g]]
   - [[#z][z]]
@@ -426,16 +427,32 @@ endif
 :header-args: :tangle core-keybindings.vim
 :END:
 ** Helper Functions
+Toggle options and print change message to status bar
+Source: https://vim.fandom.com/wiki/Quick_generic_option_toggling
 #+begin_src vimrc
-" https://vim.fandom.com/wiki/Quick_generic_option_toggling
 function! Toggle_Mode( mode, enable_message, disable_message )
     execute 'setlocal ' . a:mode . '!'
     execute 'echo (&' . a:mode' ? "' . a:enable_message . '" : "' . a:disable_message . '")'
 endfunction
+#+end_src
 
+Cycle through line number options:
+- relative
+- normal
+- disabled
+#+begin_src vimrc
 function! Cycle_Line_Numbers()
-    setlocal number!
-    set relativenumber! number?
+    if &number && &relativenumber
+        setlocal norelativenumber
+        echo 'Switched to normal line numbers'
+    elseif &number && ! &relativenumber
+        setlocal nonumber
+        echo 'Switched to disabled line numbers'
+    else
+        setlocal number
+        setlocal relativenumber
+        echo 'Switched to relative line numbers'
+    endif
 endfunction
 #+end_src
 
