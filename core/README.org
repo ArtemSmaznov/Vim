@@ -427,21 +427,21 @@ endif
 :header-args: :tangle core-keybindings.vim
 :END:
 ** Helper Functions
-Toggle options and print change message to status bar
-Source: https://vim.fandom.com/wiki/Quick_generic_option_toggling
+*** Clear
 #+begin_src vimrc
-function! Toggle_Mode( mode, enable_message, disable_message )
-    execute 'setlocal ' . a:mode . '!'
-    execute 'echo (&' . a:mode' ? "' . a:enable_message . '" : "' . a:disable_message . '")'
+function! ClearAll()
+    call feedkeys( ":nohlsearch\<CR>" )
+    call feedkeys( "\<Plug>(ExchangeClear)" )
 endfunction
 #+end_src
 
+*** Cycle Line Numbers
 Cycle through line number options:
 - relative
 - normal
 - disabled
 #+begin_src vimrc
-function! Cycle_Line_Numbers()
+function! Cycle_LineNumbers()
     if &number && &relativenumber
         setlocal norelativenumber
         echo 'Switched to normal line numbers'
@@ -456,87 +456,131 @@ function! Cycle_Line_Numbers()
 endfunction
 #+end_src
 
+*** Generic Mode Toggle
+Toggle options and print change message to status bar
+Source: https://vim.fandom.com/wiki/Quick_generic_option_toggling
+#+begin_src vimrc
+function! Toggle_Mode( mode, enable_message, disable_message )
+    execute 'setlocal ' . a:mode . '!'
+    execute 'echo (&' . a:mode' ? "' . a:enable_message . '" : "' . a:disable_message . '")'
+endfunction
+#+end_src
+
+*** Toggle Fill Column
+#+begin_src vimrc
+function! Toggle_FillColumn()
+    execute 'set colorcolumn=' . (&colorcolumn == '' ? '-0' : '')
+    execute 'echo ' . (&colorcolumn == '' ? '"Global Dispaly-Fill-Column-Indicator mode disabled"' : '"Global Dispaly-Fill-Column-Indicator mode enabled"')
+endfunction
+#+end_src
+
+*** Toggle Rainbow
+#+begin_src vimrc
+if has_key(plugs, 'Colorizer')
+    function! Toggle_Rainbow()
+        if !exists("w:match_list") || empty(w:match_list)
+            echo 'Rainbow mode enabled in current buffer'
+            ColorHighlight
+        else
+            echo 'Rainbow mode disabled in current buffer'
+            ColorClear
+        endif
+    endfunction
+endif
+#+end_src
+
 ** Leader - <Leader>
 *** Root
 #+begin_src vimrc
 if has_key(plugs, 'vim-which-key') | let g:which_key_map['<']     = 'Switch buffer'           | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Esc>'] = 'Clear search highlights' | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Esc>'] = 'Reset/Cleanup'           | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map['`']     = 'Switch to last buffer'   | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map[',']     = 'Switch workspace buffer' | endif
 
-map <leader>< :BufExplorerHorizontalSplit<cr>
-nnoremap <silent> <leader><Esc> :nohlsearch<cr>
-map <leader>` :b#<cr>
+nnoremap <leader>< :Buffers<cr>
+nnoremap <silent> <leader><Esc> :call ClearAll()<cr>
+nnoremap <leader>` :b#<cr>
+nnoremap <leader>, :BufExplorerHorizontalSplit<cr>
 #+end_src
 
 *** TAB -> +workspace
 #+begin_src vimrc
-if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']      = { 'name' : '+workspace' }   | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']      = { 'name' : '+workspace' }   | endif
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']['0'] = 'Switch to final workspace' | endif
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']['1'] = 'Switch to 1st workspace'   | endif
 
-map <leader><Tab>. :tabs<cr>
-map <leader><Tab>0 :$tabnext<cr>
-map <leader><Tab>1 :1tabnext<cr>
-map <leader><Tab>2 :2tabnext<cr>
-map <leader><Tab>3 :3tabnext<cr>
-map <leader><Tab>4 :4tabnext<cr>
-map <leader><Tab>5 :5tabnext<cr>
-map <leader><Tab>6 :6tabnext<cr>
-map <leader><Tab>7 :7tabnext<cr>
-map <leader><Tab>8 :8tabnext<cr>
-map <leader><Tab>9 :9tabnext<cr>
-map <leader><Tab>< :0tabmove<cr>
-map <leader><Tab>> :$tabmove<cr>
-map <leader><Tab>[ :tabprevious<cr>
-map <leader><Tab>] :tabnext<cr>
-map <leader><Tab>` :tabnext #<cr>
-map <leader><Tab>c :tabclose<cr>
-map <leader><Tab>d :tabclose<cr>
-map <leader><Tab>m :tabmove
-map <leader><Tab>n :tabnew<cr>
-map <leader><Tab>O :tabonly<cr>
-map <leader><Tab>{ :-tabmove<cr>
-map <leader><Tab>} :+tabmove<cr>
+nnoremap <leader><Tab><Tab> :tabs<cr>
+nnoremap <leader><Tab>0 :$tabnext<cr>
+nnoremap <leader><Tab>1 :1tabnext<cr>
+nnoremap <leader><Tab>2 :2tabnext<cr>
+nnoremap <leader><Tab>3 :3tabnext<cr>
+nnoremap <leader><Tab>4 :4tabnext<cr>
+nnoremap <leader><Tab>5 :5tabnext<cr>
+nnoremap <leader><Tab>6 :6tabnext<cr>
+nnoremap <leader><Tab>7 :7tabnext<cr>
+nnoremap <leader><Tab>8 :8tabnext<cr>
+nnoremap <leader><Tab>9 :9tabnext<cr>
+nnoremap <leader><Tab>< :0tabmove<cr>
+nnoremap <leader><Tab>> :$tabmove<cr>
+nnoremap <leader><Tab>[ :tabprevious<cr>
+nnoremap <leader><Tab>] :tabnext<cr>
+nnoremap <leader><Tab>` :tablast<cr>
+nnoremap <leader><Tab>c :tabclose<cr>
+nnoremap <leader><Tab>d :tabclose<cr>
+nnoremap <leader><Tab>m :tabmove
+nnoremap <leader><Tab>n :tabnew<cr>
+nnoremap <leader><Tab>N :tabnew 
+nnoremap <leader><Tab>O :tabonly<cr>
+nnoremap <leader><Tab>{ :-tabmove<cr>
+nnoremap <leader><Tab>} :+tabmove<cr>
 
 
 " Toggle between this and the last accessed tab
 let g:lasttab = 1
-nmap <leader><Tab>l :exe "tabn ".g:lasttab<CR>
+nnoremap <leader><Tab>l :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 #+end_src
 
 *** b -> +buffer
 #+begin_src vimrc
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b      = { 'name' : '+buffer' }  | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['['] = 'Previous buffer'       | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b[']'] = 'Next buffer'           | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['b'] = 'Switch buffer'         | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['d'] = 'Kill buffer'           | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['k'] = 'Kill buffer'           | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['K'] = 'Kill all buffers'      | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['n'] = 'Next buffer'           | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['N'] = 'New empty tab'         | endif
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['O'] = 'Kill other buffers'    | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['p'] = 'Previous buffer'       | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['l'] = 'Switch to last buffer' | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['s'] = 'Save buffer'           | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['S'] = 'Save all buffers'      | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['u'] = 'Save buffer as root'   | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b      = { 'name' : '+buffer' }    | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['['] = 'Previous buffer'         | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b[']'] = 'Next buffer'             | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['b'] = 'Switch workspace buffer' | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['B'] = 'Switch buffer'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['d'] = 'Kill buffer'             | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['i'] = 'ibuffer'                 | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['k'] = 'Kill buffer'             | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['K'] = 'Kill all buffers'        | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['l'] = 'Switch to last buffer'   | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['L'] = 'List bookmarks'          | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['n'] = 'Next buffer'             | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['N'] = 'New empty buffer'        | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['O'] = 'Kill other buffers'      | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['p'] = 'Previous buffer'         | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['r'] = 'Revert buffer'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['s'] = 'Save buffer'             | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['S'] = 'Save all buffers'        | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['u'] = 'Save buffer as root'     | endif
 
-map <leader>b[ :bprevious<cr>
-map <leader>b] :bnext<cr>
-map <leader>bb :BufExplorerHorizontalSplit<cr>
-map <leader>bd :Bclose<cr>
-map <leader>bk :Bclose<cr>
-map <leader>bK :bufdo bd<cr>
-map <leader>bn :bnext<cr>
-map <leader>bN :tabe<cr>
-" map <leader>bO :<bar> %bd <bar> e#<cr>
-map <leader>bp :bprevious<cr>
-map <leader>bl :b#<cr>
-map <leader>bs :write<cr>
-map <leader>bS :wa<cr>
-map <leader>bu :W<cr>
+nnoremap <silent> <leader>b[ :bprevious<cr>
+nnoremap <silent> <leader>b] :bnext<cr>
+nnoremap <silent> <leader>bb :BufExplorerHorizontalSplit<cr>
+nnoremap <silent> <leader>bB :Buffers<cr>
+nnoremap <silent> <leader>bd :Bclose<cr>
+nnoremap <silent> <leader>bi :BufExplorer<cr>
+nnoremap <silent> <leader>bk :Bclose<cr>
+nnoremap <silent> <leader>bK :bufdo bd<cr>
+nnoremap <silent> <leader>bl :b#<cr>
+nnoremap <silent> <leader>bL :marks<cr>
+nnoremap <silent> <leader>bn :bnext<cr>
+nnoremap <silent> <leader>bN :e *new*<cr>
+nnoremap <leader>bO :%bd <Bar> e#<cr>
+nnoremap <silent> <leader>bp :bprevious<cr>
+nnoremap <silent> <leader>br :if confirm('Discard edits and reread from ' . expand('%:p') . '?', "&Yes\n&No", 1)==1 <Bar> exe ":edit!" <Bar> endif<cr>
+nnoremap <leader>bs :write<cr>
+nnoremap <leader>bS :wa<cr>
+nnoremap <leader>bu :W<cr>
 #+end_src
 
 *** c -> +code
@@ -566,14 +610,14 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['y'] = 'Yank file pat
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['Y'] = 'Yank file path from project' | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['v'] = 'Grep?'                       | endif
 
-map <leader>fc :cd %:p:h<cr>:pwd<cr>
-map <silent> <leader>fD :if confirm('Really delete "' . expand('%') . '"?', "&Yes\n&No", 1)==1 <Bar> exe ":call delete(@%)" <Bar> exe ":Bclose" <Bar> endif<cr>
+nnoremap <leader>fc :cd %:p:h<cr>:pwd<cr>
+nnoremap <silent> <leader>fD :if confirm('Really delete "' . expand('%') . '"?', "&Yes\n&No", 1)==1 <Bar> exe ":call delete(@%)" <Bar> exe ":Bclose" <Bar> endif<cr>
 
-map <leader>fy :let @" = expand('%:p')<cr>:let @+ = expand('%:p')<cr>:echo "Copied path to clipboard: " . expand('%:p')<cr>
-map <leader>fY :let @" = expand('%')<cr>:let @+ = expand('%')<cr>:echo "Copied path to clipboard: " . expand('%')<cr>
-map <leader>fs :write<cr>
-map <leader>fS :write 
-map <leader>fv :vimgrep **/*
+nnoremap <leader>fy :let @" = expand('%:p')<cr>:let @+ = expand('%:p')<cr>:echo "Copied path to clipboard: " . expand('%:p')<cr>
+nnoremap <leader>fY :let @" = expand('%')<cr>:let @+ = expand('%')<cr>:echo "Copied path to clipboard: " . expand('%')<cr>
+nnoremap <leader>fs :write<cr>
+nnoremap <leader>fS :write 
+nnoremap <leader>fv :vimgrep **/*
 #+end_src
 
 FZF
@@ -605,9 +649,9 @@ if has_key(plugs, 'vim-gitgutter')
     nnoremap <silent> <leader>gd :vertical Gdiffsplit<cr>
     nnoremap <silent> <leader>gg :Git<cr>
 
-    nmap <leader>gp <Plug>(GitGutterPreviewHunk)
-    map <leader>gs <Plug>(GitGutterStageHunk)
-    nmap <leader>gu <Plug>(GitGutterUndoHunk)
+    nnoremap <leader>gp <Plug>(GitGutterPreviewHunk)
+    nnoremap <leader>gs <Plug>(GitGutterStageHunk)
+    nnoremap <leader>gu <Plug>(GitGutterUndoHunk)
 endif
 #+end_src
 
@@ -623,7 +667,7 @@ if has_key(plugs, 'fzf')
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['s'] = 'help-search-headings' | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['t'] = 'load-theme'           | endif
 
-    map <leader>hk :Maps<CR>
+    nnoremap <leader>hk :Maps<CR>
     nnoremap <leader>hs :Helptags<CR>
     nnoremap <leader>ht :Colors<CR>
 endif
@@ -636,8 +680,8 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['e'] = 'reload-env'
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['p'] = 'reload-packages'      | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['r'] = 'reload'               | endif
 
-map <leader>hre :source $MYVIMRC<cr>
-map <leader>hrr :source %<cr>
+nnoremap <leader>hre :source $MYVIMRC<cr>
+nnoremap <leader>hrr :source %<cr>
 #+end_src
 
 *** i -> +insert
@@ -645,7 +689,7 @@ map <leader>hrr :source %<cr>
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i      = { 'name' : '+insert' } | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['t'] = 'Toilet pagga'         | endif
 
-map <leader>it :r !toilet -f pagga
+nnoremap <leader>it :r !toilet -f pagga
 #+end_src
 
 *** o -> +open
@@ -661,10 +705,10 @@ if has_key(plugs, 'vim-floaterm')
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['r'] = 'Ranger'   | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['v'] = 'Vifm'     | endif
 
-    map <leader>ot :FloatermToggle<cr>
-    map <leader>op :FloatermNew python<cr>
-    map <leader>or :FloatermNew ranger<cr>
-    map <leader>ov :FloatermNew vifm<cr>
+    nnoremap <leader>ot :FloatermToggle<cr>
+    nnoremap <leader>op :FloatermNew python<cr>
+    nnoremap <leader>or :FloatermNew ranger<cr>
+    nnoremap <leader>ov :FloatermNew vifm<cr>
 endif
 #+end_src
 
@@ -692,10 +736,10 @@ if has_key(plugs, 'fzf')
     nnoremap <leader>p' :Marks<CR>
     nnoremap <leader>p/ :History/<CR>
     nnoremap <leader>p: :History:<CR>
-    map <leader>pb :Buffers<CR>
-    map <leader>pc :Commands<CR>
-    map <leader>pf :Filetypes<CR>
-    map <leader>pw :Windows<CR>
+    nnoremap <leader>pb :Buffers<CR>
+    nnoremap <leader>pc :Commands<CR>
+    nnoremap <leader>pf :Filetypes<CR>
+    nnoremap <leader>pw :Windows<CR>
 endif
 #+end_src
 
@@ -709,12 +753,12 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['Q'] = 'Quit Vim with
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['s'] = 'Quick save current session' | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['S'] = 'Save session to file'       | endif
 
-map <leader>ql :source $HOME/.vim/sessions/quick-session.vim<cr>
-map <leader>qL :source $HOME/.vim/sessions/
-map <leader>qq :qa<cr>
-map <leader>qQ :qa!<cr>
-map <leader>qs :mksession! $HOME/.vim/sessions/quick-session.vim<cr>
-map <leader>qS :mksession $HOME/.vim/sessions/
+nnoremap <leader>ql :source $HOME/.vim/sessions/quick-session.vim<cr>
+nnoremap <leader>qL :source $HOME/.vim/sessions/
+nnoremap <leader>qq :qa<cr>
+nnoremap <leader>qQ :qa!<cr>
+nnoremap <leader>qs :mksession! $HOME/.vim/sessions/quick-session.vim<cr>
+nnoremap <leader>qS :mksession $HOME/.vim/sessions/
 #+end_src
 
 *** s -> +search
@@ -731,8 +775,8 @@ if has_key(plugs, 'fzf')
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['t'] = 'Search Tags in buffer'      | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['T'] = 'Search Tags in all buffers' | endif
 
-    map <leader>sb :BLines<CR>
-    map <leader>sB :Lines<CR>
+    nnoremap <leader>sb :BLines<CR>
+    nnoremap <leader>sB :Lines<CR>
     nnoremap <leader>sp :Rg<CR>
     nnoremap <leader>st :BTags<CR>
     nnoremap <leader>sT :Tags<CR>
@@ -749,12 +793,12 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['r'] = 'Read-only mod
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['s'] = 'Spell checker'          | endif 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['|'] = 'Fill column indicator'  | endif 
 
-nnoremap <leader>tl :call Cycle_Line_Numbers()<cr>
+nnoremap <leader>tl :call Cycle_LineNumbers()<cr>
 nnoremap <leader>tp :call Toggle_Mode('paste'   , 'Paste mode enabled in current buffer'      , 'Paste mode disabled in current buffer')<cr>
 nnoremap <leader>tw :call Toggle_Mode('wrap'    , 'Visual-Line mode enabled in current buffer', 'Visual-Line mode disabled in current buffer')<cr>
 nnoremap <leader>tr :call Toggle_Mode('readonly', 'Read-Only mode enabled in current buffer'  , 'Read-Only mode disabled in current buffer')<cr>
 nnoremap <leader>ts :call Toggle_Mode('spell'   , 'Spell mode enabled in current buffer'      , 'Spell mode disabled in current buffer')<cr>
-nnoremap <leader>t\| :execute "set colorcolumn=" . (&colorcolumn == "" ? "-0" : "")<cr>
+nnoremap <leader>t\| :call Toggle_FillColumn()<cr>
 #+end_src
 
 Mini-map
@@ -777,8 +821,8 @@ Colorizer
 #+begin_src vimrc
 if has_key(plugs, 'Colorizer')
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.t['c'] = 'Colors' | endif
-    
-    nnoremap <leader>tc :ColorToggle<cr>
+
+    nnoremap <leader>tc :call Toggle_Rainbow()<cr>
 endif
 #+end_src
 
@@ -819,39 +863,39 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['w'] = 'Next window' 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['W'] = 'Previous window'            | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.w['|'] = 'Set window width'           | endif
 
-map <leader>w+ :resize +5<cr>
-map <leader>w- :resize -5<cr>
-map <leader>w< :vertical resize -5<cr>
-map <leader>w= <C-w>=
-map <leader>w> :vertical resize +5<cr>
-map <leader>w_ :resize<cr>
-map <leader>w` :term<cr>
-map <leader>wb <C-w>b
-map <leader>wc :close<cr>
-map <leader>wd :close<cr>
-map <leader>wh <C-w>h
-map <leader>wH <C-w>H
-map <leader>wj <C-w>j
-map <leader>wJ <C-w>J
-map <leader>wk <C-w>k
-map <leader>wK <C-w>K
-map <leader>wl <C-w>l
-map <leader>wL <C-w>L
-map <leader>wn :new<cr>
-map <leader>wo :only<cr>
-map <leader>wp <C-w>p
-map <leader>wq :quit<cr>
-map <leader>wr <C-w>r
-map <leader>wR <C-w>R
-map <leader>ws :split<cr><C-w>p
-map <leader>wS :split<cr>
-map <leader>wt <C-w>t
-map <leader>wT <C-w>T
-map <leader>wv :vsplit<cr><C-w>p
-map <leader>wV :vsplit<cr>
-map <leader>ww <C-w>w
-map <leader>wW <C-w>W
-map <leader>w\| :vertical resize<cr>
+nnoremap <leader>w+ :resize +5<cr>
+nnoremap <leader>w- :resize -5<cr>
+nnoremap <leader>w< :vertical resize -5<cr>
+nnoremap <leader>w= <C-w>=
+nnoremap <leader>w> :vertical resize +5<cr>
+nnoremap <leader>w_ :resize<cr>
+nnoremap <leader>w` :term<cr>
+nnoremap <leader>wb <C-w>b
+nnoremap <leader>wc :close<cr>
+nnoremap <leader>wd :close<cr>
+nnoremap <leader>wh <C-w>h
+nnoremap <leader>wH <C-w>H
+nnoremap <leader>wj <C-w>j
+nnoremap <leader>wJ <C-w>J
+nnoremap <leader>wk <C-w>k
+nnoremap <leader>wK <C-w>K
+nnoremap <leader>wl <C-w>l
+nnoremap <leader>wL <C-w>L
+nnoremap <leader>wn :new<cr>
+nnoremap <leader>wo :only<cr>
+nnoremap <leader>wp <C-w>p
+nnoremap <leader>wq :quit<cr>
+nnoremap <leader>wr <C-w>r
+nnoremap <leader>wR <C-w>R
+nnoremap <leader>ws :split<cr><C-w>p
+nnoremap <leader>wS :split<cr>
+nnoremap <leader>wt <C-w>t
+nnoremap <leader>wT <C-w>T
+nnoremap <leader>wv :vsplit<cr><C-w>p
+nnoremap <leader>wV :vsplit<cr>
+nnoremap <leader>ww <C-w>w
+nnoremap <leader>wW <C-w>W
+nnoremap <leader>w\| :vertical resize<cr>
 #+end_src
 
 ** g
