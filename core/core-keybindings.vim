@@ -39,15 +39,21 @@ if has_key(plugs, 'Colorizer')
     endfunction
 endif
 
-if has_key(plugs, 'vim-which-key') | let g:which_key_map['<']     = 'Switch buffer'           | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Esc>'] = 'Reset/Cleanup'           | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map['`']     = 'Switch to last buffer'   | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map[',']     = 'Switch workspace buffer' | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map['<']     = 'Switch buffer'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map['`']     = 'Switch to last buffer'   | endif
 
-nnoremap <leader>< :Buffers<cr>
 nnoremap <silent> <leader><Esc> :call ClearAll()<cr>
-nnoremap <leader>` :b#<cr>
 nnoremap <leader>, :BufExplorerHorizontalSplit<cr>
+nnoremap <leader>< :Buffers<cr>
+nnoremap <leader>` :b#<cr>
+
+if has_key(plugs, 'fzf')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map[' '] = ['GFiles', 'Find file in project' ] | endif
+
+    nnoremap <leader><Space> :GFiles<cr>
+endif
 
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']      = { 'name' : '+workspace' }   | endif
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']['0'] = 'Switch to final workspace' | endif
@@ -125,40 +131,45 @@ nnoremap <leader>bu :W<cr>
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.c = { 'name' : '+code' } | endif
 
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f      = { 'name' : '+file' }          | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['c'] = 'CD to current directory'     | endif
+if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f      = { 'name' : '+file' }          | endif
+if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['c'] = 'CD to current directory'     | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['c'] = 'Open project editorconfig'   | endif
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['C'] = 'Copy this file'              | endif
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['d'] = 'Find directory'              | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['D'] = 'Delete this file'            | endif
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['e'] = 'Find file in vim.d'          | endif
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['E'] = 'Browse vim.d'                | endif
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['F'] = 'Find file from here'         | endif
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['l'] = 'Locate file'                 | endif
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['p'] = 'Find file in private config' | endif
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['P'] = 'Browse private config'       | endif
+if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['D'] = 'Delete this file'            | endif
+if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['E'] = 'Browse vim.d'                | endif
+if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['P'] = 'Browse private config'       | endif
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['R'] = 'Rename/move file'            | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['s'] = 'Save file'                   | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['S'] = 'Save as...'                  | endif
+if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['s'] = 'Save file'                   | endif
+if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['S'] = 'Save as...'                  | endif
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['u'] = 'Sudo find file'              | endif
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['U'] = 'Sudo this file'              | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['y'] = 'Yank file path'              | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['Y'] = 'Yank file path from project' | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['v'] = 'Grep?'                       | endif
+if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['y'] = 'Yank file path'              | endif
+if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['Y'] = 'Yank file path from project' | endif
+if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['v'] = 'Grep?'                       | endif
 
 nnoremap <leader>fc :cd %:p:h<cr>:pwd<cr>
 nnoremap <silent> <leader>fD :if confirm('Really delete "' . expand('%') . '"?', "&Yes\n&No", 1)==1 <Bar> exe ":call delete(@%)" <Bar> exe ":Bclose" <Bar> endif<cr>
-
-nnoremap <leader>fy :let @" = expand('%:p')<cr>:let @+ = expand('%:p')<cr>:echo "Copied path to clipboard: " . expand('%:p')<cr>
-nnoremap <leader>fY :let @" = expand('%')<cr>:let @+ = expand('%')<cr>:echo "Copied path to clipboard: " . expand('%')<cr>
+nnoremap <leader>fE :Hexplore ~/.vim/core<cr>
+nnoremap <leader>fP :Hexplore ~/.vim<cr>
 nnoremap <leader>fs :write<cr>
 nnoremap <leader>fS :write 
+nnoremap <leader>fy :let @" = expand('%:p')<cr>:let @+ = expand('%:p')<cr>:echo "Copied path to clipboard: " . expand('%:p')<cr>
+nnoremap <leader>fY :let @" = expand('%')<cr>:let @+ = expand('%')<cr>:echo "Copied path to clipboard: " . expand('%')<cr>
 nnoremap <leader>fv :vimgrep **/*
 
 if has_key(plugs, 'fzf')
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['f'] = 'Find file'    | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['r'] = 'Recent files' | endif
+    if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['e'] = 'Find file in vim.d'          | endif
+    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['f'] = 'Find file'                   | endif
+    if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['F'] = 'Find file from here'         | endif
+    if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['l'] = 'Locate file'                 | endif
+    if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['p'] = 'Find file in private config' | endif
+    if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['r'] = 'Recent files'                | endif
 
-    map <leader>ff :Files<CR>
+    map <leader>fe :Files ~/.vim/core<CR>
+    map <leader>fF :Files<CR>
+    map <leader>fl :Locate 
+    map <leader>fp :Files ~/.vim<CR>
     map <leader>fr :History<CR>
 endif
 
@@ -206,6 +217,9 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['t'] = 'Toilet pagga'
 nnoremap <leader>it :r !toilet -f pagga
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.o = { 'name' : '+open' } | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['-'] = 'File Explorer' | endif
+
+nnoremap <leader>o- :Explore<cr>
 
 if has_key(plugs, 'vim-floaterm')
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['t'] = 'Toggle term popup' | endif
@@ -224,21 +238,23 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.m = { 'name' : '+<local
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.p = { 'name' : '+popup' } | endif
 
 if has_key(plugs, 'fzf')
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p["'"] = 'Search marks'        | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['/'] = 'Search history'      | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p[':'] = 'Commands history'    | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['b'] = 'Switch buffer'       | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['c'] = 'Search all commands' | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['f'] = 'Switch filetype'     | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['w'] = 'Switch window'       | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['f'] = 'Find file in project' | endif
 
-    nnoremap <leader>p' :Marks<CR>
-    nnoremap <leader>p/ :History/<CR>
-    nnoremap <leader>p: :History:<CR>
-    nnoremap <leader>pb :Buffers<CR>
-    nnoremap <leader>pc :Commands<CR>
-    nnoremap <leader>pf :Filetypes<CR>
-    nnoremap <leader>pw :Windows<CR>
+    nnoremap <leader>pf :GFiles<cr>
+    
+    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p["'"] = 'Search marks'        | endif
+    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['/'] = 'Search history'      | endif
+    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p[':'] = 'Commands history'    | endif
+    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['c'] = 'Search all commands' | endif
+    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['f'] = 'Switch filetype'     | endif
+    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['w'] = 'Switch window'       | endif
+
+"     nnoremap <leader>p' :Marks<CR>
+"     nnoremap <leader>p/ :History/<CR>
+"     nnoremap <leader>p: :History:<CR>
+"     nnoremap <leader>pc :Commands<CR>
+"     nnoremap <leader>pf :Filetypes<CR>
+"     nnoremap <leader>pw :Windows<CR>
 endif
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.q      = { 'name' : '+quit/session' } | endif
