@@ -225,8 +225,14 @@ nnoremap <leader>hre :source $MYVIMRC<cr>
 nnoremap <leader>hrr :source %<cr>
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i      = { 'name' : '+insert' } | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['f'] = 'Current file name'    | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['F'] = 'Current file path'    | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['p'] = 'Evil ex path'         | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['t'] = 'Toilet pagga'         | endif
 
+nnoremap <silent> <leader>if :normal "%p<cr>
+nnoremap <silent> <leader>iF a<C-r>=expand("%:p")<cr><esc>
+nnoremap <leader>ip :r !echo 
 nnoremap <leader>it :r !toilet -f pagga
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.o = { 'name' : '+open' } | endif
@@ -449,11 +455,6 @@ if has_key(plugs, 'vim-which-key') | let g:Z_map['Z'] = 'save-modified-and-close
 map ZQ ZQ
 map ZZ ZZ
 
-nnoremap <Up> :blast<cr>
-nnoremap <Down> :bfirst<cr>
-nnoremap <Left> :bprevious<cr>
-nnoremap <Right> :bnext<cr>
-
 if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['"'] = 'which_key_ignore'                 | endif
 if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map[' '] = ['[o', 'Insert newline above']     | endif
 " if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['#'] = 'Previous preproc directive'       | endif
@@ -530,6 +531,11 @@ if has_key(plugs, 'coc.nvim')
     nmap <silent> [e <Plug>(coc-diagnostic-prev)
     nmap <silent> ]e <Plug>(coc-diagnostic-next)
 endif
+
+nnoremap <Up> :blast<cr>
+nnoremap <Down> :bfirst<cr>
+nnoremap <Left> :bprevious<cr>
+nnoremap <Right> :bnext<cr>
 
 noremap <tab> :norm za<cr>
 noremap <tab><tab> :norm zA<cr>

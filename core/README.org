@@ -720,8 +720,14 @@ nnoremap <leader>hrr :source %<cr>
 *** i -> +insert
 #+begin_src vimrc
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i      = { 'name' : '+insert' } | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['f'] = 'Current file name'    | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['F'] = 'Current file path'    | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['p'] = 'Evil ex path'         | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['t'] = 'Toilet pagga'         | endif
 
+nnoremap <silent> <leader>if :normal "%p<cr>
+nnoremap <silent> <leader>iF a<C-r>=expand("%:p")<cr><esc>
+nnoremap <leader>ip :r !echo 
 nnoremap <leader>it :r !toilet -f pagga
 #+end_src
 
@@ -994,14 +1000,6 @@ map ZQ ZQ
 map ZZ ZZ
 #+end_src
 
-** Arrows
-#+begin_src vimrc
-nnoremap <Up> :blast<cr>
-nnoremap <Down> :bfirst<cr>
-nnoremap <Left> :bprevious<cr>
-nnoremap <Right> :bnext<cr>
-#+end_src
-
 ** [] Square Brackets
 #+begin_src vimrc
 if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['"'] = 'which_key_ignore'                 | endif
@@ -1086,6 +1084,14 @@ if has_key(plugs, 'coc.nvim')
     nmap <silent> [e <Plug>(coc-diagnostic-prev)
     nmap <silent> ]e <Plug>(coc-diagnostic-next)
 endif
+#+end_src
+
+** Arrows
+#+begin_src vimrc
+nnoremap <Up> :blast<cr>
+nnoremap <Down> :bfirst<cr>
+nnoremap <Left> :bprevious<cr>
+nnoremap <Right> :bnext<cr>
 #+end_src
 
 ** Folds
