@@ -207,22 +207,37 @@ endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.h = { 'name' : '+help' } | endif
 
 if has_key(plugs, 'fzf')
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['k'] = 'describe-key'         | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['s'] = 'help-search-headings' | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['t'] = 'load-theme'           | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<CR>']   = 'info-vim-Manual'         | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['?']      = 'help-for-help'           | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['e']      = 'view-echo-area-messages' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['k']      = 'describe-key'            | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['q']      = 'help-quit'               | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['s']      = 'help-search-headings'    | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['t']      = 'load-theme'              | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<F1>']   = 'help-for-help'           | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<Help>'] = 'help-for-help'           | endif
 
-    nnoremap <leader>hk :Maps<CR>
-    nnoremap <leader>hs :Helptags<CR>
-    nnoremap <leader>ht :Colors<CR>
+    nnoremap <silent> <leader>h<CR> :help<CR>
+    nnoremap <silent> <leader>h? :help helphelp<CR>
+    nnoremap <silent> <leader>he :messages<CR>
+    nnoremap <silent> <leader>hk :Maps<CR>
+    nnoremap <silent> <leader>hq :helpclose<CR>
+    nnoremap <silent> <leader>hs :Helptags<CR>
+    nnoremap <silent> <leader>ht :Colors<CR>
+    nnoremap <silent> <leader>h<F1> :help helphelp<CR>
+    nnoremap <silent> <leader>h<Help> :help helphelp<CR>
 endif
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r      = { 'name' : '+reload' } | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['e'] = 'reload-env'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['f'] = 'reload-this-file'     | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['p'] = 'reload-packages'      | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['r'] = 'reload'               | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r['t'] = 'reload-theme'         | endif
 
-nnoremap <leader>hre :source $MYVIMRC<cr>
-nnoremap <leader>hrr :source %<cr>
+nnoremap <silent> <leader>hrf :source % <Bar> echo "Current file successfully reloaded!"<cr>
+nnoremap <silent> <leader>hrp :PlugInstall --sync<cr>
+nnoremap <silent> <leader>hrr :source $MYVIMRC<cr>
+nnoremap <silent> <leader>hrt :execute 'colorscheme ' . g:colors_name<cr>
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i      = { 'name' : '+insert' } | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['f'] = 'Current file name'    | endif
