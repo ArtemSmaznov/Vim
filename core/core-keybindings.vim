@@ -55,39 +55,46 @@ if has_key(plugs, 'fzf')
     nnoremap <leader><Space> :GFiles<cr>
 endif
 
+if has_key(plugs, 'vim-gitgutter')
+    " Select current hunk
+    omap ic <Plug>(GitGutterTextObjectInnerPending)
+    omap ac <Plug>(GitGutterTextObjectOuterPending)
+    xmap ic <Plug>(GitGutterTextObjectInnerVisual)
+    xmap ac <Plug>(GitGutterTextObjectOuterVisual)
+endif
+
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']      = { 'name' : '+workspace' }   | endif
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']['0'] = 'Switch to final workspace' | endif
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']['1'] = 'Switch to 1st workspace'   | endif
 
-nnoremap <leader><Tab><Tab> :tabs<cr>
-nnoremap <leader><Tab>0 :$tabnext<cr>
-nnoremap <leader><Tab>1 :1tabnext<cr>
-nnoremap <leader><Tab>2 :2tabnext<cr>
-nnoremap <leader><Tab>3 :3tabnext<cr>
-nnoremap <leader><Tab>4 :4tabnext<cr>
-nnoremap <leader><Tab>5 :5tabnext<cr>
-nnoremap <leader><Tab>6 :6tabnext<cr>
-nnoremap <leader><Tab>7 :7tabnext<cr>
-nnoremap <leader><Tab>8 :8tabnext<cr>
-nnoremap <leader><Tab>9 :9tabnext<cr>
-nnoremap <leader><Tab>< :0tabmove<cr>
-nnoremap <leader><Tab>> :$tabmove<cr>
-nnoremap <leader><Tab>[ :tabprevious<cr>
-nnoremap <leader><Tab>] :tabnext<cr>
-nnoremap <leader><Tab>` :tablast<cr>
-nnoremap <leader><Tab>c :tabclose<cr>
-nnoremap <leader><Tab>d :tabclose<cr>
+nnoremap <leader><Tab>. :tabs<cr>
+nnoremap <silent> <leader><Tab>0 :$tabnext<cr>
+nnoremap <silent> <leader><Tab>1 :1tabnext<cr>
+nnoremap <silent> <leader><Tab>2 :2tabnext<cr>
+nnoremap <silent> <leader><Tab>3 :3tabnext<cr>
+nnoremap <silent> <leader><Tab>4 :4tabnext<cr>
+nnoremap <silent> <leader><Tab>5 :5tabnext<cr>
+nnoremap <silent> <leader><Tab>6 :6tabnext<cr>
+nnoremap <silent> <leader><Tab>7 :7tabnext<cr>
+nnoremap <silent> <leader><Tab>8 :8tabnext<cr>
+nnoremap <silent> <leader><Tab>9 :9tabnext<cr>
+nnoremap <silent> <leader><Tab>< :0tabmove<cr>
+nnoremap <silent> <leader><Tab>> :$tabmove<cr>
+nnoremap <silent> <leader><Tab>[ :tabprevious<cr>
+nnoremap <silent> <leader><Tab>] :tabnext<cr>
+nnoremap <silent> <leader><Tab>c :tabclose<cr>
+nnoremap <silent> <leader><Tab>d :tabclose<cr>
 nnoremap <leader><Tab>m :tabmove
 nnoremap <leader><Tab>n :tabnew<cr>
 nnoremap <leader><Tab>N :tabnew 
-nnoremap <leader><Tab>O :tabonly<cr>
-nnoremap <leader><Tab>{ :-tabmove<cr>
-nnoremap <leader><Tab>} :+tabmove<cr>
+nnoremap <silent> <leader><Tab>O :tabonly<cr>
+nnoremap <silent> <leader><Tab>{ :-tabmove<cr>
+nnoremap <silent> <leader><Tab>} :+tabmove<cr>
 
 
 " Toggle between this and the last accessed tab
 let g:lasttab = 1
-nnoremap <leader><Tab>l :exe "tabn ".g:lasttab<CR>
+nnoremap <silent> <leader><Tab>` :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.b      = { 'name' : '+buffer' }    | endif
@@ -176,19 +183,25 @@ endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.g      = { 'name' : '+git' } | endif
 
 if has_key(plugs, 'vim-gitgutter')
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['d'] = 'Diff Split'        | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['g'] = 'Status'            | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['p'] = 'Preview hunk'      | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['s'] = 'Stage hunk'        | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['u'] = 'Undo hunk'         | endif
-    if has_key(plugs, 'vim-which-key') | let g:squre_bracket_map.c        = 'Git Hunk'          | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['['] = 'Jump to previous hunk' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g[']'] = 'Jump to next hunk'     | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['p'] = 'Preview hunk'          | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['s'] = 'Git stage hunk'        | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['r'] = 'Revert hunk'           | endif
 
-    nnoremap <silent> <leader>gd :vertical Gdiffsplit<cr>
-    nnoremap <silent> <leader>gg :Git<cr>
+    nmap <leader>g[ <Plug>(GitGutterPrevHunk)
+    nmap <leader>g] <Plug>(GitGutterNextHunk)
+    nmap <leader>gp <Plug>(GitGutterPreviewHunk)
+    nmap <leader>gs <Plug>(GitGutterStageHunk)
+    nmap <leader>gr <Plug>(GitGutterUndoHunk)
+endif
 
-    nnoremap <leader>gp <Plug>(GitGutterPreviewHunk)
-    nnoremap <leader>gs <Plug>(GitGutterStageHunk)
-    nnoremap <leader>gu <Plug>(GitGutterUndoHunk)
+if has_key(plugs, 'vim-fugitive')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['d'] = 'Diff Split'            | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['g'] = 'Status' | endif
+    
+    nmap <silent> <leader>gd :Gvdiffsplit<cr>
+    nmap <silent> <leader>gg :Git<cr>
 endif
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.h = { 'name' : '+help' } | endif
@@ -441,9 +454,82 @@ nnoremap <Down> :bfirst<cr>
 nnoremap <Left> :bprevious<cr>
 nnoremap <Right> :bnext<cr>
 
-if has_key(plugs, 'vim-which-key') | let g:squre_bracket_map['['] = 'Move around functions' | endif
-if has_key(plugs, 'vim-which-key') | let g:squre_bracket_map[']'] = 'Move around functions' | endif
-if has_key(plugs, 'vim-which-key') | let g:squre_bracket_map['"'] = 'Move around comments'  | endif
+if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['"'] = 'which_key_ignore'                 | endif
+if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map[' '] = ['[o', 'Insert newline above']     | endif
+" if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['#'] = 'Previous preproc directive'       | endif
+" if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map["'"] = 'Previous mark line'               | endif
+if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['('] = 'Previous open paren'              | endif
+if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['['] = 'Backward section end'             | endif
+if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map[']'] = 'Backward section begin'           | endif
+" if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['`'] = 'Previous mark'                    | endif
+" if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['a'] = 'Backward arg'                     | endif
+if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['b'] = 'Previous buffer'                  | endif
+if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['c'] = 'Previous comment'                 | endif
+" if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['f'] = 'Previous file'                    | endif
+" if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['h'] = 'Outline previous visible heading' | endif
+" if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['m'] = 'Previous beginning of method'     | endif
+" if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['M'] = 'Previous end of method'           | endif
+if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['o'] = 'Insert newline above'             | endif
+if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['s'] = '+spell Previous error'            | endif
+" if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['t'] = 'Hl todo previous'                 | endif
+" if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['u'] = 'Url decode'                       | endif
+if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['w'] = '+workspace Switch left'           | endif
+" if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['y'] = 'C string decode'                  | endif
+if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['{'] = 'Previous open brace'              | endif
+
+if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['"'] = 'which_key_ignore'                 | endif
+if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map[' '] = [']o', 'Insert newline below']     | endif
+" if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['#'] = 'Next preproc directive'           | endif
+" if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map["'"] = 'Next mark line'                   | endif
+if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map[')'] = 'Next close paren'                 | endif
+if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['['] = 'Forward section end'              | endif
+if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map[']'] = 'Forward section begin'            | endif
+" if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['`'] = 'Next mark'                        | endif
+" if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['a'] = 'Forward arg'                      | endif
+if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['b'] = 'Next buffer'                      | endif
+if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['c'] = 'Next comment'                     | endif
+" if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['f'] = 'Next file'                        | endif
+" if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['h'] = 'Outline next visible heading'     | endif
+" if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['m'] = 'Next beginning of method'         | endif
+" if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['M'] = 'Next end of method'               | endif
+if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['o'] = 'Insert newline below'             | endif
+if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['s'] = '+spell Next error'                | endif
+" if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['t'] = 'Hl todo next'                     | endif
+" if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['u'] = 'Url encode'                       | endif
+if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['w'] = '+workspace Switch right'          | endif
+" if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['y'] = 'C string encode'                  | endif
+if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['}'] = 'Next close brace'                 | endif
+
+nmap <silent> [<Space> [o
+nmap <silent> ]<Space> ]o
+nmap <silent> [b :bprevious<cr>
+nmap <silent> ]b :bnext<cr>
+nmap ]c ]"
+nmap [c ["
+nmap <silent> [o :call append(line('.')-1, '')<cr>
+nmap <silent> ]o :call append(line('.'), '')<cr>
+nmap [s [s
+nmap ]s ]s
+nmap <silent> [w :tabprevious<cr>
+nmap <silent> ]w :tabnext<cr>
+nmap [{ [{
+nmap ]} ]}
+
+if has_key(plugs, 'vim-gitgutter')
+    if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map.d = '+git Previous hunk' | endif
+    if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map.d = '+git Next hunk'     | endif
+    
+    nmap [d <Plug>(GitGutterPrevHunk)
+    nmap ]d <Plug>(GitGutterNextHunk)
+endif
+
+if has_key(plugs, 'coc.nvim')
+    if has_key(plugs, 'vim-which-key') | let g:l_sqr_bracket_map['e'] = 'Previous error' | endif
+    if has_key(plugs, 'vim-which-key') | let g:r_sqr_bracket_map['e'] = 'Next error'     | endif
+    
+    nmap <silent> [e <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]e <Plug>(coc-diagnostic-next)
+endif
 
 noremap <tab> :norm za<cr>
 noremap <tab><tab> :norm zA<cr>

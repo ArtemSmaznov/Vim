@@ -45,11 +45,12 @@ let g:local_key_map = {}
 " ░▀▀▀░░▀░░▀░▀░▀▀▀░▀░▀
 
 " []
-call which_key#register('[', "g:squre_bracket_map")
-call which_key#register(']', "g:squre_bracket_map")
+call which_key#register('[', "g:l_sqr_bracket_map")
+call which_key#register(']', "g:r_sqr_bracket_map")
 nnoremap <silent> [ :<c-u>WhichKey '['<CR>
 nnoremap <silent> ] :<c-u>WhichKey ']'<CR>
-let g:squre_bracket_map = {}
+let g:l_sqr_bracket_map = {}
+let g:r_sqr_bracket_map = {}
 
 " g
 call which_key#register('g', "g:g_map")
