@@ -478,7 +478,7 @@ endfunction
 #+begin_src vimrc
 if has_key(plugs, 'Colorizer')
     function! Toggle_Rainbow()
-        if !exists("w:match_list") || empty(w:match_list)
+        if !exists('w:match_list') || empty(w:match_list)
             echo 'Rainbow mode enabled in current buffer'
             ColorHighlight
         else
@@ -487,6 +487,22 @@ if has_key(plugs, 'Colorizer')
         endif
     endfunction
 endif
+#+end_src
+
+*** Reveal in File Manager
+#+begin_src vimrc
+function! Reveal_In_Files()
+    if has('linux')
+        let opencmd = '!xdg-open '
+    elseif has('mac') || has('macunix')
+        let opencmd = '!open '
+    elseif has('win16') || has('win32')
+        let opencmd = '!explorer.exe '
+        " let opencmd = '!start explorer.exe /select,'
+    endif
+
+    silent execute opencmd . expand('%:p:h')
+endfunction
 #+end_src
 
 ** Leader - <Leader>
@@ -740,7 +756,8 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['F'] = 'Current file 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['p'] = 'Evil ex path'         | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.i['t'] = 'Toilet pagga'         | endif
 
-nnoremap <silent> <leader>if :normal "%p<cr>
+" nnoremap <silent> <leader>if :normal "%p<cr>
+nnoremap <silent> <leader>if a<C-r>=expand("%:t")<cr><esc>
 nnoremap <silent> <leader>iF a<C-r>=expand("%:p")<cr><esc>
 nnoremap <leader>ip :r !echo 
 nnoremap <leader>it :r !toilet -f pagga
@@ -748,24 +765,34 @@ nnoremap <leader>it :r !toilet -f pagga
 
 *** o -> +open
 #+begin_src vimrc
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.o = { 'name' : '+open' } | endif
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['-'] = 'File Explorer' | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.o      = { 'name' : '+open' } | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['-'] = 'Netrw'              | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['b'] = 'Default browser'    | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['o'] = 'Reveal in finder'   | endif
 
 nnoremap <leader>o- :Explore<cr>
+nnoremap <leader>ob <Plug>NetrwBrowseX
+nnoremap <leader>oo :call Reveal_In_Files()<cr>
+#+end_src
+
+CoC
+#+begin_src vimrc
+if has_key(plugs, 'coc.nvim')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['p'] = 'Project sidebar'              | endif
+    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['P'] = 'Find file in project sidebar' | endif
+
+    nnoremap <leader>op :CocCommand explorer<cr>
+endif
 #+end_src
 
 Float Term
 #+begin_src vimrc
 if has_key(plugs, 'vim-floaterm')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['-'] = 'Vifm'              | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['t'] = 'Toggle term popup' | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['p'] = 'Python'   | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['r'] = 'Ranger'   | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.o['v'] = 'Vifm'     | endif
 
-    nnoremap <leader>ot :FloatermToggle<cr>
-    nnoremap <leader>op :FloatermNew python<cr>
-    nnoremap <leader>or :FloatermNew ranger<cr>
-    nnoremap <leader>ov :FloatermNew vifm<cr>
+    nnoremap <silent> <leader>ot :FloatermToggle<cr>
+    nnoremap <silent> <leader>o- :FloatermNew vifm<cr>
 endif
 #+end_src
 

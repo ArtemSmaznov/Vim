@@ -160,13 +160,4 @@ nnoremap <silent> <leader>cp  :<C-u>CocListResume<CR>
 let g:which_key_map.c['p'] = 'Resume latest coc list' 
 
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Coc-Explorer
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nmap <leader><Tab> :CocCommand explorer<CR>
-nmap <leader>tn :CocCommand explorer<CR>
-let g:which_key_map.t['n'] = 'File tree' 
-" let g:which_key_map['<Tab>'] = 'File tree' 
-
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif

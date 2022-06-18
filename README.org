@@ -7,14 +7,17 @@
 * Table of Contents :toc:
 - [[#description][Description]]
 - [[#editor][Editor]]
+  - [[#comments][Comments]]
+  - [[#diffs][Diffs]]
+  - [[#scroll-margins][Scroll Margins]]
+  - [[#spell-checking][Spell Checking]]
 - [[#keybindings][Keybindings]]
 - [[#ui][UI]]
   - [[#color-scheme][Color Scheme]]
-  - [[#ignore-compiled-files][Ignore Compiled Files]]
 - [[#local-overwrite][Local Overwrite]]
 
 * Description
- A Vim config inspired by Doom Emacs and set to match my Emacs config as close as possible.
+ A Vim config inspired by hlissner's [[https://github.com/doomemacs/doomemacs][Doom Emacs]] and set to match my Emacs config as close as possible.
 * Editor
 ** Comments
 Stop newline continuation of comments
