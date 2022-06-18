@@ -22,10 +22,13 @@ au FocusGained * checktime
 
 " Turn persistent undo on - you can undo even when you close a buffer/VIM
 try
-  set undodir=$HOME/.vim/temp_dirs/undodir
+  set undodir=$HOME/.vim/.local/etc/transient/undodir
   set undofile
 catch
 endtry
+
+" Change location of cache files for NetRW
+let g:netrw_home="$HOME/.vim/.local/cache"
 
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")

@@ -1,6 +1,18 @@
-call plug#begin('$HOME/.vim/plugged')
+" Install vim-plug if not found
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | q | source $MYVIMRC
+  \| endif
+
+call plug#begin('$HOME/.vim/.local/straight/repos')
 
 " Core
+Plug 'junegunn/vim-plug'
 Plug 'tommcdo/vim-lion'
 Plug 'liuchengxu/vim-which-key'
 Plug 'tpope/vim-commentary'                     " Plugin for commenting code
@@ -10,7 +22,9 @@ Plug 'justinmk/vim-sneak'
 Plug 'tommcdo/vim-exchange'
 
 " LSP
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}        " LSP support for Vim & Neovim
+if has("python3")
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}        " LSP support for Vim & Neovim
+endif
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'chrisbra/Colorizer',
 
@@ -59,9 +73,3 @@ Plug 'voldikss/vim-floaterm'
 " Plug 'airblade/vim-rooter'
 
 call plug#end()
-
-" Automatically install missing plugins on startup
-autocmd VimEnter *
-      \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-      \|   PlugInstall --sync | q
-      \| endif

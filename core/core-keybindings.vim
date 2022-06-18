@@ -76,11 +76,12 @@ if has_key(plugs, 'vim-gitgutter')
     xmap ac <Plug>(GitGutterTextObjectOuterVisual)
 endif
 
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']      = { 'name' : '+workspace' }   | endif
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']['0'] = 'Switch to final workspace' | endif
-" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']['1'] = 'Switch to 1st workspace'   | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']       = { 'name' : '+workspace' }   | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map.['<Tab>']['.'] = 'Switch workspace'          | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']['0']  = 'Switch to final workspace' | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Tab>']['1']  = 'Switch to 1st workspace'   | endif
 
-nnoremap <leader><Tab>. :tabs<cr>
+nnoremap <silent> <leader><Tab>. :tabs<cr>
 nnoremap <silent> <leader><Tab>0 :$tabnext<cr>
 nnoremap <silent> <leader><Tab>1 :1tabnext<cr>
 nnoremap <silent> <leader><Tab>2 :2tabnext<cr>
@@ -109,6 +110,10 @@ nnoremap <silent> <leader><Tab>} :+tabmove<cr>
 let g:lasttab = 1
 nnoremap <silent> <leader><Tab>` :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
+
+if has_key(plugs, 'fzf')
+    nnoremap <silent> <leader><Tab>. :Windows<cr>
+endif
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.b      = { 'name' : '+buffer' }    | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.b['['] = 'Previous buffer'         | endif
@@ -223,22 +228,26 @@ if has_key(plugs, 'fzf')
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<CR>']   = 'info-vim-Manual'         | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['?']      = 'help-for-help'           | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['e']      = 'view-echo-area-messages' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['i']      = 'show-version-info'       | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['k']      = 'describe-key'            | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['q']      = 'help-quit'               | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['s']      = 'help-search-headings'    | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['t']      = 'load-theme'              | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['v']      = 'show-version-info'       | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<F1>']   = 'help-for-help'           | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<Help>'] = 'help-for-help'           | endif
 
-    nnoremap <silent> <leader>h<CR> :help<CR>
-    nnoremap <silent> <leader>h? :help helphelp<CR>
-    nnoremap <silent> <leader>he :messages<CR>
-    nnoremap <silent> <leader>hk :Maps<CR>
-    nnoremap <silent> <leader>hq :helpclose<CR>
-    nnoremap <silent> <leader>hs :Helptags<CR>
-    nnoremap <silent> <leader>ht :Colors<CR>
-    nnoremap <silent> <leader>h<F1> :help helphelp<CR>
-    nnoremap <silent> <leader>h<Help> :help helphelp<CR>
+    nnoremap <silent> <leader>h<CR> :help<cr>
+    nnoremap <silent> <leader>h? :help helphelp<cr>
+    nnoremap <silent> <leader>he :messages<cr>
+    nnoremap <silent> <leader>hi :version<cr>
+    nnoremap <silent> <leader>hk :Maps<cr>
+    nnoremap <silent> <leader>hq :helpclose<cr>
+    nnoremap <silent> <leader>hs :Helptags<cr>
+    nnoremap <silent> <leader>ht :Colors<cr>
+    nnoremap <silent> <leader>hv :version<cr>
+    nnoremap <silent> <leader>h<F1> :help helphelp<cr>
+    nnoremap <silent> <leader>h<Help> :help helphelp<cr>
 endif
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.h.r      = { 'name' : '+reload' } | endif
@@ -290,26 +299,18 @@ endif
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.m = { 'name' : '+<localleader>' } | endif
 
+if has_key(plugs, 'fzf')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.m['M'] = 'Switch major mode' | endif
+    
+    nnoremap <silent> <leader>mM :Filetypes<CR>
+endif
+
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.p = { 'name' : '+popup' } | endif
 
 if has_key(plugs, 'fzf')
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['f'] = 'Find file in project' | endif
 
     nnoremap <leader>pf :GFiles<cr>
-    
-    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p["'"] = 'Search marks'        | endif
-    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['/'] = 'Search history'      | endif
-    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p[':'] = 'Commands history'    | endif
-    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['c'] = 'Search all commands' | endif
-    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['f'] = 'Switch filetype'     | endif
-    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.p['w'] = 'Switch window'       | endif
-
-"     nnoremap <leader>p' :Marks<CR>
-"     nnoremap <leader>p/ :History/<CR>
-"     nnoremap <leader>p: :History:<CR>
-"     nnoremap <leader>pc :Commands<CR>
-"     nnoremap <leader>pf :Filetypes<CR>
-"     nnoremap <leader>pw :Windows<CR>
 endif
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.q      = { 'name' : '+quit/session' } | endif
@@ -320,12 +321,12 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['Q'] = 'Quit Vim with
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['s'] = 'Quick save current session' | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.q['S'] = 'Save session to file'       | endif
 
-nnoremap <leader>ql :source $HOME/.vim/sessions/quick-session.vim<cr>
-nnoremap <leader>qL :source $HOME/.vim/sessions/
-nnoremap <leader>qq :qa<cr>
-nnoremap <leader>qQ :qa!<cr>
-nnoremap <leader>qs :mksession! $HOME/.vim/sessions/quick-session.vim<cr>
-nnoremap <leader>qS :mksession $HOME/.vim/sessions/
+nnoremap <silent> <leader>ql :source $HOME/.vim/.local/etc/workspaces/quick-session.vim<cr>
+nnoremap <silent> <leader>qL :source $HOME/.vim/.local/etc/workspaces/
+nnoremap <silent> <leader>qq :qa<cr>
+nnoremap <silent> <leader>qQ :qa!<cr>
+nnoremap <silent> <leader>qs :mksession! $HOME/.vim/.local/etc/workspaces/quick-session.vim<cr>
+nnoremap <silent> <leader>qS :mksession $HOME/.vim/.local/etc/workspaces/
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.s = { 'name' : '+search' } | endif
 
@@ -333,14 +334,24 @@ if has_key(plugs, 'fzf')
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['b'] = 'Search buffer'              | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['B'] = 'Search all open buffers'    | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['p'] = 'Search project'             | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['r'] = 'Jump to mark'               | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['t'] = 'Search Tags in buffer'      | endif
     if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['T'] = 'Search Tags in all buffers' | endif
-
+    
     nnoremap <leader>sb :BLines<CR>
     nnoremap <leader>sB :Lines<CR>
     nnoremap <leader>sp :Rg<CR>
+    nnoremap <leader>sr :Marks<CR>
     nnoremap <leader>st :BTags<CR>
     nnoremap <leader>sT :Tags<CR>
+    
+    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['/'] = 'Search history'      | endif
+    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.s[':'] = 'Commands history'    | endif
+    " if has_key(plugs, 'vim-which-key') | let g:which_key_map.s['c'] = 'Search all commands' | endif
+
+"     nnoremap <silent> <leader>s/ :History/<CR>
+"     nnoremap <silent> <leader>s: :History:<CR>
+"     nnoremap <silent> <leader>sc :Commands<CR>
 endif
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.t      = { 'name' : '+toggle' }   | endif
