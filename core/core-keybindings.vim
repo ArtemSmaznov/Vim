@@ -83,14 +83,6 @@ if has_key(plugs, 'fzf')
     nnoremap <leader><Space> :GFiles<cr>
 endif
 
-if has_key(plugs, 'vim-gitgutter')
-    " Select current hunk
-    omap ic <Plug>(GitGutterTextObjectInnerPending)
-    omap ac <Plug>(GitGutterTextObjectOuterPending)
-    xmap ic <Plug>(GitGutterTextObjectInnerVisual)
-    xmap ac <Plug>(GitGutterTextObjectOuterVisual)
-endif
-
 if has_key(plugs, 'vim-which-key')
     " let g:which_key_map['<Tab>']       = { 'name' : '+workspace' }
     " let g:which_key_map.['<Tab>']['.'] = 'Switch workspace'
@@ -178,6 +170,9 @@ if has_key(plugs, 'vim-which-key')
 endif
 
 if has_key(plugs, 'coc.nvim')
+    command! -nargs=0 Format :call CocAction('format')
+    command! -nargs=0 OrganizeImports :call CocAction('runCommand', 'editor.action.organizeImport')
+    
     if has_key(plugs, 'vim-which-key')
         let g:which_key_map.c      = { 'name' : '+code' }
         let g:which_key_map.c['a'] = 'LSP Execute code action'
@@ -198,15 +193,15 @@ if has_key(plugs, 'coc.nvim')
     nmap <leader>ca <Plug>(coc-codeaction)
     nnoremap <silent> <leader>cd <Plug>(coc-definition)
     nnoremap <silent> <leader>cD <Plug>(coc-references)
-    xmap <leader>cf <Plug>(coc-format-selected)
-    nmap <leader>cf <Plug>(coc-format-selected)
+    nnoremap <silent> <leader>cf :Format<cr>
+    xnoremap <silent> <leader>cf <Plug>(coc-format-selected)
     nnoremap <silent> <leader>ci <Plug>(coc-implementation)
     " Find symbol of current document
     nnoremap <silent> <leader>cj :<C-u>CocList outline<cr>
     " Search workspace symbols
     nnoremap <silent> <leader>cJ :<C-u>CocList -I symbols<cr>
     nnoremap <silent> <leader>ck :call <SID>show_documentation()<cr>
-    " nnoremap <silent> <leader>co :call CocAction('organizeImport')<cr>
+    nnoremap <silent> <leader>co :OrganizeImports<cr>
     nnoremap <silent> <leader>cr <Plug>(coc-rename)
     nnoremap <silent> <leader>cx :<C-u>CocList diagnostics<cr>
     nnoremap <silent> <leader>ct <Plug>(coc-type-definition)
@@ -593,10 +588,10 @@ if has_key(plugs, 'vim-which-key')
     let g:g_map['_']      = 'last-non-blank'
     let g:g_map['a']      = 'what-cursor-position'
     let g:g_map['c']      = 'comment-operator'
-    let g:g_map['d']      = '+lookup definition'
+    let g:g_map['d']      = '+lookup Definition'
     let g:g_map['e']      = 'backward-word-end'
     let g:g_map['E']      = 'backward-WORD-end'
-    let g:g_map['f']      = '+lookup file'
+    let g:g_map['f']      = '+lookup File'
     let g:g_map['F']      = 'find-file-at-point-with-line'
     let g:g_map['g']      = 'goto-first-line'
     let g:g_map['i']      = 'insert-resume'
@@ -612,11 +607,11 @@ if has_key(plugs, 'vim-which-key')
     let g:g_map['o']      = 'goto-char'
     " let g:g_map['p']      = 'reselect-paste'
     let g:g_map['q']      = 'fill-and-move'
-    " let g:g_map['Q']      = '+format region'
-    " let g:g_map['r']      = '+eval region'
+    " let g:g_map['Q']      = '+format Region'
+    " let g:g_map['r']      = '+eval Region'
     " let g:g_map['R']      = '+eval/buffer'
-    let g:g_map['t']      = '+workspace switch-next '
-    let g:g_map['T']      = '+workspace switch-previous'
+    let g:g_map['t']      = '+workspace Switch-next '
+    let g:g_map['T']      = '+workspace Switch-previous'
     let g:g_map['u']      = 'downcase'
     let g:g_map['U']      = 'upcase'
     let g:g_map['v']      = 'visual-restore'
@@ -689,10 +684,10 @@ endif
 
 if has_key(plugs, 'coc.nvim')
     if has_key(plugs, 'vim-which-key')
-        " let g:g_map['A'] = '+lookup assignments'
-        let g:g_map['d'] = '+lookup definition'
-        let g:g_map['D'] = '+lookup references'
-        let g:g_map['I'] = '+lookup implementations'
+        " let g:g_map['A'] = '+lookup Assignments'
+        let g:g_map['d'] = '+lookup Definition'
+        let g:g_map['D'] = '+lookup References'
+        let g:g_map['I'] = '+lookup Implementations'
     endif
 
     nmap <silent> gd <Plug>(coc-definition)
@@ -705,20 +700,64 @@ endif
 " endif
 
 if has_key(plugs, 'vim-which-key')
-    let g:z_map['+']    = 'scroll-bottom-line-to-top'
-    let g:z_map['-']    = 'scroll-line-to-bottom'
-    let g:z_map['.']    = 'scroll-line-to-center'
-    let g:z_map['=']    = 'ispell-word'
-    let g:z_map['^']    = 'scroll-top-line-to-bottom'
-    let g:z_map['b']    = 'scroll-line-to-bottom'
-    let g:z_map['g']    = 'add-word'
-    let g:z_map['t']    = 'scroll-line-to-top'
-    let g:z_map['z']    = 'scroll-line-to-center'
-    let g:z_map['<CR>'] = 'scroll-line-to-top'
+    let g:z_map['<CR>'] = 'Scroll line to top'
+    let g:z_map['+']    = 'Scroll bottom line to top'
+    let g:z_map['-']    = 'Scroll line to bottom'
+    let g:z_map['.']    = 'Scroll line to center'
+    let g:z_map['=']    = '+spell ispell word'
+    let g:z_map['^']    = 'Scroll top line to bottom'
+    let g:z_map['a']    = 'Toggle fold'
+    let g:z_map['b']    = 'Scroll line to bottom'
+    let g:z_map['c']    = 'Close fold'
+    let g:z_map['d']    = 'Fold delete'
+    let g:z_map['D']    = 'Fold delete all'
+    let g:z_map['f']    = 'Fold create'
+    let g:z_map['F']    = 'Fold create line'
+    let g:z_map['g']    = '+spell Add word'
+    let g:z_map['h']    = 'Scroll column left'
+    let g:z_map['H']    = 'Scroll left'
+    let g:z_map['i']    = 'Fold invert'
+    let g:z_map['j']    = 'Fold next'
+    let g:z_map['k']    = 'Fold previous'
+    let g:z_map['l']    = 'Scroll column right'
+    let g:z_map['L']    = 'Scroll right'
+    let g:z_map['m']    = 'Close folds'
+    let g:z_map['n']    = 'Fold none'
+    let g:z_map['N']    = 'Fold normal'
+    let g:z_map['o']    = 'Open fold'
+    let g:z_map['O']    = 'Open fold rec'
+    let g:z_map['r']    = 'Open folds'
+    let g:z_map['t']    = 'Scroll line to top'
+    let g:z_map['w']    = '+spell Remove word'
+    let g:z_map['x']    = 'Update folds'
+    let g:z_map['X']    = 'Undo folds'
+    let g:z_map['z']    = 'Scroll line to center'
 endif
 
 map z= z=
+map za za
+map zc zc
+map zd zd
+map zD zD
+map zf zf
+map zF zF
 map zg zg
+map zh zh
+map zH zH
+map zi zi
+map zj zj
+map zk zk
+map zl zl
+map zL zL
+map zm zm
+map zn zn
+map zN zN
+map zo zo
+map zO zO
+map zr zr
+map zw zw
+map zx zx
+map zX zX
 
 if has_key(plugs, 'vim-which-key')
     let g:Z_map['Q'] = 'vim-quit'
@@ -834,6 +873,10 @@ vnoremap <A-j> :m '>+1<cr>gv=gv
 if has_key(plugs, 'coc.nvim')
     " Use <c-space> to trigger completion.
     inoremap <silent><expr> <c-space> coc#refresh()
+
+    " Use <C-s> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+    nmap <silent> <C-s> <Plug>(coc-range-select)
+    xmap <silent> <C-s> <Plug>(coc-range-select)
 endif
 
 if has_key(plugs, 'vim-which-key')
@@ -846,4 +889,41 @@ if has_key(plugs, 'fzf')
     endif
 
     nnoremap <silent> <leader>mM :Filetypes<CR>
+endif
+
+if has_key(plugs, 'vim-gitgutter')
+    " Select current hunk
+    omap ic <Plug>(GitGutterTextObjectInnerPending)
+    omap ac <Plug>(GitGutterTextObjectOuterPending)
+    xmap ic <Plug>(GitGutterTextObjectInnerVisual)
+    xmap ac <Plug>(GitGutterTextObjectOuterVisual)
+endif
+
+if has_key(plugs, 'coc.nvim')
+    " Create mappings for function text object, requires document symbols feature of languageserver.
+    xmap if <Plug>(coc-funcobj-i)
+    xmap af <Plug>(coc-funcobj-a)
+    omap if <Plug>(coc-funcobj-i)
+    omap af <Plug>(coc-funcobj-a)
+
+    " Use tab for trigger completion with characters ahead and navigate.
+    " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+    inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+    function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+
+    " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+    " Coc only does snippet and additional edit on confirm.
+    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+    " Or use `complete_info` if your vim support it, like:
+    " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+    " xmap <leader>x  <Plug>(coc-convert-snippet)
+    " let g:which_key_map['x'] = 'Convert to snippet'
 endif
