@@ -510,6 +510,17 @@ function! Reveal_In_Files()
 endfunction
 #+end_src
 
+*** CoC - Jump to Documentation
+#+begin_src vimrc
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'vertical h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+#+end_src
+
 ** Leader
 *** Root
 **** Vanilla
@@ -646,54 +657,59 @@ if has_key(plugs, 'vim-which-key') | let g:which_key_map.c = { 'name' : '+code' 
 **** CoC
 #+begin_src vimrc
 if has_key(plugs, 'coc.nvim')
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c = { 'name' : '+code' } | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c      = { 'name' : '+code' }                  | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c['a'] = 'LSP Execute code action'             | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c['d'] = 'Jump to definition'                  | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c['D'] = 'Jump to references'                  | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c['f'] = 'Format buffer/region'                | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c['i'] = 'Find implementations'                | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c['j'] = 'Jump to symbol in current workspace' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c['j'] = 'Jump to symbol in any workspace'     | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c['k'] = 'Jump to documentation'               | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c['x'] = 'List errors'                         | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c['t'] = 'Find type definition'                | endif
 
-    " Remap for format selected region
-    xmap <leader>cf  <Plug>(coc-format-selected)
-    nmap <leader>cf  <Plug>(coc-format-selected)
-    let g:which_key_map.c['f'] = 'Format' 
+    " do codeAction of current line
+    nmap <leader>ca <Plug>(coc-codeaction)
+    nnoremap <silent> <leader>cd <Plug>(coc-definition)
+    nnoremap <silent> <leader>cD <Plug>(coc-references)
+    xmap <leader>cf <Plug>(coc-format-selected)
+    nmap <leader>cf <Plug>(coc-format-selected)
+    nnoremap <silent> <leader>ci <Plug>(coc-implementation)
+    " Find symbol of current document
+    nnoremap <silent> <leader>cj :<C-u>CocList outline<cr>
+    " Search workspace symbols
+    nnoremap <silent> <leader>cJ :<C-u>CocList -I symbols<cr>
+    nnoremap <silent> <leader>ck :call <SID>show_documentation()<CR>
+    nnoremap <silent> <leader>cx :<C-u>CocList diagnostics<cr>
+    nnoremap <silent> <leader>ct <Plug>(coc-type-definition)
 
-    " Remap for do codeAction of current line
-    nmap <leader>c<space> <Plug>(coc-codeaction)
-    let g:which_key_map.c[' '] = 'Code action' 
 
-    " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-    xmap <leader>cv <Plug>(coc-codeaction-selected)
-    nmap <leader>cv <Plug>(coc-codeaction-selected)
-    let g:which_key_map.c['v'] = 'Code action selected' 
+
+        
+    " do codeAction of selected region, ex: `<leader>aap` for current paragraph
+    " xmap <leader>cv <Plug>(coc-codeaction-selected)
+    " nmap <leader>cv <Plug>(coc-codeaction-selected)
+    " let g:which_key_map.c['v'] = 'Code action selected' 
 
     " Fix autofix problem of current line
-    nmap <leader>ca  <Plug>(coc-fix-current)
-    let g:which_key_map.c['a'] = 'Fix current' 
+    " nmap <leader>ca  <Plug>(coc-fix-current)
+    " let g:which_key_map.c['a'] = 'Fix current' 
 
-    " Show all diagnostics
-    nnoremap <silent> <leader>cd  :<C-u>CocList diagnostics<cr>
-    let g:which_key_map.c['d'] = 'Diagnostics' 
 
     " Manage extensions
-    nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
-    let g:which_key_map.c['e'] = 'Extensions' 
+    " nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
+    " let g:which_key_map.c['e'] = 'Extensions' 
 
     " Show commands
-    nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
-    let g:which_key_map.c['c'] = 'Commands' 
+    " nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
+    " let g:which_key_map.c['c'] = 'Commands' 
 
-    " Find symbol of current document
-    nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
-    let g:which_key_map.c['o'] = 'Outline' 
+    " nnoremap <silent> <leader>cj  :<C-u>CocNext<CR>
+    " let g:which_key_map.c['j'] = 'Default action for next item' 
 
-    " Search workspace symbols
-    nnoremap <silent> <leader>cs  :<C-u>CocList -I symbols<cr>
-    let g:which_key_map.c['s'] = 'Symbols' 
-
-    nnoremap <silent> <leader>cj  :<C-u>CocNext<CR>
-    let g:which_key_map.c['j'] = 'Default action for next item' 
-
-    nnoremap <silent> <leader>ck  :<C-u>CocPrev<CR>
-    let g:which_key_map.c['k'] = 'Default action for previous item' 
-
-    nnoremap <silent> <leader>cp  :<C-u>CocListResume<CR>
-    let g:which_key_map.c['p'] = 'Resume latest coc list' 
+    " nnoremap <silent> <leader>ck  :<C-u>CocPrev<CR>
+    " let g:which_key_map.c['k'] = 'Default action for previous item' 
 
 endif
 #+end_src
@@ -1188,7 +1204,6 @@ if has_key(plugs, 'coc.nvim')
     nmap <silent> gd <Plug>(coc-definition)
     nmap <silent> gD <Plug>(coc-references)
     nmap <silent> gI <Plug>(coc-implementation)
-    " nmap <silent> gy <Plug>(coc-type-definition)
 endif
 #+end_src
 
