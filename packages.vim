@@ -12,21 +12,53 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 call plug#begin('$HOME/.vim/.local/straight/repos')
 
 " Core
-Plug 'junegunn/vim-plug'
-Plug 'tommcdo/vim-lion'
-Plug 'liuchengxu/vim-which-key'
-Plug 'tpope/vim-commentary'                     " Plugin for commenting code
-Plug 'tpope/vim-surround'                       " Plugin for deleting, changing, and adding surroundings
-Plug 'jiangmiao/auto-pairs'                     " Insert or delete brackets, parens, quotes in pair
-Plug 'justinmk/vim-sneak'
-Plug 'tommcdo/vim-exchange'
+Plug 'junegunn/vim-plug'                                   " A minimalist Vim plugin manager
+Plug 'tommcdo/vim-lion'                                    " Plugin to define a code alignment operator
+Plug 'liuchengxu/vim-which-key'                            " Displays available keybindings in popup
+Plug 'tpope/vim-commentary'                                " Comment stuff out
+Plug 'tpope/vim-surround'                                  " Plugin for deleting, changing, and adding surroundings
+Plug 'jiangmiao/auto-pairs'                                " Insert or delete brackets, parens, quotes in pair
+Plug 'justinmk/vim-sneak'                                  " Motion improved
+Plug 'tommcdo/vim-exchange'                                " Plugin to define a text exchange operator
+Plug 'tpope/vim-repeat'                                    " Repeat.vim remaps `.` in a way that plugins can tap into it
+Plug 'christoomey/vim-system-copy'                         " Copy / Paste text to the os specific clipboard
+Plug 'farmergreg/vim-lastplace'                            " Intelligently reopen files where you left off
 
 " LSP
 if has("python3")
     Plug 'neoclide/coc.nvim', {'branch': 'release'}        " LSP support for Vim & Neovim
 endif
-Plug 'severin-lemaignan/vim-minimap'
-Plug 'chrisbra/Colorizer',
+Plug 'severin-lemaignan/vim-minimap'                       " A code minimap for Vim
+Plug 'chrisbra/Colorizer'                                  " A plugin to color colornames and codes
+Plug 'szw/vim-tags'                                        " The Ctags generator for Vim
+Plug 'airblade/vim-gitgutter'                              " A Vim plugin which shows a git diff in the gutter
+Plug 'tpope/vim-fugitive'                                  " A Git wrapper so awesome, it should be illegal
+Plug 'honza/vim-snippets'                                  " snipMate & UltiSnip Snippets
+
+" UI
+Plug 'psliwka/vim-smoothie'                                " Smooth scrolling for Vim done right🥤
+Plug 'ryanoasis/vim-devicons'                              " Adds Icons to Your Plugins
+Plug 'vim-airline/vim-airline'                             " Lean and mean status/tabline that's light as air
+Plug 'edkolev/tmuxline.vim'                                " tmux statusline generator
+
+" Themes
+Plug 'lifepillar/vim-gruvbox8'
+
+" ======> Text <======
+Plug 'terryma/vim-expand-region'                           " Incremental visual selection
+Plug 'michaeljsmith/vim-indent-object'                     " Text objests based on indent levels
+Plug 'vim-scripts/ReplaceWithRegister'                     " Replace text with the contents of a register
+" Plug 'maxbrunsfeld/vim-yankstack'                        " Plugin for storing and cycling through yanked text strings
+" Plug 'vimwiki/vimwiki'                                   " A personal Wiki for Vim
+
+" ======> Navigation <======
+" Plug 'mileszs/ack.vim'                                   " Plugin that integrates ack with Vim
+" Plug 'ctrlpvim/ctrlp.vim'                                " Fuzzy file, buffer, mru, tag, ... finder
+Plug 'jlanzarotta/bufexplorer'                             " Buffer Explorer
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }        " fzf ❤️ vim
+Plug 'junegunn/fzf.vim'                                    " fzf ❤️ vim
+" ======> Other <======
+Plug 'voldikss/vim-floaterm'                               " (Neo)vim floating/popup terminal plugin
 
 " File Types
 Plug 'tpope/vim-cucumber'        , { 'for': 'cucumber' }
@@ -36,40 +68,7 @@ Plug 'rust-lang/rust.vim'        , { 'for': 'rust' }
 Plug 'cespare/vim-toml'          , { 'for': 'toml' }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 
-" UI
-Plug 'psliwka/vim-smoothie' " Smooth scrolling
-Plug 'ryanoasis/vim-devicons'
-
-" Themes
-Plug 'lifepillar/vim-gruvbox8'
-
-" ======> Text <======
-Plug 'terryma/vim-expand-region'                " Incremental visual selection
-Plug 'michaeljsmith/vim-indent-object'          " Text objests based on indent levels
-" Plug 'maxbrunsfeld/vim-yankstack'               " Plugin for storing and cycling through yanked text strings
-Plug 'tpope/vim-repeat'                         " Repeat.vim remaps `.` in a way that plugins can tap into it
-Plug 'honza/vim-snippets'
-Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'christoomey/vim-system-copy'
-" Plug 'vimwiki/vimwiki'
-
-" ======> Navigation <======
-" Plug 'mileszs/ack.vim'                          " Plugin that integrates ack with Vim
-" Plug 'ctrlpvim/ctrlp.vim'                       " Fuzzy file, buffer, mru, tag, ... finder
-Plug 'szw/vim-tags'
-Plug 'jlanzarotta/bufexplorer'                  " Buffer Explorer
-Plug 'farmergreg/vim-lastplace'                 " Intelligently reopen files where you left off
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-" ======> Other <======
-Plug 'vim-airline/vim-airline'
-Plug 'edkolev/tmuxline.vim'
-Plug 'airblade/vim-gitgutter'                   " A Vim plugin which shows a git diff in the gutter
-Plug 'tpope/vim-fugitive'                       " A Git wrapper so awesome, it should be illegal
-Plug 'voldikss/vim-floaterm'
-
 " New Plugins to try
-" Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'                               " Plugin that changes to a buffer's root directory
 
 call plug#end()

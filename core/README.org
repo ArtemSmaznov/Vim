@@ -35,6 +35,7 @@
   - [[#helper-functions-1][Helper Functions]]
   - [[#leader][Leader]]
   - [[#g][g]]
+  - [[#gs][gs]]
   - [[#z][z]]
   - [[#z-1][Z]]
   - [[#square-brackets][Square Brackets]]
@@ -43,6 +44,7 @@
   - [[#visual-selection-search][Visual Selection Search]]
   - [[#alt][Alt]]
   - [[#ctrl][Ctrl]]
+  - [[#file-type-specific][File Type Specific]]
 
 * Core
 Enable file type plugins
@@ -304,7 +306,7 @@ set ffs=unix,dos,mac " Use Unix as the standard file type
 
 ** File Types
 #+begin_src vimrc :tangle ../filetype.vim
-au BufNewFile,BufRead known_hosts,authorized_keys,*.pub setfiletype sshhosts
+autocmd BufNewFile,BufRead known_hosts,authorized_keys,*.pub setfiletype sshhosts
 #+end_src
 
 * Syntax highlighting
@@ -512,12 +514,15 @@ endfunction
 *** Root
 **** Vanilla
 #+begin_src vimrc
-if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Esc>'] = 'Reset/Cleanup'           | endif
+" if has_key(plugs, 'vim-which-key') | let g:which_key_map['<Esc>'] = 'Reset/Cleanup'           | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map[',']     = 'Switch workspace buffer' | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map['<']     = 'Switch buffer'           | endif
 if has_key(plugs, 'vim-which-key') | let g:which_key_map['`']     = 'Switch to last buffer'   | endif
 
-nnoremap <silent> <leader><Esc> :call ClearAll()<cr>
+" Can cause issues
+nnoremap <silent> <Esc> :call ClearAll()<cr>
+
+" nnoremap <silent> <leader><Esc> :call ClearAll()<cr>
 nnoremap <leader>, :BufExplorerHorizontalSplit<cr>
 nnoremap <leader>< :Buffers<cr>
 nnoremap <leader>` :b#<cr>
@@ -768,8 +773,8 @@ endif
 **** Fugitive
 #+begin_src vimrc
 if has_key(plugs, 'vim-fugitive')
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['d'] = 'Diff Split'            | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['g'] = 'Status' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['d'] = 'Diff Split' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.g['g'] = 'Status'     | endif
     
     nmap <silent> <leader>gd :Gvdiffsplit<cr>
     nmap <silent> <leader>gg :Git<cr>
@@ -779,35 +784,36 @@ endif
 *** h -> +help
 **** Vanilla
 #+begin_src vimrc
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.h = { 'name' : '+help' } | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h           = { 'name' : '+help' }      | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<CR>']   = 'info-vim-Manual'         | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['?']      = 'help-for-help'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['e']      = 'view-echo-area-messages' | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['i']      = 'show-version-info'       | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['q']      = 'help-quit'               | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['v']      = 'show-version-info'       | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<F1>']   = 'help-for-help'           | endif
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<Help>'] = 'help-for-help'           | endif
+
+nnoremap <silent> <leader>h<CR> :help<cr>
+nnoremap <silent> <leader>h? :help helphelp<cr>
+nnoremap <silent> <leader>he :messages<cr>
+nnoremap <silent> <leader>hi :version<cr>
+nnoremap <silent> <leader>hq :helpclose<cr>
+nnoremap <silent> <leader>hv :version<cr>
+nnoremap <silent> <leader>h<F1> :help helphelp<cr>
+nnoremap <silent> <leader>h<Help> :help helphelp<cr>
 #+end_src
 
 **** FZF
 #+begin_src vimrc
 if has_key(plugs, 'fzf')
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<CR>']   = 'info-vim-Manual'         | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['?']      = 'help-for-help'           | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['e']      = 'view-echo-area-messages' | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['i']      = 'show-version-info'       | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['k']      = 'describe-key'            | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['q']      = 'help-quit'               | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['s']      = 'help-search-headings'    | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['t']      = 'load-theme'              | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['v']      = 'show-version-info'       | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<F1>']   = 'help-for-help'           | endif
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['<Help>'] = 'help-for-help'           | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['k'] = 'describe-key'         | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['s'] = 'help-search-headings' | endif
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.h['t'] = 'load-theme'           | endif
 
-    nnoremap <silent> <leader>h<CR> :help<cr>
-    nnoremap <silent> <leader>h? :help helphelp<cr>
-    nnoremap <silent> <leader>he :messages<cr>
-    nnoremap <silent> <leader>hi :version<cr>
     nnoremap <silent> <leader>hk :Maps<cr>
-    nnoremap <silent> <leader>hq :helpclose<cr>
     nnoremap <silent> <leader>hs :Helptags<cr>
     nnoremap <silent> <leader>ht :Colors<cr>
-    nnoremap <silent> <leader>hv :version<cr>
-    nnoremap <silent> <leader>h<F1> :help helphelp<cr>
-    nnoremap <silent> <leader>h<Help> :help helphelp<cr>
 endif
 #+end_src
 
@@ -871,21 +877,6 @@ if has_key(plugs, 'vim-floaterm')
 
     nnoremap <silent> <leader>ot :FloatermToggle<cr>
     nnoremap <silent> <leader>o- :FloatermNew vifm<cr>
-endif
-#+end_src
-
-*** m -> +localleader
-**** Vanilla
-#+begin_src vimrc
-if has_key(plugs, 'vim-which-key') | let g:which_key_map.m = { 'name' : '+<localleader>' } | endif
-#+end_src
-
-**** FZF
-#+begin_src vimrc
-if has_key(plugs, 'fzf')
-    if has_key(plugs, 'vim-which-key') | let g:which_key_map.m['M'] = 'Switch major mode' | endif
-    
-    nnoremap <silent> <leader>mM :Filetypes<CR>
 endif
 #+end_src
 
@@ -1113,7 +1104,6 @@ if has_key(plugs, 'vim-which-key') | let g:g_map['q']      = 'fill-and-move'    
 " if has_key(plugs, 'vim-which-key') | let g:g_map['Q']      = '+format region'                    | endif
 " if has_key(plugs, 'vim-which-key') | let g:g_map['r']      = '+eval region'                      | endif
 " if has_key(plugs, 'vim-which-key') | let g:g_map['R']      = '+eval/buffer'                      | endif
-if has_key(plugs, 'vim-which-key') | let g:g_map['s']      = '+prefix'                           | endif
 if has_key(plugs, 'vim-which-key') | let g:g_map['t']      = '+workspace switch-next '           | endif
 if has_key(plugs, 'vim-which-key') | let g:g_map['T']      = '+workspace switch-previous'        | endif
 if has_key(plugs, 'vim-which-key') | let g:g_map['u']      = 'downcase'                          | endif
@@ -1143,7 +1133,7 @@ map g? g?
 map g^ g^
 map g_ g_
 map ga ga
-map gc gc
+" map gc gc
 map gd gd
 map ge ge
 map gE gE
@@ -1200,6 +1190,12 @@ if has_key(plugs, 'coc.nvim')
     nmap <silent> gI <Plug>(coc-implementation)
     " nmap <silent> gy <Plug>(coc-type-definition)
 endif
+#+end_src
+
+** gs
+*** Vim EasyMotion
+#+begin_src vimrc
+" if has_key(plugs, 'vim-which-key') | let g:g_map['s'] = '+prefix' | endif
 #+end_src
 
 ** z
@@ -1360,4 +1356,32 @@ if has_key(plugs, 'coc.nvim')
     " Use <c-space> to trigger completion.
     inoremap <silent><expr> <c-space> coc#refresh()
 endif
+#+end_src
+
+** File Type Specific
+*** Local Leader
+**** Vanilla
+#+begin_src vimrc
+if has_key(plugs, 'vim-which-key') | let g:which_key_map.m = { 'name' : '+<localleader>' } | endif
+#+end_src
+
+**** FZF
+#+begin_src vimrc
+if has_key(plugs, 'fzf')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.m['M'] = 'Switch major mode' | endif
+
+    nnoremap <silent> <leader>mM :Filetypes<CR>
+endif
+#+end_src
+
+*** Help
+#+begin_src vimrc
+autocmd FileType help nmap <silent> q :helpclose<cr>
+                   \| nmap <silent> <Esc> :helpclose<cr>
+#+end_src
+
+*** Fugitive
+#+begin_src vimrc
+autocmd FileType fugitive nmap <silent> q gq
+                       \| nmap <silent> <Esc> gq
 #+end_src
