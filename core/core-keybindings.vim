@@ -156,6 +156,58 @@ nnoremap <leader>bu :W<cr>
 
 if has_key(plugs, 'vim-which-key') | let g:which_key_map.c = { 'name' : '+code' } | endif
 
+if has_key(plugs, 'coc.nvim')
+    if has_key(plugs, 'vim-which-key') | let g:which_key_map.c = { 'name' : '+code' } | endif
+
+    " Remap for format selected region
+    xmap <leader>cf  <Plug>(coc-format-selected)
+    nmap <leader>cf  <Plug>(coc-format-selected)
+    let g:which_key_map.c['f'] = 'Format' 
+
+    " Remap for do codeAction of current line
+    nmap <leader>c<space> <Plug>(coc-codeaction)
+    let g:which_key_map.c[' '] = 'Code action' 
+
+    " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+    xmap <leader>cv <Plug>(coc-codeaction-selected)
+    nmap <leader>cv <Plug>(coc-codeaction-selected)
+    let g:which_key_map.c['v'] = 'Code action selected' 
+
+    " Fix autofix problem of current line
+    nmap <leader>ca  <Plug>(coc-fix-current)
+    let g:which_key_map.c['a'] = 'Fix current' 
+
+    " Show all diagnostics
+    nnoremap <silent> <leader>cd  :<C-u>CocList diagnostics<cr>
+    let g:which_key_map.c['d'] = 'Diagnostics' 
+
+    " Manage extensions
+    nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
+    let g:which_key_map.c['e'] = 'Extensions' 
+
+    " Show commands
+    nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
+    let g:which_key_map.c['c'] = 'Commands' 
+
+    " Find symbol of current document
+    nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
+    let g:which_key_map.c['o'] = 'Outline' 
+
+    " Search workspace symbols
+    nnoremap <silent> <leader>cs  :<C-u>CocList -I symbols<cr>
+    let g:which_key_map.c['s'] = 'Symbols' 
+
+    nnoremap <silent> <leader>cj  :<C-u>CocNext<CR>
+    let g:which_key_map.c['j'] = 'Default action for next item' 
+
+    nnoremap <silent> <leader>ck  :<C-u>CocPrev<CR>
+    let g:which_key_map.c['k'] = 'Default action for previous item' 
+
+    nnoremap <silent> <leader>cp  :<C-u>CocListResume<CR>
+    let g:which_key_map.c['p'] = 'Resume latest coc list' 
+
+endif
+
 if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f      = { 'name' : '+file' }          | endif
 if has_key(plugs, 'vim-which-key')   | let g:which_key_map.f['c'] = 'CD to current directory'     | endif
 " if has_key(plugs, 'vim-which-key') | let g:which_key_map.f['c'] = 'Open project editorconfig'   | endif
@@ -457,29 +509,124 @@ nnoremap <leader>ww <C-w>w
 nnoremap <leader>wW <C-w>W
 nnoremap <leader>w\| :vertical resize<cr>
 
-if has_key(plugs, 'vim-which-key') | let g:g_map['$'] = 'end-of-visual-line'       | endif
-if has_key(plugs, 'vim-which-key') | let g:g_map['-'] = 'number/dec-at-point'      | endif
-if has_key(plugs, 'vim-which-key') | let g:g_map['0'] = 'beginning-of-visual-line' | endif
-if has_key(plugs, 'vim-which-key') | let g:g_map['8'] = 'what-cursor-position'     | endif
-if has_key(plugs, 'vim-which-key') | let g:g_map['='] = 'number/inc-at-point'      | endif
-if has_key(plugs, 'vim-which-key') | let g:g_map['m'] = 'middle-of-visual-line'    | endif
-if has_key(plugs, 'vim-which-key') | let g:g_map['M'] = 'percentage-of-line'       | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['#']      = 'ex-search-unbounded-word-backward' | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['$']      = 'end-of-visual-line'                | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['&']      = 'ex-repeat-substitute'              | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['*']      = 'ex-search-unbounded-word-forward'  | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map[',']      = 'goto-last-change-reverse'          | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['-']      = 'number/dec-at-point'               | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['0']      = 'beginning-of-visual-line'          | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['8']      = 'what-cursor-position'              | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map[';']      = 'goto-last-change'                  | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['=']      = 'number/inc-at-point'               | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['?']      = 'rot13'                             | endif
+" if has_key(plugs, 'vim-which-key') | let g:g_map['@']      = 'apply-macro'                       | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['^']      = 'first-non-blank-of-visual-line'    | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['_']      = 'last-non-blank'                    | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['a']      = 'what-cursor-position'              | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['c']      = 'comment-operator'                  | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['d']      = '+lookup definition'                | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['e']      = 'backward-word-end'                 | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['E']      = 'backward-WORD-end'                 | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['f']      = '+lookup file'                      | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['F']      = 'find-file-at-point-with-line'      | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['g']      = 'goto-first-line'                   | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['i']      = 'insert-resume'                     | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['j']      = 'next-visual-line'                  | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['J']      = 'join-whitespace'                   | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['k']      = 'previous-visual-line'              | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['l']      = 'lion-left'                         | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['L']      = 'lion-right'                        | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['m']      = 'middle-of-visual-line'             | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['M']      = 'percentage-of-line'                | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['n']      = 'next-match'                        | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['N']      = 'previous-match'                    | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['o']      = 'goto-char'                         | endif
+" if has_key(plugs, 'vim-which-key') | let g:g_map['p']      = 'reselect-paste'                    | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['q']      = 'fill-and-move'                     | endif
+" if has_key(plugs, 'vim-which-key') | let g:g_map['Q']      = '+format region'                    | endif
+" if has_key(plugs, 'vim-which-key') | let g:g_map['r']      = '+eval region'                      | endif
+" if has_key(plugs, 'vim-which-key') | let g:g_map['R']      = '+eval/buffer'                      | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['s']      = '+prefix'                           | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['t']      = '+workspace switch-next '           | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['T']      = '+workspace switch-previous'        | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['u']      = 'downcase'                          | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['U']      = 'upcase'                            | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['v']      = 'visual-restore'                    | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['w']      = 'fill'                              | endif
+" if has_key(plugs, 'vim-which-key') | let g:g_map['y']      = 'yank-unindented'                   | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['~']      = 'invert-case'                       | endif
+" if has_key(plugs, 'vim-which-key') | let g:g_map['<C-]>']  = 'projectile-find-tag'               | endif
+" if has_key(plugs, 'vim-which-key') | let g:g_map['<C-g>']  = 'count-words'                       | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['<Down>'] = 'next-visual-line'                  | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['<End>']  = 'end-of-visual-line'                | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['<Home>'] = 'first-non-blank-of-visual-line'    | endif
+if has_key(plugs, 'vim-which-key') | let g:g_map['<Up>']   = 'previous-visual-line'              | endif
 
+map g# g#
 map g$ g$
-noremap g- <C-x>
+map g& g&
+map g* g*
+map g, g,
+map g- <C-x>
 map g0 g0
 map g8 g8
-noremap g= <C-a>
+map g; g;
+map g= <C-a>
+map g? g?
+map g^ g^
+map g_ g_
+map ga ga
+map gc gc
+map gd gd
+map ge ge
+map gE gE
+map gf gf
+map gF gF
+map gg gg
+map gi gi
+map gj gj
+map gJ gJ
+map gk gk
+map gl gl
+map gL gL
 map gm gm
 map gM gM
+map gn gn
+map gN gN
+map go go
+map gq gq
+map gt gt
+map gT gT
+map gu gu
+map gU gU
+map gv gv
+map gw gw
+map g~ g~
+map g<Down> g<Down>
+map g<End> g<End>
+map g<Home> g<Home>
+map g<Up> g<Up>
 
 if has_key(plugs, 'vim-exchange')
-    if has_key(plugs, 'vim-which-key') | let g:g_map["x"] = 'vim-exchange'        | endif
+    if has_key(plugs, 'vim-which-key') | let g:g_map["x"] = 'exchange' | endif
 
     nmap gx <Plug>(Exchange)
     nmap gxx <Plug>(ExchangeLine)
     nmap gxc <Plug>(ExchangeClear)
     xmap gx <Plug>(Exchange)
+endif
+
+if has_key(plugs, 'coc.nvim')
+    " if has_key(plugs, 'vim-which-key') | let g:g_map['A'] = '+lookup assignments'     | endif
+    if has_key(plugs, 'vim-which-key') | let g:g_map['d'] = '+lookup definition'      | endif
+    if has_key(plugs, 'vim-which-key') | let g:g_map['D'] = '+lookup references'      | endif
+    if has_key(plugs, 'vim-which-key') | let g:g_map['I'] = '+lookup implementations' | endif
+    
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gD <Plug>(coc-references)
+    nmap <silent> gI <Plug>(coc-implementation)
+    " nmap <silent> gy <Plug>(coc-type-definition)
 endif
 
 if has_key(plugs, 'vim-which-key') | let g:z_map['+']    = 'scroll-bottom-line-to-top' | endif
@@ -589,12 +736,17 @@ noremap <tab><tab> :norm zA<cr>
 noremap <S-tab> :norm zR<cr>
 noremap <S-tab><S-tab> :norm zM<cr>
 
-map <A-x> :
-
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+map <A-x> :
 
 nnoremap <A-k> :m-2<cr>==
 nnoremap <A-j> :m+<cr>==
 vnoremap <A-k> :m '<-2<cr>gv=gv
 vnoremap <A-j> :m '>+1<cr>gv=gv
+
+if has_key(plugs, 'coc.nvim')
+    " Use <c-space> to trigger completion.
+    inoremap <silent><expr> <c-space> coc#refresh()
+endif
