@@ -188,6 +188,8 @@ if has_key(plugs, 'coc.nvim')
         let g:which_key_map.c['j'] = 'Jump to symbol in current workspace'
         let g:which_key_map.c['j'] = 'Jump to symbol in any workspace'
         let g:which_key_map.c['k'] = 'Jump to documentation'
+        let g:which_key_map.c['o'] = 'LSP Organize imports'
+        let g:which_key_map.c['r'] = 'LSP Rename'
         let g:which_key_map.c['x'] = 'List errors'
         let g:which_key_map.c['t'] = 'Find type definition'
     endif
@@ -203,7 +205,9 @@ if has_key(plugs, 'coc.nvim')
     nnoremap <silent> <leader>cj :<C-u>CocList outline<cr>
     " Search workspace symbols
     nnoremap <silent> <leader>cJ :<C-u>CocList -I symbols<cr>
-    nnoremap <silent> <leader>ck :call <SID>show_documentation()<CR>
+    nnoremap <silent> <leader>ck :call <SID>show_documentation()<cr>
+    " nnoremap <silent> <leader>co :call CocAction('organizeImport')<cr>
+    nnoremap <silent> <leader>cr <Plug>(coc-rename)
     nnoremap <silent> <leader>cx :<C-u>CocList diagnostics<cr>
     nnoremap <silent> <leader>ct <Plug>(coc-type-definition)
 
@@ -843,9 +847,3 @@ if has_key(plugs, 'fzf')
 
     nnoremap <silent> <leader>mM :Filetypes<CR>
 endif
-
-autocmd FileType help nmap <silent> q :helpclose<cr>
-                   \| nmap <silent> <Esc> :helpclose<cr>
-
-autocmd FileType fugitive nmap <silent> q gq
-                       \| nmap <silent> <Esc> gq

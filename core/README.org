@@ -677,6 +677,8 @@ if has_key(plugs, 'coc.nvim')
         let g:which_key_map.c['j'] = 'Jump to symbol in current workspace'
         let g:which_key_map.c['j'] = 'Jump to symbol in any workspace'
         let g:which_key_map.c['k'] = 'Jump to documentation'
+        let g:which_key_map.c['o'] = 'LSP Organize imports'
+        let g:which_key_map.c['r'] = 'LSP Rename'
         let g:which_key_map.c['x'] = 'List errors'
         let g:which_key_map.c['t'] = 'Find type definition'
     endif
@@ -692,7 +694,9 @@ if has_key(plugs, 'coc.nvim')
     nnoremap <silent> <leader>cj :<C-u>CocList outline<cr>
     " Search workspace symbols
     nnoremap <silent> <leader>cJ :<C-u>CocList -I symbols<cr>
-    nnoremap <silent> <leader>ck :call <SID>show_documentation()<CR>
+    nnoremap <silent> <leader>ck :call <SID>show_documentation()<cr>
+    " nnoremap <silent> <leader>co :call CocAction('organizeImport')<cr>
+    nnoremap <silent> <leader>cr <Plug>(coc-rename)
     nnoremap <silent> <leader>cx :<C-u>CocList diagnostics<cr>
     nnoremap <silent> <leader>ct <Plug>(coc-type-definition)
 
@@ -1466,13 +1470,28 @@ endif
 #+end_src
 
 *** Help
-#+begin_src vimrc
-autocmd FileType help nmap <silent> q :helpclose<cr>
-                   \| nmap <silent> <Esc> :helpclose<cr>
+#+begin_src vimrc :tangle ../after/ftplugin/help_mappings.vim
+nmap <buffer> <silent> q :helpclose<cr>
+nmap <buffer> <silent> <Esc> :helpclose<cr>
 #+end_src
 
 *** Fugitive
-#+begin_src vimrc
-autocmd FileType fugitive nmap <silent> q gq
-                       \| nmap <silent> <Esc> gq
+#+begin_src vimrc :tangle ../after/ftplugin/fugitive_mappings.vim
+nmap <buffer> <silent> q gq
+nmap <buffer> <silent> <Esc> gq
+#+end_src
+
+*** Python
+#+begin_src vimrc :tangle ../after/ftplugin/python_mappings.vim
+" map <buffer> F :set foldmethod=indent<cr>
+
+inoremap <buffer> $r return 
+inoremap <buffer> $i import 
+inoremap <buffer> $p print 
+inoremap <buffer> $f # --- <esc>a
+
+map <buffer> <leader>1 /class 
+map <buffer> <leader>2 /def 
+map <buffer> <leader>C ?class 
+map <buffer> <leader>D ?def 
 #+end_src

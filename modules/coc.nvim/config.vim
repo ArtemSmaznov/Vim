@@ -54,18 +54,6 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " xmap <leader>x  <Plug>(coc-convert-snippet)
 " let g:which_key_map['x'] = 'Convert to snippet'
 
-" Use K to show documentation in preview window
-" nnoremap <leader>hk :call <SID>show_documentation()<CR>
-" let g:which_key_map.h['k'] = 'Search Documentation'
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'vertical h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
