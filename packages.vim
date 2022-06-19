@@ -40,6 +40,7 @@ Plug 'psliwka/vim-smoothie'                                " Smooth scrolling fo
 Plug 'ryanoasis/vim-devicons'                              " Adds Icons to Your Plugins
 Plug 'vim-airline/vim-airline'                             " Lean and mean status/tabline that's light as air
 Plug 'edkolev/tmuxline.vim'                                " tmux statusline generator
+Plug 'voldikss/vim-floaterm'                               " (Neo)vim floating/popup terminal plugin
 
 " Themes
 Plug 'lifepillar/vim-gruvbox8'
@@ -58,7 +59,6 @@ Plug 'jlanzarotta/bufexplorer'                             " Buffer Explorer
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }        " fzf ❤️ vim
 Plug 'junegunn/fzf.vim'                                    " fzf ❤️ vim
 " ======> Other <======
-Plug 'voldikss/vim-floaterm'                               " (Neo)vim floating/popup terminal plugin
 
 " File Types
 Plug 'tpope/vim-cucumber'        , { 'for': 'cucumber' }

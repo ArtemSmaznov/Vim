@@ -376,11 +376,13 @@ if has_key(plugs, 'vim-which-key')
     let g:which_key_map.o['-'] = 'Netrw'
     let g:which_key_map.o['b'] = 'Default browser'
     let g:which_key_map.o['o'] = 'Reveal in finder'
+    let g:which_key_map.o['t'] = 'Toggle term popup'
 endif
 
-nnoremap <leader>o- :Explore<cr>
-nnoremap <leader>ob <Plug>NetrwBrowseX
-nnoremap <leader>oo :call Reveal_In_Files()<cr>
+nnoremap <silent> <leader>o- :Explore<cr>
+nnoremap <silent> <leader>ob <Plug>NetrwBrowseX
+nnoremap <silent> <leader>oo :call Reveal_In_Files()<cr>
+nnoremap <silent> <leader>ot :term<cr>
 
 if has_key(plugs, 'coc.nvim')
     if has_key(plugs, 'vim-which-key')
@@ -394,11 +396,10 @@ endif
 if has_key(plugs, 'vim-floaterm')
     if has_key(plugs, 'vim-which-key')
         let g:which_key_map.o['-'] = 'Vifm'
-        let g:which_key_map.o['t'] = 'Toggle term popup'
     endif
 
     nnoremap <silent> <leader>ot :FloatermToggle<cr>
-    nnoremap <silent> <leader>o- :FloatermNew vifm<cr>
+    nnoremap <silent> <leader>o- :FloatermNew --wintype='float' --width=0.99 --height=0.99 vifm<cr>
 endif
 
 if has_key(plugs, 'vim-which-key')
@@ -502,39 +503,40 @@ endif
 
 if has_key(plugs, 'vim-which-key')
     let g:which_key_map.w      = { 'name' : '+window' }
-    let g:which_key_map.w['+'] = 'Increase window height'
-    let g:which_key_map.w['-'] = 'Decrease window height'
-    let g:which_key_map.w['<'] = 'Decrease window width'
+    let g:which_key_map.w['+'] = 'Window increase height'
+    let g:which_key_map.w['-'] = 'Window decrease height'
+    let g:which_key_map.w['<'] = 'Window decrease width'
     let g:which_key_map.w['='] = 'Balance windows'
-    let g:which_key_map.w['>'] = 'Increase window width'
-    let g:which_key_map.w['_'] = 'Set window height'
-    let g:which_key_map.w['`'] = 'Open a terminal in a split'
-    let g:which_key_map.w['b'] = 'Bottom right window'
-    let g:which_key_map.w['c'] = 'Close window'
-    let g:which_key_map.w['d'] = 'Close window'
-    let g:which_key_map.w['h'] = 'Left window'
-    let g:which_key_map.w['H'] = 'Move window left'
-    let g:which_key_map.w['j'] = 'Down window'
-    let g:which_key_map.w['J'] = 'Move window down'
-    let g:which_key_map.w['k'] = 'Up window'
-    let g:which_key_map.w['K'] = 'Move window up'
-    let g:which_key_map.w['l'] = 'Right window'
-    let g:which_key_map.w['L'] = 'Move window right'
-    let g:which_key_map.w['n'] = 'New window'
-    let g:which_key_map.w['o'] = 'Enlargen window'
-    let g:which_key_map.w['p'] = 'Last window'
-    let g:which_key_map.w['q'] = 'Quit window'
-    let g:which_key_map.w['r'] = 'Rotate windows downwards'
-    let g:which_key_map.w['R'] = 'Rotate windows upwards'
-    let g:which_key_map.w['s'] = 'Split window'
-    let g:which_key_map.w['S'] = 'Split and follow window'
-    let g:which_key_map.w['t'] = 'Top left window'
+    let g:which_key_map.w['>'] = 'Window increase width'
+    let g:which_key_map.w['_'] = 'Window set height'
+    " let g:which_key_map.w['`'] = 'Open a terminal in a split'
+    let g:which_key_map.w['b'] = 'Window bottom right'
+    let g:which_key_map.w['c'] = 'Window delete'
+    let g:which_key_map.w['d'] = 'Window delete'
+    let g:which_key_map.w['h'] = 'Window left'
+    let g:which_key_map.w['H'] = 'Window move left'
+    let g:which_key_map.w['j'] = 'Window down'
+    let g:which_key_map.w['J'] = 'Window move down'
+    let g:which_key_map.w['k'] = 'Window up'
+    let g:which_key_map.w['K'] = 'Window move up'
+    let g:which_key_map.w['l'] = 'Window right'
+    let g:which_key_map.w['L'] = 'Window move right'
+    let g:which_key_map.w['n'] = 'Window new'
+    let g:which_key_map.w['o'] = 'Window enlargen'
+    let g:which_key_map.w['p'] = 'Window previous'
+    let g:which_key_map.w['q'] = 'Quit'
+    let g:which_key_map.w['r'] = 'Window rotate downwards'
+    let g:which_key_map.w['R'] = 'Window rotate upwards'
+    let g:which_key_map.w['s'] = 'Window split'
+    let g:which_key_map.w['S'] = 'Window split and follow'
+    let g:which_key_map.w['t'] = 'Window top left'
     let g:which_key_map.w['T'] = 'Tear off window'
-    let g:which_key_map.w['v'] = 'VSplit window'
-    let g:which_key_map.w['V'] = 'VSplit and follow window'
-    let g:which_key_map.w['w'] = 'Next window'
-    let g:which_key_map.w['W'] = 'Previous window'
-    let g:which_key_map.w['|'] = 'Set window width'
+    " let g:which_key_map.w['u'] = 'Winner undo'
+    let g:which_key_map.w['v'] = 'Window vsplit'
+    let g:which_key_map.w['V'] = 'Window vsplit and follow'
+    let g:which_key_map.w['w'] = 'Window next'
+    let g:which_key_map.w['W'] = 'Window prev'
+    let g:which_key_map.w['|'] = 'Window set width'
 endif
 
 nnoremap <leader>w+ :resize +5<cr>
@@ -543,7 +545,6 @@ nnoremap <leader>w< :vertical resize -5<cr>
 nnoremap <leader>w= <C-w>=
 nnoremap <leader>w> :vertical resize +5<cr>
 nnoremap <leader>w_ :resize<cr>
-nnoremap <leader>w` :term<cr>
 nnoremap <leader>wb <C-w>b
 nnoremap <leader>wc :close<cr>
 nnoremap <leader>wd :close<cr>
@@ -572,58 +573,61 @@ nnoremap <leader>wW <C-w>W
 nnoremap <leader>w\| :vertical resize<cr>
 
 if has_key(plugs, 'vim-which-key')
-    let g:g_map['#']      = 'ex-search-unbounded-word-backward'
-    let g:g_map['$']      = 'end-of-visual-line'
-    let g:g_map['&']      = 'ex-repeat-substitute'
-    let g:g_map['*']      = 'ex-search-unbounded-word-forward'
-    let g:g_map[',']      = 'goto-last-change-reverse'
-    let g:g_map['-']      = 'number/dec-at-point'
-    let g:g_map['0']      = 'beginning-of-visual-line'
-    let g:g_map['8']      = 'what-cursor-position'
-    let g:g_map[';']      = 'goto-last-change'
-    let g:g_map['=']      = 'number/inc-at-point'
-    let g:g_map['?']      = 'rot13'
-    " let g:g_map['@']      = 'apply-macro'
-    let g:g_map['^']      = 'first-non-blank-of-visual-line'
-    let g:g_map['_']      = 'last-non-blank'
-    let g:g_map['a']      = 'what-cursor-position'
-    let g:g_map['c']      = 'comment-operator'
+    let g:which_key_map.w.m = { 'name' : '+maximize' }
+endif
+
+if has_key(plugs, 'vim-which-key')
+    let g:g_map['#']      = 'Ex search unbounded word backward'
+    let g:g_map['$']      = 'End of visual line'
+    let g:g_map['&']      = 'Ex repeat substitute'
+    let g:g_map['*']      = 'Ex search unbounded word forward'
+    let g:g_map[',']      = 'Goto last change reverse'
+    let g:g_map['-']      = '+number Dec at point'
+    let g:g_map['0']      = 'Beginning of visual line'
+    let g:g_map['8']      = 'What cursor position'
+    let g:g_map[';']      = 'Goto last change'
+    let g:g_map['=']      = '+number Inc at point'
+    let g:g_map['?']      = 'Rot13'
+    " let g:g_map['@']      = 'Apply macro'
+    let g:g_map['^']      = 'First non blank of visual line'
+    let g:g_map['_']      = 'Last non blank'
+    let g:g_map['a']      = 'What cursor position'
     let g:g_map['d']      = '+lookup Definition'
-    let g:g_map['e']      = 'backward-word-end'
-    let g:g_map['E']      = 'backward-WORD-end'
+    let g:g_map['e']      = 'Backward word end'
+    let g:g_map['E']      = 'Backward WORD end'
     let g:g_map['f']      = '+lookup File'
-    let g:g_map['F']      = 'find-file-at-point-with-line'
-    let g:g_map['g']      = 'goto-first-line'
-    let g:g_map['i']      = 'insert-resume'
-    let g:g_map['j']      = 'next-visual-line'
-    let g:g_map['J']      = 'join-whitespace'
-    let g:g_map['k']      = 'previous-visual-line'
-    let g:g_map['l']      = 'lion-left'
-    let g:g_map['L']      = 'lion-right'
-    let g:g_map['m']      = 'middle-of-visual-line'
-    let g:g_map['M']      = 'percentage-of-line'
-    let g:g_map['n']      = 'next-match'
-    let g:g_map['N']      = 'previous-match'
-    let g:g_map['o']      = 'goto-char'
-    " let g:g_map['p']      = 'reselect-paste'
-    let g:g_map['q']      = 'fill-and-move'
+    let g:g_map['F']      = 'Find file at point with line'
+    let g:g_map['g']      = 'Goto first line'
+    let g:g_map['i']      = 'Insert resume'
+    let g:g_map['j']      = 'Next visual line'
+    let g:g_map['J']      = 'Join whitespace'
+    let g:g_map['k']      = 'Previous visual line'
+    let g:g_map['l']      = 'Lion left'
+    let g:g_map['L']      = 'Lion right'
+    let g:g_map['m']      = 'Middle of visual line'
+    let g:g_map['M']      = 'Percentage of line'
+    let g:g_map['n']      = 'Next match'
+    let g:g_map['N']      = 'Previous match'
+    let g:g_map['o']      = 'Goto char'
+    " let g:g_map['p']      = 'Reselect paste'
+    let g:g_map['q']      = 'Fill and move'
     " let g:g_map['Q']      = '+format Region'
     " let g:g_map['r']      = '+eval Region'
     " let g:g_map['R']      = '+eval/buffer'
-    let g:g_map['t']      = '+workspace Switch-next '
-    let g:g_map['T']      = '+workspace Switch-previous'
-    let g:g_map['u']      = 'downcase'
-    let g:g_map['U']      = 'upcase'
-    let g:g_map['v']      = 'visual-restore'
-    let g:g_map['w']      = 'fill'
-    " let g:g_map['y']      = 'yank-unindented'
-    let g:g_map['~']      = 'invert-case'
-    " let g:g_map['<C-]>']  = 'projectile-find-tag'
-    " let g:g_map['<C-g>']  = 'count-words'
-    let g:g_map['<Down>'] = 'next-visual-line'
-    let g:g_map['<End>']  = 'end-of-visual-line'
-    let g:g_map['<Home>'] = 'first-non-blank-of-visual-line'
-    let g:g_map['<Up>']   = 'previous-visual-line'
+    let g:g_map['t']      = '+workspace Switch next '
+    let g:g_map['T']      = '+workspace Switch previous'
+    let g:g_map['u']      = 'Downcase'
+    let g:g_map['U']      = 'Upcase'
+    let g:g_map['v']      = 'Visual restore'
+    let g:g_map['w']      = 'Fill'
+    " let g:g_map['y']      = 'Yank unindented'
+    let g:g_map['~']      = 'Invert case'
+    " let g:g_map['<C-]>']  = 'Projectile find tag'
+    " let g:g_map['<C-g>']  = 'Count words'
+    let g:g_map['<Down>'] = 'Next visual line'
+    let g:g_map['<End>']  = 'End of visual line'
+    let g:g_map['<Home>'] = 'First non blank of visual line'
+    let g:g_map['<Up>']   = 'Previous visual line'
 endif
 
 map g# g#
@@ -640,7 +644,6 @@ map g? g?
 map g^ g^
 map g_ g_
 map ga ga
-" map gc gc
 map gd gd
 map ge ge
 map gE gE
@@ -673,7 +676,9 @@ map g<Up> g<Up>
 
 if has_key(plugs, 'vim-exchange')
     if has_key(plugs, 'vim-which-key')
-        let g:g_map['x'] = 'exchange'
+        let g:g_map['x']  = 'Exchange'
+        let g:g_map['xx'] = 'which_key_ignore'
+        let g:g_map['xc'] = 'which_key_ignore'
     endif
 
     nmap gx <Plug>(Exchange)
@@ -695,8 +700,24 @@ if has_key(plugs, 'coc.nvim')
     nmap <silent> gI <Plug>(coc-implementation)
 endif
 
+if has_key(plugs, 'vim-commentary')
+    if has_key(plugs, 'vim-which-key')
+        let g:g_map['c']  = 'Comment operator'
+        let g:g_map['cc'] = 'which_key_ignore'
+    endif
+
+    " map gc gc
+endif
+
+if has_key(plugs, 'ReplaceWithRegister')
+    if has_key(plugs, 'vim-which-key')
+        let g:g_map['r']  = '? Replace with register'
+        let g:g_map['rr'] = 'which_key_ignore'
+    endif
+endif
+
 " if has_key(plugs, 'vim-which-key')
-"     let g:g_map['s'] = '+prefix' 
+"     let g:g_map.s = '+prefix' 
 " endif
 
 if has_key(plugs, 'vim-which-key')
@@ -760,11 +781,13 @@ map zx zx
 map zX zX
 
 if has_key(plugs, 'vim-which-key')
-    let g:Z_map['Q'] = 'vim-quit'
-    let g:Z_map['Z'] = 'save-modified-and-close'
+    let g:Z_map['Q'] = 'Vim quit'
+    let g:Z_map['X'] = 'Save and kill buffer'
+    let g:Z_map['Z'] = 'Save modified and close'
 endif
 
 map ZQ ZQ
+map ZX :w <Bar> Bclose<cr>
 map ZZ ZZ
 
 if has_key(plugs, 'vim-which-key')
