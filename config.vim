@@ -4,10 +4,10 @@ if !has("mac") || !has("macunix")
   set diffopt+=vertical
 endif
 
-noremap <C-e> 4<C-e>
-noremap <C-y> 4<C-y>
+" noremap <C-e> 4<C-e>
+" noremap <C-y> 4<C-y>
 
-set so=7
+set so=1
 
 set spelllang=en_us,ru_ru
 

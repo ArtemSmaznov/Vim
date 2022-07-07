@@ -558,10 +558,30 @@ endif
 **** Vanilla
 #+begin_src vimrc
 if has_key(plugs, 'vim-which-key')
-    " let g:which_key_map['<Tab>']       = { 'name' : '+workspace' }
-    " let g:which_key_map.['<Tab>']['.'] = 'Switch workspace'
-    " let g:which_key_map['<Tab>']['0']  = 'Switch to final workspace'
-    " let g:which_key_map['<Tab>']['1']  = 'Switch to 1st workspace'
+    let g:which_key_map['<Tab>']      = { 'name' : '+workspace' }
+    let g:which_key_map['<Tab>']['.'] = 'Switch workspace'
+    let g:which_key_map['<Tab>']['0'] = 'Switch to final workspace'
+    let g:which_key_map['<Tab>']['1'] = 'Switch to 1st workspace'
+    let g:which_key_map['<Tab>']['2'] = 'Switch to 2st workspace'
+    let g:which_key_map['<Tab>']['3'] = 'Switch to 3st workspace'
+    let g:which_key_map['<Tab>']['4'] = 'Switch to 4st workspace'
+    let g:which_key_map['<Tab>']['5'] = 'Switch to 5st workspace'
+    let g:which_key_map['<Tab>']['6'] = 'Switch to 6st workspace'
+    let g:which_key_map['<Tab>']['7'] = 'Switch to 7st workspace'
+    let g:which_key_map['<Tab>']['8'] = 'Switch to 8st workspace'
+    let g:which_key_map['<Tab>']['9'] = 'Switch to 9st workspace'
+    let g:which_key_map['<Tab>']['<'] = 'Move workspace left'
+    let g:which_key_map['<Tab>']['>'] = 'Move workspace right'
+    let g:which_key_map['<Tab>']['['] = 'Previous workspace'
+    let g:which_key_map['<Tab>'][']'] = 'Next workspace'
+    let g:which_key_map['<Tab>']['`'] = 'Switch to last workspace'
+    let g:which_key_map['<Tab>']['d'] = 'Delete this workspace'
+    " let g:which_key_map['<Tab>']['l'] = 'Load workspace from file'
+    let g:which_key_map['<Tab>']['n'] = 'New workspace'
+    " let g:which_key_map['<Tab>']['R'] = 'Restore last session'
+    " let g:which_key_map['<Tab>']['s'] = 'Save workspace to file'
+    let g:which_key_map['<Tab>']['O'] = 'Kill other workspaces'
+    " let g:which_key_map['<Tab>']['x'] = 'Delete session'
 endif
 
 nnoremap <silent> <leader><Tab>. :tabs<cr>
@@ -575,19 +595,13 @@ nnoremap <silent> <leader><Tab>6 :6tabnext<cr>
 nnoremap <silent> <leader><Tab>7 :7tabnext<cr>
 nnoremap <silent> <leader><Tab>8 :8tabnext<cr>
 nnoremap <silent> <leader><Tab>9 :9tabnext<cr>
-nnoremap <silent> <leader><Tab>< :0tabmove<cr>
-nnoremap <silent> <leader><Tab>> :$tabmove<cr>
+nnoremap <silent> <leader><Tab>< :-tabmove<cr>
+nnoremap <silent> <leader><Tab>> :+tabmove<cr>
 nnoremap <silent> <leader><Tab>[ :tabprevious<cr>
 nnoremap <silent> <leader><Tab>] :tabnext<cr>
-nnoremap <silent> <leader><Tab>c :tabclose<cr>
 nnoremap <silent> <leader><Tab>d :tabclose<cr>
-nnoremap <leader><Tab>m :tabmove
 nnoremap <leader><Tab>n :tabnew<cr>
-nnoremap <leader><Tab>N :tabnew
 nnoremap <silent> <leader><Tab>O :tabonly<cr>
-nnoremap <silent> <leader><Tab>{ :-tabmove<cr>
-nnoremap <silent> <leader><Tab>} :+tabmove<cr>
-
 
 " Toggle between this and the last accessed tab
 let g:lasttab = 1

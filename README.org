@@ -36,13 +36,13 @@ endif
 ** Scroll Margins
 Step size for navigating with CTRL+e/y
 #+begin_src vimrc
-noremap <C-e> 4<C-e>
-noremap <C-y> 4<C-y>
+" noremap <C-e> 4<C-e>
+" noremap <C-y> 4<C-y>
 #+end_src
 
 Leave 7 lines on screen above/below the cursor
 #+begin_src vimrc
-set so=7
+set so=1
 #+end_src
 
 ** Spell Checking
