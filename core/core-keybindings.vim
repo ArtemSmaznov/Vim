@@ -102,12 +102,15 @@ if has_key(plugs, 'vim-which-key')
     let g:which_key_map['<Tab>'][']'] = 'Next workspace'
     let g:which_key_map['<Tab>']['`'] = 'Switch to last workspace'
     let g:which_key_map['<Tab>']['d'] = 'Delete this workspace'
-    " let g:which_key_map['<Tab>']['l'] = 'Load workspace from file'
     let g:which_key_map['<Tab>']['n'] = 'New workspace'
-    " let g:which_key_map['<Tab>']['R'] = 'Restore last session'
-    " let g:which_key_map['<Tab>']['s'] = 'Save workspace to file'
     let g:which_key_map['<Tab>']['O'] = 'Kill other workspaces'
-    " let g:which_key_map['<Tab>']['x'] = 'Delete session'
+
+    if has('mksession')
+        let g:which_key_map['<Tab>']['l'] = 'Load workspace from file'
+        let g:which_key_map['<Tab>']['R'] = 'Restore last session'
+        let g:which_key_map['<Tab>']['s'] = 'Save workspace to file'
+        " let g:which_key_map['<Tab>']['x'] = 'Delete session'
+    endif
 endif
 
 nnoremap <silent> <leader><Tab>. :tabs<cr>
@@ -126,7 +129,10 @@ nnoremap <silent> <leader><Tab>> :+tabmove<cr>
 nnoremap <silent> <leader><Tab>[ :tabprevious<cr>
 nnoremap <silent> <leader><Tab>] :tabnext<cr>
 nnoremap <silent> <leader><Tab>d :tabclose<cr>
-nnoremap <leader><Tab>n :tabnew<cr>
+nnoremap <leader><Tab>l :source $HOME/.vim/.local/etc/workspaces/
+nnoremap <silent> <leader><Tab>n :tabnew<cr>
+nnoremap <silent> <leader><Tab>R :execute $"source {autosave_file}"<cr>
+nnoremap <leader><Tab>s :mksession! $HOME/.vim/.local/etc/workspaces/
 nnoremap <silent> <leader><Tab>O :tabonly<cr>
 
 " Toggle between this and the last accessed tab

@@ -193,6 +193,86 @@ endtry
 let g:netrw_home="$HOME/.vim/.local/cache"
 #+end_src
 
+*** Viminfo
+- ~'~ option is used to specify how many files for which you save marks (a-z)
+- ~f~ option controls whether global marks (A-Z and 0-9) are stored
+  If this option is 0, none are stored. If it is 1 or you do not specify an f option, the marks are stored.
+- < option controls how many lines are saved for each of the registers
+  By default, all the lines are saved. If 0, nothing is saved. To avoid adding thousands of lines to your viminfo file (which might never get used and makes starting Vim slower) you use a maximum of 500 lines.
+- ~:~ number of lines to save from the command line history
+- ~@~ number of lines to save from the input line history
+- ~/~ number of lines to save from the search history
+- ~r~ removable media, for which no marks will be stored (can be used several times)
+- ~!~ global= variables that start with an uppercase letter and don't contain lowercase letters
+- ~h~ disable 'hlsearch' highlighting when starting
+- ~%~ the buffer list (only restored when starting Vim without file arguments)
+- ~c~ convert the text using 'encoding'
+- ~n~ name used for the viminfo file (must be the last option)
+#+begin_src vimrc
+if has('viminfo')
+    set viminfo+=f1
+    set viminfo+=n~/.vim/.local/etc/workspaces/_viminfo
+endif
+#+end_src
+
+*** Sessions
+Session options default: ~blank,buffers,curdir,folds,help,options,tabpages,winsize,terminal~
+Changes the effect of the =:mksession= command.  It is a comma
+separated list of words.  Each word enables saving and restoring
+something:
+- ~blank~ empty windows
+- ~buffers~ hidden and unloaded buffers, not just those in windows
+- ~curdir~ the current directory
+- ~folds~ manually created folds, opened/closed folds and local fold options
+- ~globals~ global variables that start with an uppercase letter and contain at least one lowercase letter. Only String and Number types are stored.
+- ~help~ the help window
+- ~localoptions~ options and mappings local to a window or buffer (not global values for local options)
+- ~options~ all options and mappings (also global values for local options)
+- ~skiprtp~ exclude =runtimepath= and =packpath= from the options
+- ~resize~ size of the Vim window: 'lines' and 'columns'
+- ~sesdir~ the directory in which the session file is located will become the current directory (useful with projects accessed over a network from different systems)
+- ~slash~ backslashes in file names replaced with forward slashes
+- ~tabpages~ all tab pages; without this only the current tab page is restored, so that you can make a session for each tab page separately
+- ~terminal~ include terminal windows where the command can be restored
+- ~unix~ with Unix end-of-line format (single <NL>), even when on Windows or DOS
+- ~winpos~ position of the whole Vim window
+- ~winsize~ window sizes
+#+begin_src vimrc
+if has('mksession')
+    " set sessionoptions-=tabpages
+    set sessionoptions-=help
+    set sessionoptions-=options
+endif
+#+end_src
+
+Autosave last session on exiting Vim and store up to 3 recent backups
+#+begin_src vimrc
+if has('mksession')
+    let autosave_file="$HOME/.vim/.local/etc/workspaces/autosave"
+
+    function! SaveSession( backups )
+        let backups = a:backups
+
+        while backups > 0
+            if backups != 1
+                if filereadable(expand($"{g:autosave_file}{backups-1}"))
+                    execute $"!mv {g:autosave_file}{backups-1} {g:autosave_file}{backups}"
+                endif
+            else
+                if filereadable(expand($"{g:autosave_file}"))
+                    execute $"!mv {g:autosave_file} {g:autosave_file}{backups}"
+                endif
+            endif
+            let backups -= 1
+        endwhile
+
+        execute 'mksession! ' . g:autosave_file
+    endfunction
+
+    autocmd! VimLeave * silent call SaveSession(3)
+endif
+#+end_src
+
 ** Ignore Compiled Files
 #+begin_src vimrc
 set wildignore=*.o,*~,*.pyc
@@ -576,12 +656,15 @@ if has_key(plugs, 'vim-which-key')
     let g:which_key_map['<Tab>'][']'] = 'Next workspace'
     let g:which_key_map['<Tab>']['`'] = 'Switch to last workspace'
     let g:which_key_map['<Tab>']['d'] = 'Delete this workspace'
-    " let g:which_key_map['<Tab>']['l'] = 'Load workspace from file'
     let g:which_key_map['<Tab>']['n'] = 'New workspace'
-    " let g:which_key_map['<Tab>']['R'] = 'Restore last session'
-    " let g:which_key_map['<Tab>']['s'] = 'Save workspace to file'
     let g:which_key_map['<Tab>']['O'] = 'Kill other workspaces'
-    " let g:which_key_map['<Tab>']['x'] = 'Delete session'
+
+    if has('mksession')
+        let g:which_key_map['<Tab>']['l'] = 'Load workspace from file'
+        let g:which_key_map['<Tab>']['R'] = 'Restore last session'
+        let g:which_key_map['<Tab>']['s'] = 'Save workspace to file'
+        " let g:which_key_map['<Tab>']['x'] = 'Delete session'
+    endif
 endif
 
 nnoremap <silent> <leader><Tab>. :tabs<cr>
@@ -600,7 +683,10 @@ nnoremap <silent> <leader><Tab>> :+tabmove<cr>
 nnoremap <silent> <leader><Tab>[ :tabprevious<cr>
 nnoremap <silent> <leader><Tab>] :tabnext<cr>
 nnoremap <silent> <leader><Tab>d :tabclose<cr>
-nnoremap <leader><Tab>n :tabnew<cr>
+nnoremap <leader><Tab>l :source $HOME/.vim/.local/etc/workspaces/
+nnoremap <silent> <leader><Tab>n :tabnew<cr>
+nnoremap <silent> <leader><Tab>R :execute $"source {autosave_file}"<cr>
+nnoremap <leader><Tab>s :mksession! $HOME/.vim/.local/etc/workspaces/
 nnoremap <silent> <leader><Tab>O :tabonly<cr>
 
 " Toggle between this and the last accessed tab
