@@ -25,7 +25,7 @@ Plug 'christoomey/vim-system-copy'                         " Copy / Paste text t
 Plug 'farmergreg/vim-lastplace'                            " Intelligently reopen files where you left off
 
 " LSP
-if has("python3")
+if has('python3')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}          " LSP support for Vim & Neovim
 endif
 Plug 'severin-lemaignan/vim-minimap'                       " A code minimap for Vim

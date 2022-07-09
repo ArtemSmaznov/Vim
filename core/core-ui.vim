@@ -2,15 +2,15 @@ set background=dark
 colorscheme gruvbox8
 
 " Set font according to system
-if has("mac") || has("macunix")
+if has('mac') || has('macunix')
   set gfn=IBM\ Plex\ Mono:h14,Hack:h14,Source\ Code\ Pro:h15,Menlo:h15
-elseif has("win16") || has("win32")
+elseif has('win16') || has('win32')
   set gfn=Hack\ Nerd\ Font\ Mono:h10,Source\ Code\ Pro:h12,IBM\ Plex\ Mono:h14,Consolas:h11
-elseif has("gui_gtk2")
+elseif has('gui_gtk2')
   set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("linux")
+elseif has('linux')
   set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("unix")
+elseif has('unix')
   set gfn=Monospace\ 11
 endif
 
@@ -38,7 +38,7 @@ if $COLORTERM == 'gnome-terminal'
   set t_Co=256
 endif
 
-if exists('$TMUX') 
+if exists("$TMUX") 
   if has('nvim')
     set termguicolors
   else
@@ -46,7 +46,7 @@ if exists('$TMUX')
   endif
 endif
 
-if has("gui_running")
+if has('gui_running')
   set guioptions-=T
   set guioptions-=e
   set t_Co=256

@@ -1,6 +1,6 @@
 autocmd BufNewFile,BufRead,BufEnter * setlocal fo-=cro
 
-if !has("mac") || !has("macunix")
+if !has('mac') || !has('macunix')
   set diffopt+=vertical
 endif
 

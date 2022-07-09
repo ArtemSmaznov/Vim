@@ -11,6 +11,7 @@
   - [[#general-abbreviations][General abbreviations]]
   - [[#search][Search]]
   - [[#files-backups-and-undo][Files, Backups and Undo]]
+  - [[#sessions][Sessions]]
   - [[#ignore-compiled-files][Ignore Compiled Files]]
   - [[#text-tab-and-indent-related][Text, tab and indent related]]
   - [[#tabs-windows-and-buffers][Tabs, windows and buffers]]
@@ -126,14 +127,14 @@ endfunction
 func! DeleteTillSlash()
   let g:cmd = getcmdline()
 
-  if has("win16") || has("win32")
+  if has('win16') || has('win32')
     let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
   else
     let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
   endif
 
   if g:cmd == g:cmd_edited
-    if has("win16") || has("win32")
+    if has('win16') || has('win32')
       let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
     else
       let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
@@ -164,7 +165,6 @@ set smartcase  " When searching try to be smart about cases
 set hlsearch   " Highlight search results
 set incsearch  " Makes search act like search in modern browsers
 set magic      " For regular expressions turn magic on
-
 set wildmenu   " Turn on the Wild menu
 #+end_src
 
@@ -189,10 +189,11 @@ try
 catch
 endtry
 
-" Change location of cache files for NetRW
+" Location for cache files for NetRW
 let g:netrw_home="$HOME/.vim/.local/cache"
 #+end_src
 
+** Sessions
 *** Viminfo
 - ~'~ option is used to specify how many files for which you save marks (a-z)
 - ~f~ option controls whether global marks (A-Z and 0-9) are stored
@@ -215,8 +216,8 @@ if has('viminfo')
 endif
 #+end_src
 
-*** Sessions
-Session options default: ~blank,buffers,curdir,folds,help,options,tabpages,winsize,terminal~
+*** Session Options
+Default: ~blank,buffers,curdir,folds,help,options,tabpages,winsize,terminal~
 Changes the effect of the =:mksession= command.  It is a comma
 separated list of words.  Each word enables saving and restoring
 something:
@@ -245,6 +246,7 @@ if has('mksession')
 endif
 #+end_src
 
+*** Auto-save
 Auto-save last session on exiting Vim and store up to 3 recent backups
 #+begin_src vimrc
 if has('mksession')
@@ -276,7 +278,7 @@ endif
 ** Ignore Compiled Files
 #+begin_src vimrc
 set wildignore=*.o,*~,*.pyc
-if has("win16") || has("win32")
+if has('win16') || has('win32')
   set wildignore+=.git\*,.hg\*,.svn\*,**\node_modules\**
 else
   set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,**/node_modules/**,*/.DS_Store
@@ -325,7 +327,7 @@ fun! CleanExtraSpaces()
   call setreg('/', old_query)
 endfun
 
-if has("autocmd")
+if has('autocmd')
   autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 endif
 #+end_src
@@ -356,7 +358,7 @@ set tm=500
 
 Properly disable sound on errors on Mac Vim
 #+begin_src vimrc
-if has("gui_macvim")
+if has('gui_macvim')
   autocmd GUIEnter * set vb t_vb=
 endif
 #+end_src
@@ -438,15 +440,15 @@ colorscheme gruvbox8
 ** Fonts
 #+begin_src vimrc
 " Set font according to system
-if has("mac") || has("macunix")
+if has('mac') || has('macunix')
   set gfn=IBM\ Plex\ Mono:h14,Hack:h14,Source\ Code\ Pro:h15,Menlo:h15
-elseif has("win16") || has("win32")
+elseif has('win16') || has('win32')
   set gfn=Hack\ Nerd\ Font\ Mono:h10,Source\ Code\ Pro:h12,IBM\ Plex\ Mono:h14,Consolas:h11
-elseif has("gui_gtk2")
+elseif has('gui_gtk2')
   set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("linux")
+elseif has('linux')
   set gfn=IBM\ Plex\ Mono\ 14,:Hack\ 14,Source\ Code\ Pro\ 12,Bitstream\ Vera\ Sans\ Mono\ 11
-elseif has("unix")
+elseif has('unix')
   set gfn=Monospace\ 11
 endif
 #+end_src
@@ -489,7 +491,7 @@ endif
 #+end_src
 
 #+begin_src vimrc
-if exists('$TMUX') 
+if exists("$TMUX") 
   if has('nvim')
     set termguicolors
   else
@@ -501,7 +503,7 @@ endif
 ** GUI Mode
 Set extra options when running in GUI mode
 #+begin_src vimrc
-if has("gui_running")
+if has('gui_running')
   set guioptions-=T
   set guioptions-=e
   set t_Co=256

@@ -5,7 +5,6 @@ set smartcase  " When searching try to be smart about cases
 set hlsearch   " Highlight search results
 set incsearch  " Makes search act like search in modern browsers
 set magic      " For regular expressions turn magic on
-
 set wildmenu   " Turn on the Wild menu
 
 set nobackup              " This is recommended by coc
@@ -27,7 +26,7 @@ try
 catch
 endtry
 
-" Change location of cache files for NetRW
+" Location for cache files for NetRW
 let g:netrw_home="$HOME/.vim/.local/cache"
 
 if has('viminfo')
@@ -67,7 +66,7 @@ if has('mksession')
 endif
 
 set wildignore=*.o,*~,*.pyc
-if has("win16") || has("win32")
+if has('win16') || has('win32')
   set wildignore+=.git\*,.hg\*,.svn\*,**\node_modules\**
 else
   set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,**/node_modules/**,*/.DS_Store
@@ -110,7 +109,7 @@ fun! CleanExtraSpaces()
   call setreg('/', old_query)
 endfun
 
-if has("autocmd")
+if has('autocmd')
   autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
 endif
 
@@ -130,7 +129,7 @@ set novisualbell
 set t_vb=
 set tm=500
 
-if has("gui_macvim")
+if has('gui_macvim')
   autocmd GUIEnter * set vb t_vb=
 endif
 

@@ -28,7 +28,7 @@ autocmd BufNewFile,BufRead,BufEnter * setlocal fo-=cro
 ** Diffs
 Open diffs in vertical splits
 #+begin_src vimrc
-if !has("mac") || !has("macunix")
+if !has('mac') || !has('macunix')
   set diffopt+=vertical
 endif
 #+end_src
