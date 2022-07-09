@@ -5,7 +5,10 @@ set smartcase  " When searching try to be smart about cases
 set hlsearch   " Highlight search results
 set incsearch  " Makes search act like search in modern browsers
 set magic      " For regular expressions turn magic on
-set wildmenu   " Turn on the Wild menu
+
+if has('wildmenu')
+  set wildmenu   " Turn on the Wild menu
+endif
 
 set nobackup              " This is recommended by coc
 set nowritebackup         " This is recommended by coc
@@ -20,11 +23,13 @@ set autoread
 au FocusGained * checktime
 
 " Turn persistent undo on - you can undo even when you close a buffer/VIM
-try
-  set undodir=$HOME/.vim/.local/etc/transient/undodir
-  set undofile
-catch
-endtry
+if has('persistent_undo')
+  try
+    set undodir=$HOME/.vim/.local/etc/transient/undodir
+    set undofile
+  catch
+  endtry
+endif
 
 " Location for cache files for NetRW
 let g:netrw_home="$HOME/.vim/.local/cache"
@@ -62,14 +67,18 @@ if has('mksession')
     execute 'mksession! ' . g:autosave_file
   endfunction
 
-  autocmd! VimLeave * silent call SaveSession(3)
+  if has('autocmd')
+    autocmd! VimLeave * silent call SaveSession(3)
+  endif
 endif
 
-set wildignore=*.o,*~,*.pyc
-if has('win16') || has('win32')
-  set wildignore+=.git\*,.hg\*,.svn\*,**\node_modules\**
-else
-  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,**/node_modules/**,*/.DS_Store
+if has('wildignore')
+  set wildignore=*.o,*~,*.pyc
+  if has('win16') || has('win32')
+    set wildignore+=.git\*,.hg\*,.svn\*,**\node_modules\**
+  else
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,**/node_modules/**,*/.DS_Store
+  endif
 endif
 
 set tabstop=2             " Insert 2 spaces for a tab
@@ -82,7 +91,10 @@ set linebreak
 " set textwidth=500
 
 set autoindent  " Good auto indent
-set smartindent " Makes indenting smart
+if has('smartindent')
+  set smartindent " Makes indenting smart
+endif
+
 set wrap        " Wrap lines
 
 " CTRL+A/X will only treat numbers as decimals or hex
@@ -129,7 +141,7 @@ set novisualbell
 set t_vb=
 set tm=500
 
-if has('gui_macvim')
+if has('gui_macvim') && has('autocmd')
   autocmd GUIEnter * set vb t_vb=
 endif
 
