@@ -88,6 +88,7 @@ let g:maplocalleader = " m"
 Sources
 #+begin_src vimrc
 source $HOME/.vim/packages.vim
+source $HOME/.vim/core/core-utils.vim
 source $HOME/.vim/modules/source.vim
 source $HOME/.vim/core/core-editor.vim
 source $HOME/.vim/core/core-ui.vim
@@ -95,6 +96,9 @@ source $HOME/.vim/core/core-keybindings.vim
 #+end_src
 
 * Commands
+:PROPERTIES:
+:header-args: :tangle core-utils.vim
+:END:
 ** Sudo Save
 =:W= sudo saves the file
 #+begin_src vimrc
@@ -103,6 +107,9 @@ command! Bclose call <SID>BufcloseCloseIt()
 #+end_src
 
 * Functions
+:PROPERTIES:
+:header-args: :tangle core-utils.vim
+:END:
 ** Has Paste
 Check if =Paste= mode is enabled
 #+begin_src vimrc
@@ -189,6 +196,15 @@ Get directory for current buffer
 #+begin_src vimrc
 function! CurrentFileDir(cmd)
   return a:cmd . " " . expand("%:p:h") . "/"
+endfunction
+#+end_src
+
+** Ensure Directory Exists
+#+begin_src vimrc
+function! EnsureDir( dir )
+  if !isdirectory(expand(a:dir))
+    silent call mkdir(expand(a:dir), 'p')
+  endif
 endfunction
 #+end_src
 
@@ -354,6 +370,7 @@ Turn persistent undo on - you can undo even when you close a buffer/VIM
 #+begin_src vimrc
 if has('persistent_undo')
   try
+    call EnsureDir("$HOME/.vim/.local/etc/transient/undodir")
     set undodir=$HOME/.vim/.local/etc/transient/undodir
     set undofile
   catch
@@ -466,6 +483,7 @@ let autosave_file="$HOME/.vim/.local/etc/workspaces/autosave"
 let autosave_backups=3
 
 if has('mksession') && has('autocmd')
+  call EnsureDir("$HOME/.vim/.local/etc/workspaces")
   autocmd! VimLeave * silent call AutoSaveSession(autosave_backups)
 endif
 #+end_src

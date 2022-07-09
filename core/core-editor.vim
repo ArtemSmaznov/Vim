@@ -18,6 +18,7 @@ set history=500       " Sets how many lines of history VIM has to remember
 
 if has('persistent_undo')
   try
+    call EnsureDir("$HOME/.vim/.local/etc/transient/undodir")
     set undodir=$HOME/.vim/.local/etc/transient/undodir
     set undofile
   catch
@@ -68,6 +69,7 @@ let autosave_file="$HOME/.vim/.local/etc/workspaces/autosave"
 let autosave_backups=3
 
 if has('mksession') && has('autocmd')
+  call EnsureDir("$HOME/.vim/.local/etc/workspaces")
   autocmd! VimLeave * silent call AutoSaveSession(autosave_backups)
 endif
 
