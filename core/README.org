@@ -6,23 +6,41 @@
 
 * Table of Contents :toc:
 - [[#core][Core]]
-- [[#helper-functions][Helper functions]]
+- [[#commands][Commands]]
+  - [[#sudo-save][Sudo Save]]
+- [[#functions][Functions]]
+  - [[#has-paste][Has Paste]]
+  - [[#bclose][Bclose]]
+  - [[#visual-selection][Visual Selection]]
+  - [[#delete-till-slash][Delete Till Slash]]
+  - [[#current-file-dir][Current File Dir]]
+  - [[#auto-save-session][Auto-save Session]]
+  - [[#clear-all][Clear All]]
+  - [[#toggle-options][Toggle Options]]
+  - [[#toggle-fill-column][Toggle Fill Column]]
+  - [[#toggle-rainbow][Toggle Rainbow]]
+  - [[#cycle-line-numbers][Cycle Line Numbers]]
+  - [[#reveal-in-file-manager][Reveal in File Manager]]
+  - [[#coc-jump-to-documentation][CoC: Jump to Documentation]]
+  - [[#clean-extra-spaces][Clean Extra Spaces]]
 - [[#editor][Editor]]
-  - [[#general-abbreviations][General abbreviations]]
+  - [[#abbreviations][Abbreviations]]
   - [[#search][Search]]
-  - [[#files-backups-and-undo][Files, Backups and Undo]]
+  - [[#backups][Backups]]
+  - [[#cache-files][Cache Files]]
+  - [[#clipboard][Clipboard]]
+  - [[#buffers][Buffers]]
   - [[#sessions][Sessions]]
   - [[#wildcards][Wildcards]]
-  - [[#text-tab-and-indent-related][Text, tab and indent related]]
-  - [[#tabs-windows-and-buffers][Tabs, windows and buffers]]
+  - [[#indents][Indents]]
+  - [[#line-wrap][Line Wrap]]
+  - [[#increment-numbers][Increment Numbers]]
   - [[#mouse][Mouse]]
   - [[#sound][Sound]]
   - [[#backspace][Backspace]]
-  - [[#sudo-save][Sudo Save]]
   - [[#spell-checking][Spell Checking]]
-- [[#file-handling][File Handling]]
-  - [[#file-types][File Types]]
-- [[#syntax-highlighting][Syntax highlighting]]
+- [[#file-types][File Types]]
+  - [[#setting-file-types][Setting File Types]]
   - [[#ssh-hosts][SSH Hosts]]
 - [[#ui][UI]]
   - [[#color-scheme][Color Scheme]]
@@ -33,7 +51,6 @@
   - [[#terminal-colors][Terminal Colors]]
   - [[#gui-mode][GUI Mode]]
 - [[#keybindings][Keybindings]]
-  - [[#helper-functions-1][Helper Functions]]
   - [[#leader][Leader]]
   - [[#g][g]]
   - [[#g-s][g-s]]
@@ -82,10 +99,12 @@ source $HOME/.vim/core/core-keybindings.vim
 =:W= sudo saves the file
 #+begin_src vimrc
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+command! Bclose call <SID>BufcloseCloseIt()
 #+end_src
 
 * Functions
-** Check if =Paste= mode is enabled
+** Has Paste
+Check if =Paste= mode is enabled
 #+begin_src vimrc
 function! HasPaste()
   if &paste
@@ -95,9 +114,9 @@ function! HasPaste()
 endfunction
 #+end_src
 
-** Don't close window, when deleting a buffer
+** Bclose
+Don't close window, when deleting a buffer
 #+begin_src vimrc
-command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
   let l:currentBufNum = bufnr("%")
   let l:alternateBufNum = bufnr("#")
@@ -118,7 +137,7 @@ function! <SID>BufcloseCloseIt()
 endfunction
 #+end_src
 
-** Visual selection
+** Visual Selection
 #+begin_src vimrc
 function! CmdLine(str)
   call feedkeys(":" . a:str)
@@ -142,7 +161,7 @@ function! VisualSelection(direction, extra_filter) range
 endfunction
 #+end_src
 
-** Delete till slash
+** Delete Till Slash
 #+begin_src vimrc
 function! DeleteTillSlash()
   let g:cmd = getcmdline()
@@ -165,7 +184,8 @@ function! DeleteTillSlash()
 endfunction
 #+end_src
 
-** Get directory for current buffer
+** Current File Dir :unused:
+Get directory for current buffer
 #+begin_src vimrc
 function! CurrentFileDir(cmd)
   return a:cmd . " " . expand("%:p:h") . "/"
@@ -193,7 +213,7 @@ function! AutoSaveSession( backups )
 endfunction
 #+end_src
 
-** Clear
+** Clear All
 #+begin_src vimrc
 function! ClearAll()
   call feedkeys( ":nohlsearch\<CR>" )
@@ -201,34 +221,13 @@ function! ClearAll()
 endfunction
 #+end_src
 
-** Generic Mode Toggle
+** Toggle Options
 Toggle options and print change message to status bar
 Source: https://vim.fandom.com/wiki/Quick_generic_option_toggling
 #+begin_src vimrc
 function! ToggleOption( opt, mode )
   execute $"setlocal {a:opt}!"
   execute $"echo '{a:mode} mode' (&{a:opt} ? 'enabled' : 'disabled') 'in current buffer'"
-endfunction
-#+end_src
-
-** Cycle Line Numbers
-Cycle through line number options:
-- relative
-- normal
-- disabled
-#+begin_src vimrc
-function! CycleLineNumbers()
-  if &number && &relativenumber
-    setlocal norelativenumber
-    echo 'Switched to normal line numbers'
-  elseif &number && ! &relativenumber
-    setlocal nonumber
-    echo 'Switched to disabled line numbers'
-  else
-    setlocal number
-    setlocal relativenumber
-    echo 'Switched to relative line numbers'
-  endif
 endfunction
 #+end_src
 
@@ -255,9 +254,30 @@ if has_key(plugs, 'Colorizer')
 endif
 #+end_src
 
+** Cycle Line Numbers
+Cycle through line number options:
+- relative
+- normal
+- disabled
+#+begin_src vimrc
+function! CycleLineNumbers()
+  if &number && &relativenumber
+    setlocal norelativenumber
+    echo 'Switched to normal line numbers'
+  elseif &number && ! &relativenumber
+    setlocal nonumber
+    echo 'Switched to disabled line numbers'
+  else
+    setlocal number
+    setlocal relativenumber
+    echo 'Switched to relative line numbers'
+  endif
+endfunction
+#+end_src
+
 ** Reveal in File Manager
 #+begin_src vimrc
-function! Reveal_In_Files()
+function! RevealInFiles()
   if has('linux')
     let opencmd = '!xdg-open '
   elseif has('mac') || has('macunix')
@@ -271,7 +291,7 @@ function! Reveal_In_Files()
 endfunction
 #+end_src
 
-** CoC - Jump to Documentation
+** CoC: Jump to Documentation
 #+begin_src vimrc
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -279,6 +299,19 @@ function! s:show_documentation()
   else
     call CocAction('doHover')
   endif
+endfunction
+#+end_src
+**
+
+** Clean Extra Spaces
+Delete trailing white space
+#+begin_src vimrc
+function! CleanExtraSpaces()
+  let save_cursor = getpos(".")
+  let old_query = getreg('/')
+  silent! %s/\s\+$//e
+  call setpos('.', save_cursor)
+  call setreg('/', old_query)
 endfunction
 #+end_src
 
@@ -354,15 +387,6 @@ au FocusGained * checktime
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-" Delete trailing white space
-function! CleanExtraSpaces()
-  let save_cursor = getpos(".")
-  let old_query = getreg('/')
-  silent! %s/\s\+$//e
-  call setpos('.', save_cursor)
-  call setreg('/', old_query)
-endfunction
 
 " Delete trailing white space on save, useful for some filetypes
 if has('autocmd')
@@ -1065,7 +1089,7 @@ endif
 
 nnoremap <silent> <leader>o- :Explore<cr>
 nnoremap <silent> <leader>ob <Plug>NetrwBrowseX
-nnoremap <silent> <leader>oo :call Reveal_In_Files()<cr>
+nnoremap <silent> <leader>oo :call RevealInFiles()<cr>
 nnoremap <silent> <leader>ot :term<cr>
 #+end_src
 

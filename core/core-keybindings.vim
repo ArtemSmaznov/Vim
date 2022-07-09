@@ -339,7 +339,7 @@ endif
 
 nnoremap <silent> <leader>o- :Explore<cr>
 nnoremap <silent> <leader>ob <Plug>NetrwBrowseX
-nnoremap <silent> <leader>oo :call Reveal_In_Files()<cr>
+nnoremap <silent> <leader>oo :call RevealInFiles()<cr>
 nnoremap <silent> <leader>ot :term<cr>
 
 if has_key(plugs, 'coc.nvim')

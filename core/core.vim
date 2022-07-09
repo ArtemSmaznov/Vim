@@ -13,6 +13,7 @@ source $HOME/.vim/core/core-ui.vim
 source $HOME/.vim/core/core-keybindings.vim
 
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+command! Bclose call <SID>BufcloseCloseIt()
 
 function! HasPaste()
   if &paste
@@ -21,7 +22,6 @@ function! HasPaste()
   return ''
 endfunction
 
-command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
   let l:currentBufNum = bufnr("%")
   let l:alternateBufNum = bufnr("#")
@@ -114,20 +114,6 @@ function! ToggleOption( opt, mode )
   execute $"echo '{a:mode} mode' (&{a:opt} ? 'enabled' : 'disabled') 'in current buffer'"
 endfunction
 
-function! CycleLineNumbers()
-  if &number && &relativenumber
-    setlocal norelativenumber
-    echo 'Switched to normal line numbers'
-  elseif &number && ! &relativenumber
-    setlocal nonumber
-    echo 'Switched to disabled line numbers'
-  else
-    setlocal number
-    setlocal relativenumber
-    echo 'Switched to relative line numbers'
-  endif
-endfunction
-
 function! ToggleFillColumn()
   execute 'set colorcolumn=' . (&colorcolumn == '' ? '-0' : '')
   execute 'echo ' . (&colorcolumn == '' ? '"Global Dispaly-Fill-Column-Indicator mode disabled"' : '"Global Dispaly-Fill-Column-Indicator mode enabled"')
@@ -145,7 +131,21 @@ if has_key(plugs, 'Colorizer')
   endfunction
 endif
 
-function! Reveal_In_Files()
+function! CycleLineNumbers()
+  if &number && &relativenumber
+    setlocal norelativenumber
+    echo 'Switched to normal line numbers'
+  elseif &number && ! &relativenumber
+    setlocal nonumber
+    echo 'Switched to disabled line numbers'
+  else
+    setlocal number
+    setlocal relativenumber
+    echo 'Switched to relative line numbers'
+  endif
+endfunction
+
+function! RevealInFiles()
   if has('linux')
     let opencmd = '!xdg-open '
   elseif has('mac') || has('macunix')
@@ -164,4 +164,12 @@ function! s:show_documentation()
   else
     call CocAction('doHover')
   endif
+endfunction
+
+function! CleanExtraSpaces()
+  let save_cursor = getpos(".")
+  let old_query = getreg('/')
+  silent! %s/\s\+$//e
+  call setpos('.', save_cursor)
+  call setreg('/', old_query)
 endfunction
