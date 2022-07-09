@@ -4,7 +4,7 @@ set ignorecase " Ignore case when searching
 set smartcase  " When searching try to be smart about cases
 set hlsearch   " Highlight search results
 set incsearch  " Makes search act like search in modern browsers
-set magic      " For regular expressions turn magic on
+set magic      " Regular expressions in search
 
 if has('wildmenu')
   set wildmenu   " Turn on the Wild menu
@@ -15,14 +15,7 @@ set nowritebackup         " This is recommended by coc
 set noswapfile
 
 set history=500       " Sets how many lines of history VIM has to remember
-set clipboard=unnamed " Copy paste between vim and everything else
 
-" Set to auto read when a file is changed from the outside
-set autoread
-" au FocusGained,BufEnter * checktime
-au FocusGained * checktime
-
-" Turn persistent undo on - you can undo even when you close a buffer/VIM
 if has('persistent_undo')
   try
     set undodir=$HOME/.vim/.local/etc/transient/undodir
@@ -31,8 +24,43 @@ if has('persistent_undo')
   endtry
 endif
 
-" Location for cache files for NetRW
 let g:netrw_home="$HOME/.vim/.local/cache"
+
+set clipboard=unnamed " Copy paste between vim and everything else
+
+set encoding=utf-8   " Set utf8 as standard encoding
+set ffs=unix,dos,mac " Use Unix as the standard file type
+
+" Set to auto read when a file is changed from the outside
+set autoread
+" au FocusGained,BufEnter * checktime
+au FocusGained * checktime
+
+" Return to last edit position when opening files (You want this!)
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Delete trailing white space
+function! CleanExtraSpaces()
+  let save_cursor = getpos(".")
+  let old_query = getreg('/')
+  silent! %s/\s\+$//e
+  call setpos('.', save_cursor)
+  call setreg('/', old_query)
+endfunction
+
+" Delete trailing white space on save, useful for some filetypes
+if has('autocmd')
+  autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
+endif
+
+set hidden     " A buffer becomes hidden when it is abandoned
+
+" Specify the behavior when switching between buffers 
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
 
 if has('viminfo')
   set viminfo+=f1
@@ -45,85 +73,48 @@ if has('mksession')
   set sessionoptions-=options
 endif
 
-if has('mksession')
-  let autosave_file="$HOME/.vim/.local/etc/workspaces/autosave"
+let autosave_file="$HOME/.vim/.local/etc/workspaces/autosave"
+let autosave_backups=3
 
-  function! SaveSession( backups )
-    let backups = a:backups
-
-    while backups > 0
-      if backups != 1
-        if filereadable(expand($"{g:autosave_file}{backups-1}"))
-          execute $"!mv {g:autosave_file}{backups-1} {g:autosave_file}{backups}"
-        endif
-      else
-        if filereadable(expand($"{g:autosave_file}"))
-          execute $"!mv {g:autosave_file} {g:autosave_file}{backups}"
-        endif
-      endif
-      let backups -= 1
-    endwhile
-
-    execute 'mksession! ' . g:autosave_file
-  endfunction
-
-  if has('autocmd')
-    autocmd! VimLeave * silent call SaveSession(3)
-  endif
+if has('mksession') && has('autocmd')
+  autocmd! VimLeave * silent call AutoSaveSession(autosave_backups)
 endif
 
 if has('wildignore')
   set wildignore=*.o,*~,*.pyc
   if has('win16') || has('win32')
-    set wildignore+=.git\*,.hg\*,.svn\*,**\node_modules\**
+    set wildignore+=.git\*
+    set wildignore+=.hg\*
+    set wildignore+=.svn\*
+    set wildignore+=**\node_modules\**
   else
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,**/node_modules/**,*/.DS_Store
+    set wildignore+=*/.git/*
+    set wildignore+=*/.hg/*
+    set wildignore+=*/.svn/*
+    set wildignore+=**/node_modules/**
+    set wildignore+=*/.DS_Store
   endif
 endif
 
-set tabstop=2             " Insert 2 spaces for a tab
-set shiftwidth=2          " Change the number of spaces for indentation
-set smarttab              " Makes tabbing smarter will realize you have 2 vs 4
-set expandtab             " Converts tabs to spaces
+set tabstop=2     " Number of spaces to insert for a tab
+set shiftwidth=2  " Change the number of spaces for indentation
+set smarttab      " Makes tabbing smarter will realize you have 2 vs 4
+set expandtab     " Converts tabs to spaces
+set autoindent    " Good auto indent
 
-" Linebreak on 500 characters
-set linebreak
-" set textwidth=500
-
-set autoindent  " Good auto indent
 if has('smartindent')
   set smartindent " Makes indenting smart
 endif
 
+" Linebreak on 500 characters
+if has('linebreak')
+  set linebreak " Visual only line break
+endif
+" set textwidth=500
+
 set wrap        " Wrap lines
 
-" CTRL+A/X will only treat numbers as decimals or hex
 set nrformats=bin,hex
-
-set hidden     " A buffer becomes hidden when it is abandoned
-
-" Specify the behavior when switching between buffers 
-try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
-catch
-endtry
-
-" Return to last edit position when opening files (You want this!)
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-" Delete trailing white space on save, useful for some filetypes
-fun! CleanExtraSpaces()
-  let save_cursor = getpos(".")
-  let old_query = getreg('/')
-  silent! %s/\s\+$//e
-  call setpos('.', save_cursor)
-  call setreg('/', old_query)
-endfun
-
-if has('autocmd')
-  autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
-endif
 
 set mouse=a
 
@@ -148,6 +139,6 @@ endif
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
-command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
-
-set spelllang=en_us
+if has('syntax')
+  set spelllang=en_us
+endif

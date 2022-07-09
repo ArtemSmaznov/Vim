@@ -1,11 +1,14 @@
-syn match sshhost "\d\{1,3}\.\d\{1,3}\.\d\{1,3}\.\d\{1,3}"
-syn match sshhost ":\d\+"
-syn match sshhost "[0-9a-zA-Z_-]\+@.\+"
+" IP/Port, Site or Hostname
+" syntax match host "\d\{1,3}\.\d\{1,3}\.\d\{1,3}\.\d\{1,3}"
+syntax match host ":\d\+"
+syntax match host "[0-9a-zA-Z_-]\+@.\+"
+syntax match host "\(\w*\.\)\+\w*"
 
-syn match sshsite ".\+\(,\)\@="
+" Website
+" syntax match site ".\+\(,\)\@="
 
-syn match sshpubkey "AAAA[0-9a-zA-Z+/]\+[=]\{0,2}"
+" Public SSH Key
+syntax match pub_key "AAAA[0-9a-zA-Z+/]\+[=]\{0,2}"
 
-hi def link sshsite Statement
-hi def link sshhost Special 
-hi def link sshpubkey SpecialKey
+highlight def link host Special 
+highlight def link pub_key SpecialKey

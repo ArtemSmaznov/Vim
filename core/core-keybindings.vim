@@ -1,65 +1,3 @@
-function! ClearAll()
-  call feedkeys( ":nohlsearch\<CR>" )
-  call feedkeys( "\<Plug>(ExchangeClear)" )
-endfunction
-
-function! Cycle_LineNumbers()
-  if &number && &relativenumber
-    setlocal norelativenumber
-    echo 'Switched to normal line numbers'
-  elseif &number && ! &relativenumber
-    setlocal nonumber
-    echo 'Switched to disabled line numbers'
-  else
-    setlocal number
-    setlocal relativenumber
-    echo 'Switched to relative line numbers'
-  endif
-endfunction
-
-function! Toggle_Mode( mode, enable_message, disable_message )
-  execute 'setlocal ' . a:mode . '!'
-  execute 'echo (&' . a:mode' ? "' . a:enable_message . '" : "' . a:disable_message . '")'
-endfunction
-
-function! Toggle_FillColumn()
-  execute 'set colorcolumn=' . (&colorcolumn == '' ? '-0' : '')
-  execute 'echo ' . (&colorcolumn == '' ? '"Global Dispaly-Fill-Column-Indicator mode disabled"' : '"Global Dispaly-Fill-Column-Indicator mode enabled"')
-endfunction
-
-if has_key(plugs, 'Colorizer')
-  function! Toggle_Rainbow()
-    if !exists('w:match_list') || empty(w:match_list)
-      echo 'Rainbow mode enabled in current buffer'
-      ColorHighlight
-    else
-      echo 'Rainbow mode disabled in current buffer'
-      ColorClear
-    endif
-  endfunction
-endif
-
-function! Reveal_In_Files()
-  if has('linux')
-    let opencmd = '!xdg-open '
-  elseif has('mac') || has('macunix')
-    let opencmd = '!open '
-  elseif has('win16') || has('win32')
-    let opencmd = '!explorer.exe '
-    " let opencmd = '!start explorer.exe /select,'
-  endif
-
-  silent execute opencmd . expand('%:p:h')
-endfunction
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'vertical h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
 if has_key(plugs, 'vim-which-key')
   " let g:which_key_map['<Esc>'] = 'Reset/Cleanup'
   let g:which_key_map[',']     = 'Switch workspace buffer'
@@ -487,16 +425,22 @@ if has_key(plugs, 'vim-which-key')
   let g:which_key_map.t['p'] = 'Paste mode'
   let g:which_key_map.t['w'] = 'Soft line wrapping'
   let g:which_key_map.t['r'] = 'Read-only mode'
-  let g:which_key_map.t['s'] = 'Spell checker'
   let g:which_key_map.t['|'] = 'Fill column indicator'
+
+  if has('syntax')
+    let g:which_key_map.t['s'] = 'Spell checker'
+  endif
 endif
 
-nnoremap <leader>tl :call Cycle_LineNumbers()<cr>
-nnoremap <leader>tp :call Toggle_Mode('paste'   , 'Paste mode enabled in current buffer'      , 'Paste mode disabled in current buffer')<cr>
-nnoremap <leader>tw :call Toggle_Mode('wrap'    , 'Visual-Line mode enabled in current buffer', 'Visual-Line mode disabled in current buffer')<cr>
-nnoremap <leader>tr :call Toggle_Mode('readonly', 'Read-Only mode enabled in current buffer'  , 'Read-Only mode disabled in current buffer')<cr>
-nnoremap <leader>ts :call Toggle_Mode('spell'   , 'Spell mode enabled in current buffer'      , 'Spell mode disabled in current buffer')<cr>
-nnoremap <leader>t\| :call Toggle_FillColumn()<cr>
+nnoremap <leader>tl :call CycleLineNumbers()<cr>
+nnoremap <leader>tp :call ToggleOption('paste', 'Paste')<cr>
+nnoremap <leader>tw :call ToggleOption('wrap', 'Visual-Line')<cr>
+nnoremap <leader>tr :call ToggleOption('readonly', 'Read-Only')<cr>
+nnoremap <leader>t\| :call ToggleFillColumn()<cr>
+
+if has('syntax')
+  nnoremap <leader>ts :call ToggleOption('spell', 'Spell')<cr>
+endif
 
 if has_key(plugs, 'vim-minimap')
   if has_key(plugs, 'vim-which-key')
