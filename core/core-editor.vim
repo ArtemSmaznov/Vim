@@ -31,39 +31,39 @@ endtry
 let g:netrw_home="$HOME/.vim/.local/cache"
 
 if has('viminfo')
-    set viminfo+=f1
-    set viminfo+=n~/.vim/.local/etc/workspaces/_viminfo
+  set viminfo+=f1
+  set viminfo+=n~/.vim/.local/etc/workspaces/_viminfo
 endif
 
 if has('mksession')
-    " set sessionoptions-=tabpages
-    set sessionoptions-=help
-    set sessionoptions-=options
+  " set sessionoptions-=tabpages
+  set sessionoptions-=help
+  set sessionoptions-=options
 endif
 
 if has('mksession')
-    let autosave_file="$HOME/.vim/.local/etc/workspaces/autosave"
+  let autosave_file="$HOME/.vim/.local/etc/workspaces/autosave"
 
-    function! SaveSession( backups )
-        let backups = a:backups
+  function! SaveSession( backups )
+    let backups = a:backups
 
-        while backups > 0
-            if backups != 1
-                if filereadable(expand($"{g:autosave_file}{backups-1}"))
-                    execute $"!mv {g:autosave_file}{backups-1} {g:autosave_file}{backups}"
-                endif
-            else
-                if filereadable(expand($"{g:autosave_file}"))
-                    execute $"!mv {g:autosave_file} {g:autosave_file}{backups}"
-                endif
-            endif
-            let backups -= 1
-        endwhile
+    while backups > 0
+      if backups != 1
+        if filereadable(expand($"{g:autosave_file}{backups-1}"))
+          execute $"!mv {g:autosave_file}{backups-1} {g:autosave_file}{backups}"
+        endif
+      else
+        if filereadable(expand($"{g:autosave_file}"))
+          execute $"!mv {g:autosave_file} {g:autosave_file}{backups}"
+        endif
+      endif
+      let backups -= 1
+    endwhile
 
-        execute 'mksession! ' . g:autosave_file
-    endfunction
+    execute 'mksession! ' . g:autosave_file
+  endfunction
 
-    autocmd! VimLeave * silent call SaveSession(3)
+  autocmd! VimLeave * silent call SaveSession(3)
 endif
 
 set wildignore=*.o,*~,*.pyc

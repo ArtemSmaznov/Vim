@@ -26,7 +26,7 @@ Plug 'farmergreg/vim-lastplace'                            " Intelligently reope
 
 " LSP
 if has("python3")
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}        " LSP support for Vim & Neovim
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}          " LSP support for Vim & Neovim
 endif
 Plug 'severin-lemaignan/vim-minimap'                       " A code minimap for Vim
 Plug 'chrisbra/Colorizer'                                  " A plugin to color colornames and codes
