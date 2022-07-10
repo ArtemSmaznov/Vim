@@ -54,7 +54,13 @@ try
 catch
 endtry
 
+call EnsureDir("$HOME/.vim/.local/etc/workspaces")
+
 if has('viminfo')
+  if filereadable(expand("$HOME/.viminfo"))
+    silent execute $"!mv $HOME/.viminfo $HOME/.vim/.local/etc/workspaces/_viminfo"
+  endif
+  
   set viminfo+=f1
   set viminfo+=n~/.vim/.local/etc/workspaces/_viminfo
 endif
@@ -69,7 +75,6 @@ let autosave_file="$HOME/.vim/.local/etc/workspaces/autosave"
 let autosave_backups=3
 
 if has('mksession') && has('autocmd')
-  call EnsureDir("$HOME/.vim/.local/etc/workspaces")
   autocmd! VimLeave * silent call AutoSaveSession(autosave_backups)
 endif
 
