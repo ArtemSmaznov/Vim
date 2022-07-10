@@ -8,23 +8,21 @@
 - [[#core][Core]]
 - [[#commands][Commands]]
   - [[#sudo-save][Sudo Save]]
+  - [[#close-buffer][Close Buffer]]
 - [[#functions][Functions]]
-  - [[#has-paste][Has Paste]]
+  - [[#clear-all][Clear All]]
   - [[#bclose][Bclose]]
   - [[#visual-selection][Visual Selection]]
-  - [[#delete-till-slash][Delete Till Slash]]
   - [[#current-file-dir][Current File Dir]]
   - [[#ensure-directory-exists][Ensure Directory Exists]]
-  - [[#auto-save-session][Auto-save Session]]
+  - [[#sessions][Sessions]]
   - [[#workspaces][Workspaces]]
-  - [[#clear-all][Clear All]]
   - [[#toggle-options][Toggle Options]]
-  - [[#toggle-fill-column][Toggle Fill Column]]
-  - [[#toggle-rainbow][Toggle Rainbow]]
-  - [[#cycle-line-numbers][Cycle Line Numbers]]
   - [[#reveal-in-file-manager][Reveal in File Manager]]
   - [[#coc-jump-to-documentation][CoC: Jump to Documentation]]
+  - [[#delete-till-slash][Delete Till Slash]]
   - [[#clean-extra-spaces][Clean Extra Spaces]]
+  - [[#has-paste][Has Paste]]
 - [[#editor][Editor]]
   - [[#abbreviations][Abbreviations]]
   - [[#search][Search]]
@@ -32,7 +30,7 @@
   - [[#cache-files][Cache Files]]
   - [[#clipboard][Clipboard]]
   - [[#buffers][Buffers]]
-  - [[#sessions][Sessions]]
+  - [[#sessions-1][Sessions]]
   - [[#wildcards][Wildcards]]
   - [[#indents][Indents]]
   - [[#line-wrap][Line Wrap]]
@@ -89,20 +87,24 @@ let g:maplocalleader = " m"
 
 Paths
 #+begin_src vimrc
-let vim_dir="$HOME/.vim"
 let workspaces=$"{vim_dir}/.local/etc/workspaces"
 let autosave=$"{workspaces}/autosave"
 let viminfo=expand($"{workspaces}/_viminfo")
+
+let undodir=$"{vim_dir}/.local/etc/transient/undodir"
+
+" Location for cache files for =NetRW=
+let g:netrw_home=$"{vim_dir}/.local/cache"
 #+end_src
 
 Sources
 #+begin_src vimrc
-source $HOME/.vim/packages.vim
-source $HOME/.vim/core/core-utils.vim
-source $HOME/.vim/modules/source.vim
-source $HOME/.vim/core/core-editor.vim
-source $HOME/.vim/core/core-ui.vim
-source $HOME/.vim/core/core-keybindings.vim
+execute $"source {vim_dir}/packages.vim"
+execute $"source {vim_dir}/core/core-utils.vim"
+execute $"source {vim_dir}/modules/source.vim"
+execute $"source {vim_dir}/core/core-editor.vim"
+execute $"source {vim_dir}/core/core-ui.vim"
+execute $"source {vim_dir}/core/core-keybindings.vim"
 #+end_src
 
 * Commands
@@ -113,6 +115,10 @@ source $HOME/.vim/core/core-keybindings.vim
 =:W= sudo saves the file
 #+begin_src vimrc
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+#+end_src
+
+** Close Buffer
+#+begin_src vimrc
 command! Bclose call <SID>BufcloseCloseIt()
 #+end_src
 
@@ -120,14 +126,11 @@ command! Bclose call <SID>BufcloseCloseIt()
 :PROPERTIES:
 :header-args: :tangle core-utils.vim
 :END:
-** Has Paste
-Check if =Paste= mode is enabled
+** Clear All
 #+begin_src vimrc
-function! HasPaste()
-  if &paste
-    return 'PASTE MODE  '
-  endif
-  return ''
+function! ClearAll()
+  call feedkeys( ":nohlsearch\<CR>" )
+  call feedkeys( "\<Plug>(ExchangeClear)" )
 endfunction
 #+end_src
 
@@ -178,29 +181,6 @@ function! VisualSelection(direction, extra_filter) range
 endfunction
 #+end_src
 
-** Delete Till Slash
-#+begin_src vimrc
-function! DeleteTillSlash()
-  let g:cmd = getcmdline()
-
-  if has('win16') || has('win32')
-    let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
-  else
-    let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
-  endif
-
-  if g:cmd == g:cmd_edited
-    if has('win16') || has('win32')
-      let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
-    else
-      let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
-    endif
-  endif   
-
-  return g:cmd_edited
-endfunction
-#+end_src
-
 ** Current File Dir :unused:
 Get directory for current buffer
 #+begin_src vimrc
@@ -218,10 +198,11 @@ function! EnsureDir( dir )
 endfunction
 #+end_src
 
-** Auto-save Session
+** Sessions
+*** Quick save session
 #+begin_src vimrc
-function! AutoSaveSession( backups )
-  let backups = a:backups
+function! QuickSaveSession()
+  let backups = 3
   while backups > 0
     if backups != 1
       if filereadable(expand($"{g:autosave}{backups-1}"))
@@ -239,6 +220,13 @@ function! AutoSaveSession( backups )
 endfunction
 #+end_src
 
+*** Quick load session
+#+begin_src vimrc
+function! QuickLoadSession()
+  execute $"source {g:autosave}"
+endfunction
+#+end_src
+
 ** Workspaces
 *** TODO Save workspace to file
 - Needs handling for dismissing input
@@ -252,11 +240,15 @@ endfunction
 *** Load workspace from file
 #+begin_src vimrc
 function! LoadWorkspace()
-  call fzf#run({
-    \ 'dir': g:workspaces,
-    \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
-    \ 'sink': "source" 
-    \ })
+  if has_key(g:plugs, 'fzf')
+    call fzf#run({
+      \ 'dir': g:workspaces,
+      \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
+      \ 'sink': "source" 
+      \ })
+  else
+    call feedkeys($":source {g:workspaces}/")
+  endif
 endfunction
 #+end_src
 
@@ -264,25 +256,18 @@ endfunction
 - Needs to suppress shell output
 #+begin_src vimrc
 function! DeleteWorkspace()
-  call fzf#run({
-    \ 'dir': g:workspaces,
-    \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
-    \ 'sink': "!rm" 
-    \ })
-endfunction
-#+end_src
-
-** Clear All
-#+begin_src vimrc
-function! ClearAll()
-  call feedkeys( ":nohlsearch\<CR>" )
-  call feedkeys( "\<Plug>(ExchangeClear)" )
+  if has_key(g:plugs, 'fzf')
+    call fzf#run({
+      \ 'dir': g:workspaces,
+      \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
+      \ 'sink': "!rm" 
+      \ })
+  endif
 endfunction
 #+end_src
 
 ** Toggle Options
 Toggle options and print change message to status bar
-Source: https://vim.fandom.com/wiki/Quick_generic_option_toggling
 #+begin_src vimrc
 function! ToggleOption( opt, mode )
   execute $"setlocal {a:opt}!"
@@ -290,30 +275,27 @@ function! ToggleOption( opt, mode )
 endfunction
 #+end_src
 
-** Toggle Fill Column
+Toggle Fill Column
 #+begin_src vimrc
 function! ToggleFillColumn()
   execute 'set colorcolumn=' . (&colorcolumn == '' ? '-0' : '')
-  execute 'echo ' . (&colorcolumn == '' ? '"Global Dispaly-Fill-Column-Indicator mode disabled"' : '"Global Dispaly-Fill-Column-Indicator mode enabled"')
+  execute $"echo 'Global Dispaly-Fill-Column-Indicator mode' (&colorcolumn != '' ? 'enabled' : 'disabled')"
 endfunction
 #+end_src
 
-** Toggle Rainbow
+Toggle Rainbow
 #+begin_src vimrc
-if has_key(plugs, 'Colorizer')
-  function! Toggle_Rainbow()
-    if !exists('w:match_list') || empty(w:match_list)
-      echo 'Rainbow mode enabled in current buffer'
-      ColorHighlight
-    else
-      echo 'Rainbow mode disabled in current buffer'
-      ColorClear
-    endif
-  endfunction
-endif
+function! Toggle_Rainbow()
+  if !exists('w:match_list') || empty(w:match_list)
+    ColorHighlight
+    echo 'Rainbow mode enabled in current buffer'
+  else
+    ColorClear
+    echo 'Rainbow mode disabled in current buffer'
+  endif
+endfunction
 #+end_src
 
-** Cycle Line Numbers
 Cycle through line number options:
 - relative
 - normal
@@ -362,6 +344,29 @@ endfunction
 #+end_src
 **
 
+** Delete Till Slash
+#+begin_src vimrc
+function! DeleteTillSlash()
+  let g:cmd = getcmdline()
+
+  if has('win16') || has('win32')
+    let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
+  else
+    let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
+  endif
+
+  if g:cmd == g:cmd_edited
+    if has('win16') || has('win32')
+      let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
+    else
+      let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
+    endif
+  endif
+
+  return g:cmd_edited
+endfunction
+#+end_src
+
 ** Clean Extra Spaces
 Delete trailing white space
 #+begin_src vimrc
@@ -371,6 +376,17 @@ function! CleanExtraSpaces()
   silent! %s/\s\+$//e
   call setpos('.', save_cursor)
   call setreg('/', old_query)
+endfunction
+#+end_src
+
+** Has Paste
+Check if =Paste= mode is enabled
+#+begin_src vimrc
+function! HasPaste()
+  if &paste
+    return 'PASTE MODE  '
+  endif
+  return ''
 endfunction
 #+end_src
 
@@ -413,17 +429,12 @@ Turn persistent undo on - you can undo even when you close a buffer/VIM
 #+begin_src vimrc
 if has('persistent_undo')
   try
-    call EnsureDir("$HOME/.vim/.local/etc/transient/undodir")
-    set undodir=$HOME/.vim/.local/etc/transient/undodir
+    call EnsureDir(g:undodir)
+    set undodir=g:undodir
     set undofile
   catch
   endtry
 endif
-#+end_src
-
-Location for cache files for =NetRW=
-#+begin_src vimrc
-let g:netrw_home="$HOME/.vim/.local/cache"
 #+end_src
 
 ** Clipboard
@@ -483,11 +494,11 @@ endtry
 - ~c~ convert the text using 'encoding'
 - ~n~ name used for the viminfo file (must be the last option)
 #+begin_src vimrc
-call EnsureDir("$HOME/.vim/.local/etc/workspaces")
+call EnsureDir(g:workspaces)
 
 if has('viminfo')
   if filereadable(expand("$HOME/.viminfo"))
-    silent execute $"!mv $HOME/.viminfo $HOME/.vim/.local/etc/workspaces/_viminfo"
+    silent execute $"!mv $HOME/.viminfo {viminfo}"
   endif
   
   set viminfo+=f1
@@ -528,10 +539,8 @@ endif
 *** Auto-save
 Auto-save last session on exiting Vim and store up to 3 recent backups
 #+begin_src vimrc
-let autosave_backups=3
-
 if has('mksession') && has('autocmd')
-  autocmd! VimLeave * silent call AutoSaveSession(autosave_backups)
+  autocmd! VimLeave * silent call QuickSaveSession()
 endif
 #+end_src
 
@@ -814,6 +823,7 @@ if has_key(plugs, 'vim-which-key')
   if has('mksession')
     let g:which_key_map['<Tab>']['R'] = 'Restore last session'
     let g:which_key_map['<Tab>']['s'] = 'Save workspace to file'
+    let g:which_key_map['<Tab>']['x'] = 'Delete workspace from file'
     " let g:which_key_map['<Tab>']['x'] = 'Delete session'
   endif
 endif
@@ -834,11 +844,12 @@ nnoremap <silent> <leader><Tab>> :+tabmove<cr>
 nnoremap <silent> <leader><Tab>[ :tabprevious<cr>
 nnoremap <silent> <leader><Tab>] :tabnext<cr>
 nnoremap <silent> <leader><Tab>d :tabclose<cr>
-nnoremap <leader><Tab>l :source $HOME/.vim/.local/etc/workspaces/
+nnoremap <silent> <leader><Tab>l :call LoadWorkspace()<cr>
 nnoremap <silent> <leader><Tab>n :tabnew<cr>
-nnoremap <silent> <leader><Tab>R :execute $"source {g:autosave}"<cr>
-nnoremap <leader><Tab>s :mksession! $HOME/.vim/.local/etc/workspaces/
+nnoremap <silent> <leader><Tab>R :call QuickLoadSession()<cr>
+nnoremap <silent> <leader><Tab>s :call SaveWorkspace()<cr>
 nnoremap <silent> <leader><Tab>O :tabonly<cr>
+nnoremap <silent> <leader><Tab>x :call DeleteWorkspace()<cr>
 
 " Toggle between this and the last accessed tab
 let g:lasttab = 1
@@ -849,14 +860,7 @@ au TabLeave * let g:lasttab = tabpagenr()
 **** FZF
 #+begin_src vimrc
 if has_key(plugs, 'fzf')
-  if has_key(plugs, 'vim-which-key')
-    let g:which_key_map['<Tab>']['x'] = 'Delete workspace from file'
-  endif
-
   nnoremap <silent> <leader><Tab>. :Windows<cr>
-  nnoremap <silent> <leader><Tab>l :call LoadWorkspace()<cr>
-  nnoremap <silent> <leader><Tab>s :call SaveWorkspace()<cr>
-  nnoremap <silent> <leader><Tab>x :call DeleteWorkspace()<cr>
 endif
 #+end_src
 
@@ -1220,12 +1224,12 @@ if has_key(plugs, 'vim-which-key')
   let g:which_key_map.q['S'] = 'Save session to file'
 endif
 
-nnoremap <silent> <leader>ql :source $HOME/.vim/.local/etc/workspaces/quick-session.vim<cr>
-nnoremap <silent> <leader>qL :source $HOME/.vim/.local/etc/workspaces/
+nnoremap <silent> <leader>ql :call QuickLoadSession()<cr>
+nnoremap <leader>qL :call feedkeys($":source {g:workspaces}/")<cr>
 nnoremap <silent> <leader>qq :qa<cr>
 nnoremap <silent> <leader>qQ :qa!<cr>
-nnoremap <silent> <leader>qs :mksession! $HOME/.vim/.local/etc/workspaces/quick-session.vim<cr>
-nnoremap <silent> <leader>qS :mksession $HOME/.vim/.local/etc/workspaces/
+nnoremap <silent> <leader>qs :call QuickSaveSession()<cr>
+nnoremap <leader>qS :call feedkeys($":mksession! {g:workspaces}/")<cr>
 #+end_src
 
 *** s -> +search

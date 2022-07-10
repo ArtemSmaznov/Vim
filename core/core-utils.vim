@@ -1,11 +1,10 @@
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
 command! Bclose call <SID>BufcloseCloseIt()
 
-function! HasPaste()
-  if &paste
-    return 'PASTE MODE  '
-  endif
-  return ''
+function! ClearAll()
+  call feedkeys( ":nohlsearch\<CR>" )
+  call feedkeys( "\<Plug>(ExchangeClear)" )
 endfunction
 
 function! <SID>BufcloseCloseIt()
@@ -48,26 +47,6 @@ function! VisualSelection(direction, extra_filter) range
   let @" = l:saved_reg
 endfunction
 
-function! DeleteTillSlash()
-  let g:cmd = getcmdline()
-
-  if has('win16') || has('win32')
-    let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
-  else
-    let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
-  endif
-
-  if g:cmd == g:cmd_edited
-    if has('win16') || has('win32')
-      let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
-    else
-      let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
-    endif
-  endif   
-
-  return g:cmd_edited
-endfunction
-
 function! CurrentFileDir(cmd)
   return a:cmd . " " . expand("%:p:h") . "/"
 endfunction
@@ -78,8 +57,8 @@ function! EnsureDir( dir )
   endif
 endfunction
 
-function! AutoSaveSession( backups )
-  let backups = a:backups
+function! QuickSaveSession()
+  let backups = 3
   while backups > 0
     if backups != 1
       if filereadable(expand($"{g:autosave}{backups-1}"))
@@ -96,30 +75,35 @@ function! AutoSaveSession( backups )
   execute 'mksession! ' . g:autosave
 endfunction
 
+function! QuickLoadSession()
+  execute $"source {g:autosave}"
+endfunction
+
 function! SaveWorkspace()
   let ws = input("Save workspace as: ")
   execute $"mksession! {g:workspaces}/{ws}"
 endfunction
 
 function! LoadWorkspace()
-  call fzf#run({
-    \ 'dir': g:workspaces,
-    \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
-    \ 'sink': "source" 
-    \ })
+  if has_key(g:plugs, 'fzf')
+    call fzf#run({
+      \ 'dir': g:workspaces,
+      \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
+      \ 'sink': "source" 
+      \ })
+  else
+    call feedkeys($":source {g:workspaces}/")
+  endif
 endfunction
 
 function! DeleteWorkspace()
-  call fzf#run({
-    \ 'dir': g:workspaces,
-    \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
-    \ 'sink': "!rm" 
-    \ })
-endfunction
-
-function! ClearAll()
-  call feedkeys( ":nohlsearch\<CR>" )
-  call feedkeys( "\<Plug>(ExchangeClear)" )
+  if has_key(g:plugs, 'fzf')
+    call fzf#run({
+      \ 'dir': g:workspaces,
+      \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
+      \ 'sink': "!rm" 
+      \ })
+  endif
 endfunction
 
 function! ToggleOption( opt, mode )
@@ -129,20 +113,18 @@ endfunction
 
 function! ToggleFillColumn()
   execute 'set colorcolumn=' . (&colorcolumn == '' ? '-0' : '')
-  execute 'echo ' . (&colorcolumn == '' ? '"Global Dispaly-Fill-Column-Indicator mode disabled"' : '"Global Dispaly-Fill-Column-Indicator mode enabled"')
+  execute $"echo 'Global Dispaly-Fill-Column-Indicator mode' (&colorcolumn != '' ? 'enabled' : 'disabled')"
 endfunction
 
-if has_key(plugs, 'Colorizer')
-  function! Toggle_Rainbow()
-    if !exists('w:match_list') || empty(w:match_list)
-      echo 'Rainbow mode enabled in current buffer'
-      ColorHighlight
-    else
-      echo 'Rainbow mode disabled in current buffer'
-      ColorClear
-    endif
-  endfunction
-endif
+function! Toggle_Rainbow()
+  if !exists('w:match_list') || empty(w:match_list)
+    ColorHighlight
+    echo 'Rainbow mode enabled in current buffer'
+  else
+    ColorClear
+    echo 'Rainbow mode disabled in current buffer'
+  endif
+endfunction
 
 function! CycleLineNumbers()
   if &number && &relativenumber
@@ -179,10 +161,37 @@ function! s:show_documentation()
   endif
 endfunction
 
+function! DeleteTillSlash()
+  let g:cmd = getcmdline()
+
+  if has('win16') || has('win32')
+    let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
+  else
+    let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
+  endif
+
+  if g:cmd == g:cmd_edited
+    if has('win16') || has('win32')
+      let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
+    else
+      let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
+    endif
+  endif
+
+  return g:cmd_edited
+endfunction
+
 function! CleanExtraSpaces()
   let save_cursor = getpos(".")
   let old_query = getreg('/')
   silent! %s/\s\+$//e
   call setpos('.', save_cursor)
   call setreg('/', old_query)
+endfunction
+
+function! HasPaste()
+  if &paste
+    return 'PASTE MODE  '
+  endif
+  return ''
 endfunction

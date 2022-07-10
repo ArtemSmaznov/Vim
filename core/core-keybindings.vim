@@ -47,6 +47,7 @@ if has_key(plugs, 'vim-which-key')
   if has('mksession')
     let g:which_key_map['<Tab>']['R'] = 'Restore last session'
     let g:which_key_map['<Tab>']['s'] = 'Save workspace to file'
+    let g:which_key_map['<Tab>']['x'] = 'Delete workspace from file'
     " let g:which_key_map['<Tab>']['x'] = 'Delete session'
   endif
 endif
@@ -67,11 +68,12 @@ nnoremap <silent> <leader><Tab>> :+tabmove<cr>
 nnoremap <silent> <leader><Tab>[ :tabprevious<cr>
 nnoremap <silent> <leader><Tab>] :tabnext<cr>
 nnoremap <silent> <leader><Tab>d :tabclose<cr>
-nnoremap <leader><Tab>l :source $HOME/.vim/.local/etc/workspaces/
+nnoremap <silent> <leader><Tab>l :call LoadWorkspace()<cr>
 nnoremap <silent> <leader><Tab>n :tabnew<cr>
-nnoremap <silent> <leader><Tab>R :execute $"source {g:autosave}"<cr>
-nnoremap <leader><Tab>s :mksession! $HOME/.vim/.local/etc/workspaces/
+nnoremap <silent> <leader><Tab>R :call QuickLoadSession()<cr>
+nnoremap <silent> <leader><Tab>s :call SaveWorkspace()<cr>
 nnoremap <silent> <leader><Tab>O :tabonly<cr>
+nnoremap <silent> <leader><Tab>x :call DeleteWorkspace()<cr>
 
 " Toggle between this and the last accessed tab
 let g:lasttab = 1
@@ -79,14 +81,7 @@ nnoremap <silent> <leader><Tab>` :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
 if has_key(plugs, 'fzf')
-  if has_key(plugs, 'vim-which-key')
-    let g:which_key_map['<Tab>']['x'] = 'Delete workspace from file'
-  endif
-
   nnoremap <silent> <leader><Tab>. :Windows<cr>
-  nnoremap <silent> <leader><Tab>l :call LoadWorkspace()<cr>
-  nnoremap <silent> <leader><Tab>s :call SaveWorkspace()<cr>
-  nnoremap <silent> <leader><Tab>x :call DeleteWorkspace()<cr>
 endif
 
 if has_key(plugs, 'vim-which-key')
@@ -389,12 +384,12 @@ if has_key(plugs, 'vim-which-key')
   let g:which_key_map.q['S'] = 'Save session to file'
 endif
 
-nnoremap <silent> <leader>ql :source $HOME/.vim/.local/etc/workspaces/quick-session.vim<cr>
-nnoremap <silent> <leader>qL :source $HOME/.vim/.local/etc/workspaces/
+nnoremap <silent> <leader>ql :call QuickLoadSession()<cr>
+nnoremap <leader>qL :call feedkeys($":source {g:workspaces}/")<cr>
 nnoremap <silent> <leader>qq :qa<cr>
 nnoremap <silent> <leader>qQ :qa!<cr>
-nnoremap <silent> <leader>qs :mksession! $HOME/.vim/.local/etc/workspaces/quick-session.vim<cr>
-nnoremap <silent> <leader>qS :mksession $HOME/.vim/.local/etc/workspaces/
+nnoremap <silent> <leader>qs :call QuickSaveSession()<cr>
+nnoremap <leader>qS :call feedkeys($":mksession! {g:workspaces}/")<cr>
 
 if has_key(plugs, 'vim-which-key')
   let g:which_key_map.s = { 'name' : '+search' }

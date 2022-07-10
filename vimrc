@@ -1,2 +1,4 @@
-source $HOME/.vim/core/core.vim
-source $HOME/.vim/config.vim
+let vim_dir="$HOME/.vim"
+
+execute $"source {vim_dir}/core/core.vim"
+execute $"source {vim_dir}/config.vim"

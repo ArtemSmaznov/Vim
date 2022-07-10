@@ -62,7 +62,7 @@ colorscheme gruvbox8
 Load custom configuration overwrites from and external file
 #+begin_src vimrc
 try
-  source $HOME/.vim/after/vimrc
+  execute $"source {vim_dir}/after/vimrc"
 catch
 endtry
 #+end_src

@@ -15,6 +15,6 @@ set spelllang=en_us,ru_ru
 colorscheme gruvbox8
 
 try
-  source $HOME/.vim/after/vimrc
+  execute $"source {vim_dir}/after/vimrc"
 catch
 endtry

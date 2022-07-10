@@ -9,7 +9,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | q | source $MYVIMRC
   \| endif
 
-call plug#begin('$HOME/.vim/.local/straight/repos')
+call plug#begin($"{g:vim_dir}/.local/straight/repos")
 
 " Core
 Plug 'junegunn/vim-plug'                                   " A minimalist Vim plugin manager

@@ -18,14 +18,12 @@ set history=500       " Sets how many lines of history VIM has to remember
 
 if has('persistent_undo')
   try
-    call EnsureDir("$HOME/.vim/.local/etc/transient/undodir")
-    set undodir=$HOME/.vim/.local/etc/transient/undodir
+    call EnsureDir(g:undodir)
+    set undodir=g:undodir
     set undofile
   catch
   endtry
 endif
-
-let g:netrw_home="$HOME/.vim/.local/cache"
 
 set clipboard=unnamed " Copy paste between vim and everything else
 
@@ -54,11 +52,11 @@ try
 catch
 endtry
 
-call EnsureDir("$HOME/.vim/.local/etc/workspaces")
+call EnsureDir(g:workspaces)
 
 if has('viminfo')
   if filereadable(expand("$HOME/.viminfo"))
-    silent execute $"!mv $HOME/.viminfo $HOME/.vim/.local/etc/workspaces/_viminfo"
+    silent execute $"!mv $HOME/.viminfo {viminfo}"
   endif
   
   set viminfo+=f1
@@ -71,10 +69,8 @@ if has('mksession')
   set sessionoptions-=options
 endif
 
-let autosave_backups=3
-
 if has('mksession') && has('autocmd')
-  autocmd! VimLeave * silent call AutoSaveSession(autosave_backups)
+  autocmd! VimLeave * silent call QuickSaveSession()
 endif
 
 if has('wildignore')
