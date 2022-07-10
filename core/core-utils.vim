@@ -82,18 +82,39 @@ function! AutoSaveSession( backups )
   let backups = a:backups
   while backups > 0
     if backups != 1
-      if filereadable(expand($"{g:autosave_file}{backups-1}"))
-        execute $"!mv {g:autosave_file}{backups-1} {g:autosave_file}{backups}"
+      if filereadable(expand($"{g:autosave}{backups-1}"))
+        execute $"!mv {g:autosave}{backups-1} {g:autosave}{backups}"
       endif
     else
-      if filereadable(expand($"{g:autosave_file}"))
-        execute $"!mv {g:autosave_file} {g:autosave_file}{backups}"
+      if filereadable(expand($"{g:autosave}"))
+        execute $"!mv {g:autosave} {g:autosave}{backups}"
       endif
     endif
     let backups -= 1
   endwhile
 
-  execute 'mksession! ' . g:autosave_file
+  execute 'mksession! ' . g:autosave
+endfunction
+
+function! SaveWorkspace()
+  let ws = input("Save workspace as: ")
+  execute $"mksession! {g:workspaces}/{ws}"
+endfunction
+
+function! LoadWorkspace()
+  call fzf#run({
+    \ 'dir': g:workspaces,
+    \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
+    \ 'sink': "source" 
+    \ })
+endfunction
+
+function! DeleteWorkspace()
+  call fzf#run({
+    \ 'dir': g:workspaces,
+    \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
+    \ 'sink': "!rm" 
+    \ })
 endfunction
 
 function! ClearAll()

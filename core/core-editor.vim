@@ -62,7 +62,7 @@ if has('viminfo')
   endif
   
   set viminfo+=f1
-  set viminfo+=n~/.vim/.local/etc/workspaces/_viminfo
+  execute $"set viminfo+=n{viminfo}"
 endif
 
 if has('mksession')
@@ -71,7 +71,6 @@ if has('mksession')
   set sessionoptions-=options
 endif
 
-let autosave_file="$HOME/.vim/.local/etc/workspaces/autosave"
 let autosave_backups=3
 
 if has('mksession') && has('autocmd')

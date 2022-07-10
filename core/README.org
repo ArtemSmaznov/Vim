@@ -14,7 +14,9 @@
   - [[#visual-selection][Visual Selection]]
   - [[#delete-till-slash][Delete Till Slash]]
   - [[#current-file-dir][Current File Dir]]
+  - [[#ensure-directory-exists][Ensure Directory Exists]]
   - [[#auto-save-session][Auto-save Session]]
+  - [[#workspaces][Workspaces]]
   - [[#clear-all][Clear All]]
   - [[#toggle-options][Toggle Options]]
   - [[#toggle-fill-column][Toggle Fill Column]]
@@ -83,6 +85,14 @@ With a map leader it's possible to do extra key combinations
 #+begin_src vimrc
 let g:mapleader = " "
 let g:maplocalleader = " m"
+#+end_src
+
+Paths
+#+begin_src vimrc
+let vim_dir="$HOME/.vim"
+let workspaces=$"{vim_dir}/.local/etc/workspaces"
+let autosave=$"{workspaces}/autosave"
+let viminfo=expand($"{workspaces}/_viminfo")
 #+end_src
 
 Sources
@@ -214,18 +224,51 @@ function! AutoSaveSession( backups )
   let backups = a:backups
   while backups > 0
     if backups != 1
-      if filereadable(expand($"{g:autosave_file}{backups-1}"))
-        execute $"!mv {g:autosave_file}{backups-1} {g:autosave_file}{backups}"
+      if filereadable(expand($"{g:autosave}{backups-1}"))
+        execute $"!mv {g:autosave}{backups-1} {g:autosave}{backups}"
       endif
     else
-      if filereadable(expand($"{g:autosave_file}"))
-        execute $"!mv {g:autosave_file} {g:autosave_file}{backups}"
+      if filereadable(expand($"{g:autosave}"))
+        execute $"!mv {g:autosave} {g:autosave}{backups}"
       endif
     endif
     let backups -= 1
   endwhile
 
-  execute 'mksession! ' . g:autosave_file
+  execute 'mksession! ' . g:autosave
+endfunction
+#+end_src
+
+** Workspaces
+*** TODO Save workspace to file
+- Needs handling for dismissing input
+#+begin_src vimrc
+function! SaveWorkspace()
+  let ws = input("Save workspace as: ")
+  execute $"mksession! {g:workspaces}/{ws}"
+endfunction
+#+end_src
+
+*** Load workspace from file
+#+begin_src vimrc
+function! LoadWorkspace()
+  call fzf#run({
+    \ 'dir': g:workspaces,
+    \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
+    \ 'sink': "source" 
+    \ })
+endfunction
+#+end_src
+
+*** TODO Delete workspace file
+- Needs to suppress shell output
+#+begin_src vimrc
+function! DeleteWorkspace()
+  call fzf#run({
+    \ 'dir': g:workspaces,
+    \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
+    \ 'sink': "!rm" 
+    \ })
 endfunction
 #+end_src
 
@@ -448,7 +491,7 @@ if has('viminfo')
   endif
   
   set viminfo+=f1
-  set viminfo+=n~/.vim/.local/etc/workspaces/_viminfo
+  execute $"set viminfo+=n{viminfo}"
 endif
 #+end_src
 
@@ -485,7 +528,6 @@ endif
 *** Auto-save
 Auto-save last session on exiting Vim and store up to 3 recent backups
 #+begin_src vimrc
-let autosave_file="$HOME/.vim/.local/etc/workspaces/autosave"
 let autosave_backups=3
 
 if has('mksession') && has('autocmd')
@@ -765,11 +807,11 @@ if has_key(plugs, 'vim-which-key')
   let g:which_key_map['<Tab>'][']'] = 'Next workspace'
   let g:which_key_map['<Tab>']['`'] = 'Switch to last workspace'
   let g:which_key_map['<Tab>']['d'] = 'Delete this workspace'
+  let g:which_key_map['<Tab>']['l'] = 'Load workspace from file'
   let g:which_key_map['<Tab>']['n'] = 'New workspace'
   let g:which_key_map['<Tab>']['O'] = 'Kill other workspaces'
 
   if has('mksession')
-    let g:which_key_map['<Tab>']['l'] = 'Load workspace from file'
     let g:which_key_map['<Tab>']['R'] = 'Restore last session'
     let g:which_key_map['<Tab>']['s'] = 'Save workspace to file'
     " let g:which_key_map['<Tab>']['x'] = 'Delete session'
@@ -794,7 +836,7 @@ nnoremap <silent> <leader><Tab>] :tabnext<cr>
 nnoremap <silent> <leader><Tab>d :tabclose<cr>
 nnoremap <leader><Tab>l :source $HOME/.vim/.local/etc/workspaces/
 nnoremap <silent> <leader><Tab>n :tabnew<cr>
-nnoremap <silent> <leader><Tab>R :execute $"source {autosave_file}"<cr>
+nnoremap <silent> <leader><Tab>R :execute $"source {g:autosave}"<cr>
 nnoremap <leader><Tab>s :mksession! $HOME/.vim/.local/etc/workspaces/
 nnoremap <silent> <leader><Tab>O :tabonly<cr>
 
@@ -807,7 +849,14 @@ au TabLeave * let g:lasttab = tabpagenr()
 **** FZF
 #+begin_src vimrc
 if has_key(plugs, 'fzf')
+  if has_key(plugs, 'vim-which-key')
+    let g:which_key_map['<Tab>']['x'] = 'Delete workspace from file'
+  endif
+
   nnoremap <silent> <leader><Tab>. :Windows<cr>
+  nnoremap <silent> <leader><Tab>l :call LoadWorkspace()<cr>
+  nnoremap <silent> <leader><Tab>s :call SaveWorkspace()<cr>
+  nnoremap <silent> <leader><Tab>x :call DeleteWorkspace()<cr>
 endif
 #+end_src
 
