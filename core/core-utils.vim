@@ -59,16 +59,15 @@ endfunction
 
 function! QuickSaveSession()
   let backups = 3
+
   while backups > 0
-    if backups != 1
-      if filereadable(expand($"{g:autosave}{backups-1}"))
-        execute $"!mv {g:autosave}{backups-1} {g:autosave}{backups}"
-      endif
-    else
-      if filereadable(expand($"{g:autosave}"))
-        execute $"!mv {g:autosave} {g:autosave}{backups}"
-      endif
+    let f_from = expand($"{g:autosave}{backups-1}")
+    if backups == 1
+      let f_from = expand($"{g:autosave}")
     endif
+
+    call rename(f_from, expand($"{g:autosave}{backups}"))
+
     let backups -= 1
   endwhile
 
@@ -80,8 +79,10 @@ function! QuickLoadSession()
 endfunction
 
 function! SaveWorkspace()
-  let ws = input("Save workspace as: ")
-  execute $"mksession! {g:workspaces}/{ws}"
+  let ws = input("Workspace to save: ")
+  if ws != ''
+    execute $"mksession! {g:workspaces}/{ws}"
+  endif
 endfunction
 
 function! LoadWorkspace()
@@ -101,7 +102,7 @@ function! DeleteWorkspace()
     call fzf#run({
       \ 'dir': g:workspaces,
       \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
-      \ 'sink': "!rm" 
+      \ 'sink': function('delete')
       \ })
   endif
 endfunction

@@ -55,9 +55,34 @@ endtry
 call EnsureDir(g:workspaces)
 
 if has('viminfo')
-  if filereadable(expand("$HOME/.viminfo"))
-    silent execute $"!mv $HOME/.viminfo {viminfo}"
+  let info_at_home = expand("$HOME/.viminfo")
+  let info_at_vim = expand($"{viminfo}")
+
+  if filereadable(info_at_home)
+    if filereadable(info_at_vim)
+      let choice = confirm(
+          \ $"Duplicate viminfo files found:
+          \ \n home: {info_at_home}
+          \ \n vim: {info_at_vim}
+          \ \n\nWhich version would you like to keep? (default Vim)", 
+          \ "&Vim\n&Home",
+          \ 1
+          \ )
+      if choice == 0
+        echo "\nNo changes have been made!"
+        echo "The choice will be presented once again on next vim launch.\n"
+      elseif choice == 1
+        call delete(expand("$HOME/.viminfo"))
+        echo $"Deleted {info_at_home}"
+      elseif choice == 2
+        call rename(expand("$HOME/.viminfo"), expand($"{viminfo}"))
+        echo $"Replaced {info_at_vim} with {info_at_home}"
+      endif
+    else
+      call rename(expand("$HOME/.viminfo"), expand($"{viminfo}"))
+    endif
   endif
+
   
   set viminfo+=f1
   execute $"set viminfo+=n{viminfo}"
