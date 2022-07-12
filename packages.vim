@@ -70,5 +70,6 @@ Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 
 " New Plugins to try
 " Plug 'airblade/vim-rooter'                               " Plugin that changes to a buffer's root directory
+" Plug 'junegunn/vim-emoji'                                " Emoji in Vim
 
 call plug#end()

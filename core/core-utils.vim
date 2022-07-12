@@ -79,7 +79,7 @@ function! QuickLoadSession()
 endfunction
 
 function! SaveWorkspace()
-  let ws = input("Workspace to save: ")
+  let ws = input("Save workspace as: ")
   if ws != ''
     execute $"mksession! {g:workspaces}/{ws}"
   endif
@@ -87,24 +87,25 @@ endfunction
 
 function! LoadWorkspace()
   if has_key(g:plugs, 'fzf')
-    call fzf#run({
+    call fzf#run(fzf#wrap({
+      \ 'options': "--prompt 'Workspace to load: '",
       \ 'dir': g:workspaces,
       \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
       \ 'sink': "source" 
-      \ })
+      \ }))
   else
     call feedkeys($":source {g:workspaces}/")
   endif
 endfunction
 
 function! DeleteWorkspace()
-  if has_key(g:plugs, 'fzf')
-    call fzf#run({
-      \ 'dir': g:workspaces,
-      \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
-      \ 'sink': function('delete')
-      \ })
-  endif
+  call fzf#run(fzf#wrap({
+    \ 'options': "--prompt 'Workspace to delete: ' --multi",
+    \ 'down': '40%',
+    \ 'dir': g:workspaces,
+    \ 'source': $"ls {g:workspaces} | grep -ve autosave -e viminfo || exit 0",
+    \ 'sink': function('delete')
+    \ }))
 endfunction
 
 function! ToggleOption( opt, mode )
