@@ -1,7 +1,6 @@
 if has_key(plugs, 'vim-which-key')
   " let g:which_key_map['<Esc>'] = 'Reset/Cleanup'
   let g:which_key_map[',']     = 'Switch workspace buffer'
-  let g:which_key_map['<']     = 'Switch buffer'
   let g:which_key_map['`']     = 'Switch to last buffer'
 endif
 
@@ -10,15 +9,16 @@ nnoremap <silent> <Esc> :call ClearAll()<cr>
 
 " nnoremap <silent> <leader><Esc> :call ClearAll()<cr>
 nnoremap <leader>, :BufExplorerHorizontalSplit<cr>
-nnoremap <leader>< :Buffers<cr>
 nnoremap <leader>` :b#<cr>
 
 if has_key(plugs, 'fzf')
   if has_key(plugs, 'vim-which-key')
     let g:which_key_map[' '] = ['GFiles', 'Find file in project' ]
+    let g:which_key_map['<'] = 'Switch buffer'
   endif
 
   nnoremap <leader><Space> :GFiles<cr>
+  nnoremap <leader>< :call Buffers()<cr>
 endif
 
 if has_key(plugs, 'vim-which-key')
@@ -86,7 +86,7 @@ if has_key(plugs, 'fzf')
     let g:which_key_map['<Tab>']['D'] = 'Delete workspace from file'
   endif
 
-  nnoremap <silent> <leader><Tab>. :Windows<cr>
+  nnoremap <silent> <leader><Tab>. :call Workspaces()<cr>
   nnoremap <silent> <leader><Tab>D :call DeleteWorkspace()<cr>
 endif
 
@@ -126,7 +126,7 @@ nnoremap <silent> <leader>bn :bnext<cr>
 nnoremap <silent> <leader>bN :e *new*<cr>
 nnoremap <leader>bO :%bd <Bar> e#<cr>
 nnoremap <silent> <leader>bp :bprevious<cr>
-nnoremap <silent> <leader>br :if confirm('Discard edits and reread from ' . expand('%:p') . '?', "&Yes\n&No", 1)==1 <Bar> exe ":edit!" <Bar> endif<cr>
+nnoremap <silent> <leader>br :call RevertBuffer()<cr>
 nnoremap <leader>bs :write<cr>
 nnoremap <leader>bS :wa<cr>
 nnoremap <leader>bu :W<cr>
@@ -202,7 +202,7 @@ if has_key(plugs, 'coc.nvim')
 endif
 
 if has_key(plugs, 'vim-which-key')
-  let g:which_key_map.f      = { 'name' : '+file' }          
+  let g:which_key_map.f      = { 'name' : '+file' }
   let g:which_key_map.f['c'] = 'CD to current directory'
   " let g:which_key_map.f['c'] = 'Open project editorconfig'
   " let g:which_key_map.f['C'] = 'Copy this file'
@@ -222,7 +222,7 @@ if has_key(plugs, 'vim-which-key')
 endif
 
 nnoremap <leader>fc :cd %:p:h<cr>:pwd<cr>
-nnoremap <silent> <leader>fD :if confirm('Really delete "' . expand('%') . '"?', "&Yes\n&No", 1)==1 <Bar> exe ":call delete(@%)" <Bar> exe ":Bclose" <Bar> endif<cr>
+nnoremap <silent> <leader>fD :call DeleteWithConfirmation( GetCurrentFile() )<cr>
 nnoremap <leader>fE :Hexplore ~/.vim/core<cr>
 nnoremap <leader>ff :call feedkeys(":edit " . expand("%:p:h") . '/')<cr>
 nnoremap <leader>fP :Hexplore ~/.vim<cr>
@@ -232,20 +232,20 @@ nnoremap <leader>fy :let @" = expand('%:p')<cr>:let @+ = expand('%:p')<cr>:echo 
 nnoremap <leader>fY :let @" = expand('%')<cr>:let @+ = expand('%')<cr>:echo "Copied path to clipboard: " . expand('%')<cr>
 nnoremap <leader>fv :vimgrep **/*
 
-if has_key(plugs, 'fzf' )
+if has_key(plugs, 'fzf')
   if has_key(plugs, 'vim-which-key')
-    let g:which_key_map.f['e'] = 'Find file in vim.d'      
+    let g:which_key_map.f['e'] = 'Find file in vim.d'
     let g:which_key_map.f['F'] = 'Find file from here'
     let g:which_key_map.f['l'] = 'Locate file'
     let g:which_key_map.f['p'] = 'Find file in private config'
     let g:which_key_map.f['r'] = 'Recent files'
   endif
 
-  nnoremap <silent> <leader>fe :Files ~/.vim/core<cr>
-  nnoremap <silent> <leader>fF :execute "Files " . expand("%:h:p")<cr>
-  nnoremap <silent> <leader>fl :Locate
-  nnoremap <silent> <leader>fp :Files ~/.vim<cr>
-  nnoremap <silent> <leader>fr :History<cr>
+  nnoremap <silent> <leader>fe :call Files( '~/.vim/core', '[vim-core] Find file: ' )<cr>
+  nnoremap <silent> <leader>fF :call Files( GetCurrentDir(), 'Find file: ' )<cr>
+  nnoremap <leader>fl :Locate
+  nnoremap <silent> <leader>fp :call Files( '~/.vim', '[vim] Find file: ' )<cr>
+  nnoremap <silent> <leader>fr :call RecentFiles()<cr>
 endif
 
 if has_key(plugs, 'vim-which-key')
@@ -308,7 +308,7 @@ if has_key(plugs, 'fzf')
 
   nnoremap <silent> <leader>hk :Maps<cr>
   nnoremap <silent> <leader>hs :Helptags<cr>
-  nnoremap <silent> <leader>ht :Colors<cr>
+  nnoremap <silent> <leader>ht :call Colors()<cr>
 endif
 
 if has_key(plugs, 'vim-which-key')
@@ -417,14 +417,14 @@ if has_key(plugs, 'fzf')
     let g:which_key_map.s['t'] = 'Search Tags in buffer'
     let g:which_key_map.s['T'] = 'Search Tags in all buffers'
   endif
-  
-  nnoremap <leader>sb :BLines<CR>
-  nnoremap <leader>sB :Lines<CR>
-  nnoremap <leader>sp :Rg<CR>
-  nnoremap <leader>sr :Marks<CR>
-  nnoremap <leader>st :BTags<CR>
-  nnoremap <leader>sT :Tags<CR>
-  
+
+  nnoremap <silent> <leader>sb :call Swiper()<cr>
+  nnoremap <silent> <leader>sB :call SwiperAll()<cr>
+  nnoremap <silent> <leader>sp :Rg<cr>
+  nnoremap <silent> <leader>sr :Marks<cr>
+  nnoremap <silent> <leader>st :BTags<cr>
+  nnoremap <silent> <leader>sT :Tags<cr>
+
   " let g:which_key_map.s['/'] = 'Search history'
   " let g:which_key_map.s[':'] = 'Commands history'
   " let g:which_key_map.s['c'] = 'Search all commands'

@@ -17,7 +17,7 @@ let g:fzf_history_dir = $"{vim_dir}/.local/cache/fzf-history"
 let g:fzf_tags_command = 'ctags -R'
 let g:fzf_layout = { 'down': '40%' }
 
-let $FZF_DEFAULT_COMMAND="rg --files --hidden"
+let $FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git/'"
 
 " For full list of options see `man fzf`
 let $FZF_DEFAULT_OPTS = '
@@ -44,10 +44,11 @@ let g:fzf_colors = {
       \ 'spinner': ['fg', 'Label']
       \ }
 
-"Get Files
+" Redefining default functions
+
+" Files
 command! -bang -nargs=? -complete=dir Files
       \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
-
 
 " Get text in files with Rg
 command! -bang -nargs=* Rg

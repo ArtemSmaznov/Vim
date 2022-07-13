@@ -47,13 +47,30 @@ function! VisualSelection(direction, extra_filter) range
   let @" = l:saved_reg
 endfunction
 
-function! CurrentFileDir(cmd)
-  return a:cmd . " " . expand("%:p:h") . "/"
+function! GetCurrentFile()
+  return expand("%:p")
+endfunction
+
+function! GetCurrentDir()
+  return expand("%:p:h")
 endfunction
 
 function! EnsureDir( dir )
   if !isdirectory(expand(a:dir))
     silent call mkdir(expand(a:dir), 'p')
+  endif
+endfunction
+
+function! DeleteWithConfirmation( file )
+  if confirm($"Really delete \"{a:file}\"?", "&Yes\n&No", 1) == 1
+    call delete(a:file)
+    Bclose
+  endif
+endfunction
+
+function! RevertBuffer()
+  if confirm($"Discard edits and reread from {expand('%:p')}?", "&Yes\n&No", 1) == 1 
+    exe ":edit!" 
   endif
 endfunction
 
@@ -155,14 +172,6 @@ function! RevealInFiles()
   silent execute opencmd . expand('%:p:h')
 endfunction
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'vertical h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
 function! DeleteTillSlash()
   let g:cmd = getcmdline()
 
@@ -197,3 +206,53 @@ function! HasPaste()
   endif
   return ''
 endfunction
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'vertical h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+if has_key(plugs, 'fzf')
+  function! Files( dir, prompt )
+    call fzf#vim#files( a:dir, {'options': $"--prompt '{a:prompt}'"} )
+  endfunction
+endif
+
+if has_key(plugs, 'fzf')
+  function! RecentFiles()
+    call fzf#vim#history({'options': "--prompt 'Recent files: '"})
+  endfunction
+endif
+
+if has_key(plugs, 'fzf')
+  function! Buffers()
+    call fzf#vim#buffers( {'options': $"--prompt 'Switch to workspace buffer: '"} )
+  endfunction
+endif
+
+if has_key(plugs, 'fzf')
+  function! Workspaces()
+    call fzf#vim#windows( {'options': $"--prompt 'Switch to workspace: '"} )
+  endfunction
+endif
+
+if has_key(plugs, 'fzf')
+  function! Swiper()
+    call fzf#vim#buffer_lines( {'options': $"--prompt 'Swiper: '"} )
+  endfunction
+endif
+
+if has_key(plugs, 'fzf')
+  function! SwiperAll()
+    call fzf#vim#lines( {'options': $"--prompt 'Swiper-all: '"} )
+  endfunction
+endif
+
+if has_key(plugs, 'fzf')
+  function! Colors()
+    call fzf#vim#colors( {'options': $"--prompt 'Load custom theme: '"} )
+  endfunction
+endif

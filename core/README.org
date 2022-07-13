@@ -13,16 +13,18 @@
   - [[#clear-all][Clear All]]
   - [[#bclose][Bclose]]
   - [[#visual-selection][Visual Selection]]
-  - [[#current-file-dir][Current File Dir]]
+  - [[#current-file][Current File]]
   - [[#ensure-directory-exists][Ensure Directory Exists]]
+  - [[#delete-file][Delete File]]
   - [[#sessions][Sessions]]
   - [[#workspaces][Workspaces]]
   - [[#toggle-options][Toggle Options]]
   - [[#reveal-in-file-manager][Reveal in File Manager]]
-  - [[#coc-jump-to-documentation][CoC: Jump to Documentation]]
   - [[#delete-till-slash][Delete Till Slash]]
   - [[#clean-extra-spaces][Clean Extra Spaces]]
   - [[#has-paste][Has Paste]]
+  - [[#plugin-coc][Plugin: CoC]]
+  - [[#plugin-fzf][Plugin: FZF]]
 - [[#editor][Editor]]
   - [[#abbreviations][Abbreviations]]
   - [[#search][Search]]
@@ -181,11 +183,18 @@ function! VisualSelection(direction, extra_filter) range
 endfunction
 #+end_src
 
-** Current File Dir :unused:
+** Current File
+Get full file path for the current buffer
+#+begin_src vimrc
+function! GetCurrentFile()
+  return expand("%:p")
+endfunction
+#+end_src
+
 Get directory for current buffer
 #+begin_src vimrc
-function! CurrentFileDir(cmd)
-  return a:cmd . " " . expand("%:p:h") . "/"
+function! GetCurrentDir()
+  return expand("%:p:h")
 endfunction
 #+end_src
 
@@ -194,6 +203,25 @@ endfunction
 function! EnsureDir( dir )
   if !isdirectory(expand(a:dir))
     silent call mkdir(expand(a:dir), 'p')
+  endif
+endfunction
+#+end_src
+
+** Delete File
+#+begin_src vimrc
+function! DeleteWithConfirmation( file )
+  if confirm($"Really delete \"{a:file}\"?", "&Yes\n&No", 1) == 1
+    call delete(a:file)
+    Bclose
+  endif
+endfunction
+#+end_src
+
+** Revert Buffer
+#+begin_src vimrc
+function! RevertBuffer()
+  if confirm($"Discard edits and reread from {expand('%:p')}?", "&Yes\n&No", 1) == 1 
+    exe ":edit!" 
   endif
 endfunction
 #+end_src
@@ -332,18 +360,6 @@ function! RevealInFiles()
 endfunction
 #+end_src
 
-** CoC: Jump to Documentation
-#+begin_src vimrc
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'vertical h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-#+end_src
-**
-
 ** Delete Till Slash
 #+begin_src vimrc
 function! DeleteTillSlash()
@@ -388,6 +404,79 @@ function! HasPaste()
   endif
   return ''
 endfunction
+#+end_src
+
+** Plugin: CoC
+*** Jump to Documentation
+#+begin_src vimrc
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'vertical h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+#+end_src
+
+** Plugin: FZF
+*** Find File
+#+begin_src vimrc
+if has_key(plugs, 'fzf')
+  function! Files( dir, prompt )
+    call fzf#vim#files( a:dir, {'options': $"--prompt '{a:prompt}'"} )
+  endfunction
+endif
+#+end_src
+
+*** Recent Files
+#+begin_src vimrc
+if has_key(plugs, 'fzf')
+  function! RecentFiles()
+    call fzf#vim#history({'options': "--prompt 'Recent files: '"})
+  endfunction
+endif
+#+end_src
+
+*** Buffers
+#+begin_src vimrc
+if has_key(plugs, 'fzf')
+  function! Buffers()
+    call fzf#vim#buffers( {'options': $"--prompt 'Switch to workspace buffer: '"} )
+  endfunction
+endif
+#+end_src
+
+*** Workspaces
+#+begin_src vimrc
+if has_key(plugs, 'fzf')
+  function! Workspaces()
+    call fzf#vim#windows( {'options': $"--prompt 'Switch to workspace: '"} )
+  endfunction
+endif
+#+end_src
+
+*** Swiper
+#+begin_src vimrc
+if has_key(plugs, 'fzf')
+  function! Swiper()
+    call fzf#vim#buffer_lines( {'options': $"--prompt 'Swiper: '"} )
+  endfunction
+endif
+
+if has_key(plugs, 'fzf')
+  function! SwiperAll()
+    call fzf#vim#lines( {'options': $"--prompt 'Swiper-all: '"} )
+  endfunction
+endif
+#+end_src
+
+*** Themes
+#+begin_src vimrc
+if has_key(plugs, 'fzf')
+  function! Colors()
+    call fzf#vim#colors( {'options': $"--prompt 'Load custom theme: '"} )
+  endfunction
+endif
 #+end_src
 
 * Editor
@@ -795,7 +884,6 @@ endif
 if has_key(plugs, 'vim-which-key')
   " let g:which_key_map['<Esc>'] = 'Reset/Cleanup'
   let g:which_key_map[',']     = 'Switch workspace buffer'
-  let g:which_key_map['<']     = 'Switch buffer'
   let g:which_key_map['`']     = 'Switch to last buffer'
 endif
 
@@ -804,7 +892,6 @@ nnoremap <silent> <Esc> :call ClearAll()<cr>
 
 " nnoremap <silent> <leader><Esc> :call ClearAll()<cr>
 nnoremap <leader>, :BufExplorerHorizontalSplit<cr>
-nnoremap <leader>< :Buffers<cr>
 nnoremap <leader>` :b#<cr>
 #+end_src
 
@@ -813,9 +900,11 @@ nnoremap <leader>` :b#<cr>
 if has_key(plugs, 'fzf')
   if has_key(plugs, 'vim-which-key')
     let g:which_key_map[' '] = ['GFiles', 'Find file in project' ]
+    let g:which_key_map['<'] = 'Switch buffer'
   endif
 
   nnoremap <leader><Space> :GFiles<cr>
+  nnoremap <leader>< :call Buffers()<cr>
 endif
 #+end_src
 
@@ -890,7 +979,7 @@ if has_key(plugs, 'fzf')
     let g:which_key_map['<Tab>']['D'] = 'Delete workspace from file'
   endif
 
-  nnoremap <silent> <leader><Tab>. :Windows<cr>
+  nnoremap <silent> <leader><Tab>. :call Workspaces()<cr>
   nnoremap <silent> <leader><Tab>D :call DeleteWorkspace()<cr>
 endif
 #+end_src
@@ -934,7 +1023,7 @@ nnoremap <silent> <leader>bn :bnext<cr>
 nnoremap <silent> <leader>bN :e *new*<cr>
 nnoremap <leader>bO :%bd <Bar> e#<cr>
 nnoremap <silent> <leader>bp :bprevious<cr>
-nnoremap <silent> <leader>br :if confirm('Discard edits and reread from ' . expand('%:p') . '?', "&Yes\n&No", 1)==1 <Bar> exe ":edit!" <Bar> endif<cr>
+nnoremap <silent> <leader>br :call RevertBuffer()<cr>
 nnoremap <leader>bs :write<cr>
 nnoremap <leader>bS :wa<cr>
 nnoremap <leader>bu :W<cr>
@@ -1021,7 +1110,7 @@ endif
 **** Vanilla
 #+begin_src vimrc
 if has_key(plugs, 'vim-which-key')
-  let g:which_key_map.f      = { 'name' : '+file' }          
+  let g:which_key_map.f      = { 'name' : '+file' }
   let g:which_key_map.f['c'] = 'CD to current directory'
   " let g:which_key_map.f['c'] = 'Open project editorconfig'
   " let g:which_key_map.f['C'] = 'Copy this file'
@@ -1041,7 +1130,7 @@ if has_key(plugs, 'vim-which-key')
 endif
 
 nnoremap <leader>fc :cd %:p:h<cr>:pwd<cr>
-nnoremap <silent> <leader>fD :if confirm('Really delete "' . expand('%') . '"?', "&Yes\n&No", 1)==1 <Bar> exe ":call delete(@%)" <Bar> exe ":Bclose" <Bar> endif<cr>
+nnoremap <silent> <leader>fD :call DeleteWithConfirmation( GetCurrentFile() )<cr>
 nnoremap <leader>fE :Hexplore ~/.vim/core<cr>
 nnoremap <leader>ff :call feedkeys(":edit " . expand("%:p:h") . '/')<cr>
 nnoremap <leader>fP :Hexplore ~/.vim<cr>
@@ -1054,20 +1143,20 @@ nnoremap <leader>fv :vimgrep **/*
 
 **** FZF
 #+begin_src vimrc
-if has_key(plugs, 'fzf' )
+if has_key(plugs, 'fzf')
   if has_key(plugs, 'vim-which-key')
-    let g:which_key_map.f['e'] = 'Find file in vim.d'      
+    let g:which_key_map.f['e'] = 'Find file in vim.d'
     let g:which_key_map.f['F'] = 'Find file from here'
     let g:which_key_map.f['l'] = 'Locate file'
     let g:which_key_map.f['p'] = 'Find file in private config'
     let g:which_key_map.f['r'] = 'Recent files'
   endif
 
-  nnoremap <silent> <leader>fe :Files ~/.vim/core<cr>
-  nnoremap <silent> <leader>fF :execute "Files " . expand("%:h:p")<cr>
-  nnoremap <silent> <leader>fl :Locate
-  nnoremap <silent> <leader>fp :Files ~/.vim<cr>
-  nnoremap <silent> <leader>fr :History<cr>
+  nnoremap <silent> <leader>fe :call Files( '~/.vim/core', '[vim-core] Find file: ' )<cr>
+  nnoremap <silent> <leader>fF :call Files( GetCurrentDir(), 'Find file: ' )<cr>
+  nnoremap <leader>fl :Locate
+  nnoremap <silent> <leader>fp :call Files( '~/.vim', '[vim] Find file: ' )<cr>
+  nnoremap <silent> <leader>fr :call RecentFiles()<cr>
 endif
 #+end_src
 
@@ -1147,7 +1236,7 @@ if has_key(plugs, 'fzf')
 
   nnoremap <silent> <leader>hk :Maps<cr>
   nnoremap <silent> <leader>hs :Helptags<cr>
-  nnoremap <silent> <leader>ht :Colors<cr>
+  nnoremap <silent> <leader>ht :call Colors()<cr>
 endif
 #+end_src
 
@@ -1289,14 +1378,14 @@ if has_key(plugs, 'fzf')
     let g:which_key_map.s['t'] = 'Search Tags in buffer'
     let g:which_key_map.s['T'] = 'Search Tags in all buffers'
   endif
-  
-  nnoremap <leader>sb :BLines<CR>
-  nnoremap <leader>sB :Lines<CR>
-  nnoremap <leader>sp :Rg<CR>
-  nnoremap <leader>sr :Marks<CR>
-  nnoremap <leader>st :BTags<CR>
-  nnoremap <leader>sT :Tags<CR>
-  
+
+  nnoremap <silent> <leader>sb :call Swiper()<cr>
+  nnoremap <silent> <leader>sB :call SwiperAll()<cr>
+  nnoremap <silent> <leader>sp :Rg<cr>
+  nnoremap <silent> <leader>sr :Marks<cr>
+  nnoremap <silent> <leader>st :BTags<cr>
+  nnoremap <silent> <leader>sT :Tags<cr>
+
   " let g:which_key_map.s['/'] = 'Search history'
   " let g:which_key_map.s[':'] = 'Commands history'
   " let g:which_key_map.s['c'] = 'Search all commands'
