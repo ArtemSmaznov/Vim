@@ -1,8 +1,9 @@
-#+TITLE: Doom Vim
-#+AUTHOR: Artem Smaznov
-#+DESCRIPTION: You either love it or don't know that it exists.
-#+STARTUP: overview
-#+PROPERTY: header-args :tangle config.vim
+#+title:       Doom Vim
+#+author:      Artem Smaznov
+#+description: You either love it or don't know that it exists.
+#+startup:     overview
+#+property:    header-args :tangle config.vim
+#+auto_tangle: t
 
 * Table of Contents :toc:
 - [[#description][Description]]
