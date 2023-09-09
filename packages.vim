@@ -23,6 +23,7 @@ Plug 'tommcdo/vim-exchange'                                " Plugin to define a 
 Plug 'tpope/vim-repeat'                                    " Repeat.vim remaps `.` in a way that plugins can tap into it
 Plug 'christoomey/vim-system-copy'                         " Copy / Paste text to the os specific clipboard
 Plug 'farmergreg/vim-lastplace'                            " Intelligently reopen files where you left off
+Plug 'lambdalisue/vim-manpager'                            " Use Vim as MANPAGER
 
 " LSP
 if has('python3')
