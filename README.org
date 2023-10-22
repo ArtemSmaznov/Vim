@@ -1,3 +1,6 @@
+:PROPERTIES:
+:ID:       f39d2412-eec4-44dd-94d8-9ca6d851ee3a
+:END:
 #+title:       Doom Vim
 #+author:      Artem Smaznov
 #+description: You either love it or don't know that it exists.
